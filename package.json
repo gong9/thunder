@@ -1,0 +1,35 @@
+{
+  "name": "twins-ecology",
+  "version": "0.0.0",
+  "description": "twins-ecology",
+  "scripts": {
+    "build": "pnpm -r build",
+    "prepare": "husky install",
+    "test": "pnpm -r test",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "keywords": [],
+  "authors": [],
+  "license": "MIT",
+  "devDependencies": {
+    "@antfu/eslint-config": "^0.39.8",
+    "@commitlint/cli": "^17.1.2",
+    "@commitlint/config-conventional": "^17.1.0",
+    "@types/jest": "^27",
+    "@types/node": "^18.14.1",
+    "@umijs/lint": "^4",
+    "@umijs/test": "^4",
+    "eslint": "^8.23.0",
+    "father": "^4.1.5",
+    "husky": "^8.0.1",
+    "jest": "^27",
+    "ts-node": "^10",
+    "typescript": "^4"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  }
+}
