@@ -1,5 +1,4 @@
-// @ts-ignore
-import { Config, } from '@umijs/test';
+import type { Config } from '@umijs/test'
 
 export default {
   projects: [
@@ -8,4 +7,4 @@ export default {
   testMatch: [
     '<rootDir>/packages/**/__tests__/**/*.test.{ts,js,tsx,jsx}',
   ],
-} as Config.InitialOptions;
+} as Config.InitialOptions

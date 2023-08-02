@@ -2,6 +2,9 @@
   "name": "@twins/twins-cic",
   "version": "0.0.1",
   "description": "",
+  "author": "",
+  "license": "MIT",
+  "keywords": [],
   "main": "dist/index.js",
   "files": [
     "dist",
@@ -14,8 +17,5 @@
     "prepublishOnly": "father doctor && npm run build",
     "test": "jest --maxWorkers 2"
   },
-  "keywords": [],
-  "author": "",
-  "license": "MIT",
   "dependencies": {}
 }

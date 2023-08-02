@@ -1,5 +1,5 @@
 {
-  "name": "@twins/twins-analysis",
+  "name": "@twins/twins-three",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -17,5 +17,10 @@
     "prepublishOnly": "father doctor && npm run build",
     "test": "jest --maxWorkers 2"
   },
-  "dependencies": {}
+  "dependencies": {
+    "three": "^0.155.0"
+  },
+  "devDependencies": {
+    "@types/three": "^0.155.0"
+  }
 }

@@ -2,6 +2,8 @@
   "name": "twins-ecology",
   "version": "0.0.0",
   "description": "twins-ecology",
+  "license": "MIT",
+  "keywords": [],
   "scripts": {
     "build": "pnpm -r build",
     "prepare": "husky install",
@@ -9,11 +11,9 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
-  "keywords": [],
   "authors": [],
-  "license": "MIT",
   "devDependencies": {
-    "@antfu/eslint-config": "^0.39.8",
+    "@antfu/eslint-config": "^0.38.5",
     "@commitlint/cli": "^17.1.2",
     "@commitlint/config-conventional": "^17.1.0",
     "@types/jest": "^27",

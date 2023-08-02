@@ -1,9 +1,7 @@
 {
   "extends": "@antfu",
   "rules": {
-    "semi": [
-      "error",
-      "never"
-    ]
+    "unused-imports/no-unused-imports": "off",
+    "antfu/top-level-function": "off"
   }
 }
