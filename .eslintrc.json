@@ -2,6 +2,7 @@
   "extends": "@antfu",
   "rules": {
     "unused-imports/no-unused-imports": "off",
-    "antfu/top-level-function": "off"
+    "antfu/top-level-function": "off",
+    "eol-last": "off"
   }
 }

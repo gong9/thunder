@@ -1,5 +1,0 @@
-const demo = () => {
-
-}
-
-demo()
