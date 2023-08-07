@@ -89,10 +89,10 @@ class TwinsThreeScene {
   private initDefaultPerspectiveCamera() {
     const rendererOps = this.opts.defCameraOps || {}
     const camera = new PerspectiveCamera(
-      90,
+      rendererOps.fov || 90,
       window.innerWidth / window.innerHeight,
-      0.1,
-      1000,
+      rendererOps.near || 0.1,
+      rendererOps.far || 1000,
     )
 
     const position = rendererOps.position || new Vector3(0, 3, 10)
@@ -106,13 +106,19 @@ class TwinsThreeScene {
   /**
    * frame render
    */
-  public startFrameAnimate() {
+  public startFrameAnimate(frameAnimate?: (renderer: WebGLRenderer) => void) {
     if (!this.renderer || !this.scene || !this.camera)
       throw new Error('scene or camera or renderer is not init')
 
-    this.controls && this.controls.update()
-    this.renderer!.render(this.scene!, this.camera!)
-    requestAnimationFrame(() => this.startFrameAnimate())
+    if (frameAnimate) {
+      frameAnimate(this.renderer)
+    }
+    else {
+      this.controls && this.controls.update()
+      this.renderer!.render(this.scene!, this.camera!)
+    }
+
+    requestAnimationFrame(() => this.startFrameAnimate(frameAnimate))
   }
 
   /**
