@@ -38,7 +38,6 @@ interface TwinsThreeSceneOptions {
 class TwinsThreeScene {
   private opts: TwinsThreeSceneOptions = {}
   private pointer: Vector2 = new Vector2()
-  private updateRaycasterTimer: number | null = null
   scene: Scene | null = null
   raycaster: Raycaster | null = null
   camera: PerspectiveCamera | null = null
@@ -148,9 +147,9 @@ class TwinsThreeScene {
 
     target.appendChild(renderer.domElement)
 
-    window.addEventListener('click', (e: MouseEvent) => this.onPointerClick(e))
+    target.addEventListener('click', (e: MouseEvent) => this.onPointerClick(e))
     // window.addEventListener('pointermove', (e: MouseEvent) => this.onPointerClick(e))
-    window.addEventListener('resize', () => this.resetScene(camera, renderer))
+    target.addEventListener('resize', () => this.resetScene(camera, renderer))
   }
 
   public destroy() {
