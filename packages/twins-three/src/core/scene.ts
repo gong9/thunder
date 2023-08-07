@@ -1,5 +1,5 @@
 import type { Object3D } from 'three'
-import { ACESFilmicToneMapping, PerspectiveCamera, Scene, Vector3, WebGLRenderer } from 'three'
+import { ACESFilmicToneMapping, PerspectiveCamera, Raycaster, Scene, Vector2, Vector3, WebGLRenderer } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
 interface TwinsThreeSceneOptions {
@@ -27,11 +27,20 @@ interface TwinsThreeSceneOptions {
    */
 
   orbitControls?: boolean
+
+  /**
+   * on demand render scene, 按需渲染
+   */
+  onDemand?: boolean
+
 }
 
 class TwinsThreeScene {
   private opts: TwinsThreeSceneOptions = {}
+  private pointer: Vector2 = new Vector2()
+  private updateRaycasterTimer: number | null = null
   scene: Scene | null = null
+  raycaster: Raycaster | null = null
   camera: PerspectiveCamera | null = null
   renderer: WebGLRenderer | null = null
   controls: OrbitControls | null = null
@@ -39,6 +48,7 @@ class TwinsThreeScene {
   constructor(opts: TwinsThreeSceneOptions) {
     this.opts = opts ?? {}
     this.scene = new Scene()
+    this.raycaster = new Raycaster()
   }
 
   /**
@@ -86,7 +96,7 @@ class TwinsThreeScene {
       1000,
     )
 
-    const position = rendererOps.position || new Vector3(0, 3, 3)
+    const position = rendererOps.position || new Vector3(0, 3, 10)
     camera.position.set(position.x, position.y, position.z)
 
     this.camera = camera
@@ -106,6 +116,25 @@ class TwinsThreeScene {
     requestAnimationFrame(() => this.startFrameAnimate())
   }
 
+  /**
+   * update raycaster
+   */
+  private updateRaycaster() {
+    this.raycaster!.setFromCamera(this.pointer, this.camera!)
+    const intersects = this.raycaster!.intersectObjects(this.scene!.children)
+    console.log(this.scene!.children)
+
+    for (let i = 0; i < intersects.length; i++)
+      console.log(intersects[i])
+  }
+
+  private onPointerClick(event: MouseEvent) {
+    this.pointer.setX((event.clientX / window.innerWidth) * 2 - 1)
+    this.pointer.setY(-(event.clientY / window.innerHeight) * 2 + 1)
+
+    this.updateRaycaster()
+  }
+
   public add(object3d: Object3D) {
     this.scene!.add(object3d)
   }
@@ -118,6 +147,14 @@ class TwinsThreeScene {
       this.controls = new OrbitControls(camera, renderer.domElement)
 
     target.appendChild(renderer.domElement)
+
+    window.addEventListener('click', (e: MouseEvent) => this.onPointerClick(e))
+    // window.addEventListener('pointermove', (e: MouseEvent) => this.onPointerClick(e))
+    window.addEventListener('resize', () => this.resetScene(camera, renderer))
+  }
+
+  public destroy() {
+    window.removeEventListener('resize', () => this.resetScene(this.camera!, this.renderer!))
   }
 }
 

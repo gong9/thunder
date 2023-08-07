@@ -1,3 +1,4 @@
 import TwinsThreeScene from './core/scene'
+import TwinsThreeMesh from './core/mesh'
 
-export default { TwinsThreeScene }
+export default { TwinsThreeScene, TwinsThreeMesh }

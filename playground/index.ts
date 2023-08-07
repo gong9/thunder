@@ -1,29 +1,31 @@
 import * as TwinsThree from '../packages/twins-three/src/index'
-import { BoxGeometry, Mesh, MeshBasicMaterial, AmbientLight, Vector3 } from 'three'
+import { BoxGeometry, MeshBasicMaterial } from 'three'
 
 const TwinsThreeScene = TwinsThree.default.TwinsThreeScene
+const TwinsThreeMesh = TwinsThree.default.TwinsThreeMesh
+
+const scene = new TwinsThreeScene({
+    orbitControls: true,
+})
 
 const createBox = () => {
     const geometry = new BoxGeometry(1, 1, 1)
     const material = new MeshBasicMaterial({ color: 0x00FF00 })
-    return new Mesh(geometry, material)
+    return new TwinsThreeMesh(geometry, material)
 }
 
-const createAmbientLight = (position: Vector3, color = 0xFFFFFF, intensity = 1) => {
-    const ambientLight = new AmbientLight(color, intensity)
-    ambientLight.position.set(position.x, position.y, position.z)
+for (let i = 0; i < 2; i++) {
+    const box = createBox()
+    box.position.set(i * 4, 0, 0)
+    box.addNatureEventListener('click', (event) => {
+        console.log(event)
+    })
 
-    return ambientLight
+    scene.add(box)
 }
 
-// template
-const scene = new TwinsThreeScene({
-    orbitControls: true,
-})
-const ambientLight = createAmbientLight(new Vector3(0, 0, 0))
-const box = createBox()
 
-scene.add(box)
-scene.add(ambientLight)
 scene.render(document.querySelector('#app')!)
 scene.startFrameAnimate()
+
+

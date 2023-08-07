@@ -3,6 +3,7 @@
   "rules": {
     "unused-imports/no-unused-imports": "off",
     "antfu/top-level-function": "off",
-    "eol-last": "off"
+    "eol-last": "off",
+    "no-console": "off"
   }
 }
