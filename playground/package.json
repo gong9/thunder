@@ -11,6 +11,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/three": "^0.155.0",
     "parcel": "^2.9.3"
+  },
+  "dependencies": {
+    "three": "^0.155.0"
   }
 }

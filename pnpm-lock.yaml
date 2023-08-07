@@ -63,7 +63,14 @@ importers:
   packages/twins-three-vue3: {}
 
   playground:
+    dependencies:
+      three:
+        specifier: ^0.155.0
+        version: 0.155.0
     devDependencies:
+      '@types/three':
+        specifier: ^0.155.0
+        version: 0.155.0
       parcel:
         specifier: ^2.9.3
         version: 2.9.3

@@ -1,4 +1,6 @@
+import type { Object3D } from 'three'
 import { ACESFilmicToneMapping, PerspectiveCamera, Scene, Vector3, WebGLRenderer } from 'three'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
 interface TwinsThreeSceneOptions {
   /**
@@ -19,6 +21,12 @@ interface TwinsThreeSceneOptions {
     near?: number
     far?: number
   }
+
+  /**
+   * Controls
+   */
+
+  orbitControls?: boolean
 }
 
 class TwinsThreeScene {
@@ -26,9 +34,10 @@ class TwinsThreeScene {
   scene: Scene | null = null
   camera: PerspectiveCamera | null = null
   renderer: WebGLRenderer | null = null
+  controls: OrbitControls | null = null
 
   constructor(opts: TwinsThreeSceneOptions) {
-    this.opts = opts
+    this.opts = opts ?? {}
     this.scene = new Scene()
   }
 
@@ -37,7 +46,7 @@ class TwinsThreeScene {
    * @param camera
    * @param renderer
    */
-  private resetScene(camera: PerspectiveCamera, renderer: WebGLRenderer) {
+  public resetScene(camera: PerspectiveCamera, renderer: WebGLRenderer) {
     camera.aspect = window.innerWidth / window.innerHeight
     camera.updateProjectionMatrix()
     renderer.setSize(window.innerWidth, window.innerHeight)
@@ -60,6 +69,9 @@ class TwinsThreeScene {
     renderer.toneMapping = ACESFilmicToneMapping
     renderer.toneMappingExposure = 0.3
     renderer.setPixelRatio(window.devicePixelRatio)
+
+    this.renderer = renderer
+    return renderer
   }
 
   /**
@@ -78,13 +90,34 @@ class TwinsThreeScene {
     camera.position.set(position.x, position.y, position.z)
 
     this.camera = camera
+    this.scene!.add(camera)
+    return camera
   }
 
-  private frameAnimate() {}
+  /**
+   * frame render
+   */
+  public startFrameAnimate() {
+    if (!this.renderer || !this.scene || !this.camera)
+      throw new Error('scene or camera or renderer is not init')
 
-  render() {
-    this.initDefaultPerspectiveCamera()
-    this.initRenderer()
+    this.controls && this.controls.update()
+    this.renderer!.render(this.scene!, this.camera!)
+    requestAnimationFrame(() => this.startFrameAnimate())
+  }
+
+  public add(object3d: Object3D) {
+    this.scene!.add(object3d)
+  }
+
+  render(target: HTMLElement) {
+    const camera = this.initDefaultPerspectiveCamera()
+    const renderer = this.initRenderer()
+
+    if (this.opts.orbitControls)
+      this.controls = new OrbitControls(camera, renderer.domElement)
+
+    target.appendChild(renderer.domElement)
   }
 }
 
