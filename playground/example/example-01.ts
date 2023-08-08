@@ -12,10 +12,10 @@ const createBox = () => {
 }
 
 const box = createBox()
-box.position.set(0, 0, 0)
-box.addNatureEventListener('click', (event) => {
-  console.log(event)
+box.addNatureEventListener('click', (object3D) => {
+  (object3D.material as any).color.set(0xFF0000)
 })
+
 scene.add(box)
 
 scene.render(document.querySelector('#app')!)

@@ -17,10 +17,11 @@
     "prepublishOnly": "father doctor && npm run build",
     "test": "jest --maxWorkers 2"
   },
-  "dependencies": {
+  "peerDependencies": {
     "three": "^0.155.0"
   },
   "devDependencies": {
-    "@types/three": "^0.155.0"
+    "@types/three": "^0.155.0",
+    "three": "^0.155.0"
   }
 }

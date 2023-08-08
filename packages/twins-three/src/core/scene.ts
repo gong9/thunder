@@ -126,11 +126,7 @@ class TwinsThreeScene {
    */
   private updateRaycaster() {
     this.raycaster!.setFromCamera(this.pointer, this.camera!)
-    const intersects = this.raycaster!.intersectObjects(this.scene!.children)
-    console.log(this.scene!.children)
-
-    for (let i = 0; i < intersects.length; i++)
-      console.log(intersects[i])
+    this.raycaster!.intersectObjects(this.scene!.children)
   }
 
   private onPointerClick(event: MouseEvent) {
@@ -152,9 +148,7 @@ class TwinsThreeScene {
       this.controls = new OrbitControls(camera, renderer.domElement)
 
     target.appendChild(renderer.domElement)
-
     target.addEventListener('click', (e: MouseEvent) => this.onPointerClick(e))
-    // window.addEventListener('pointermove', (e: MouseEvent) => this.onPointerClick(e))
     target.addEventListener('resize', () => this.resetScene(camera, renderer))
   }
 
