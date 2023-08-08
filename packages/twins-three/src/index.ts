@@ -1,4 +1,7 @@
 import TwinsThreeScene from './core/scene'
 import TwinsThreeMesh from './core/mesh'
+import TwinsThreeModel from './core/model'
 
-export { TwinsThreeScene, TwinsThreeMesh }
+import { ModelType } from './commonEnu'
+
+export { TwinsThreeScene, TwinsThreeMesh, TwinsThreeModel, ModelType }
