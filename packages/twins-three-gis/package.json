@@ -1,0 +1,21 @@
+{
+  "name": "@twins/three-gis",
+  "version": "0.0.1",
+  "description": "",
+  "author": "",
+  "license": "MIT",
+  "keywords": [],
+  "main": "dist/index.js",
+  "files": [
+    "dist",
+    "readme.md",
+    "package.json"
+  ],
+  "scripts": {
+    "build": "father build",
+    "build:deps": "father prebundle",
+    "prepublishOnly": "father doctor && npm run build",
+    "test": "jest --maxWorkers 2"
+  },
+  "dependencies": {}
+}
