@@ -5,6 +5,7 @@
   "license": "MIT",
   "keywords": [],
   "scripts": {
+    "start:p": "cd playground && pnpm start",
     "build": "pnpm -r build",
     "prepare": "husky install",
     "test": "pnpm -r test",
