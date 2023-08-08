@@ -26,10 +26,28 @@ class TwinsThreeMesh extends Mesh {
    * @param type
    * @param handlefn
    */
-  public removeNatureEventListener<T extends CubeEventType>(type: T, handlefn: EventHandleFn<T>) {}
+  public removeNatureEventListener<T extends CubeEventType>(type: T, handlefn: EventHandleFn<T>) {
+    if (!this.natureEventMap.has(type))
+      return
 
-  public removeAllNatureEventListener() {}
+    const handlefns = this.natureEventMap.get(type)!
+    const index = handlefns.findIndex(fn => fn === handlefn)
+    if (index > -1)
+      handlefns.splice(index, 1)
+  }
 
+  /**
+   * removeAllNatureEventListener
+   */
+  public removeAllNatureEventListener() {
+    this.natureEventMap.clear()
+  }
+
+  /**
+   * handle mesh raycaster
+   * @param raycaster
+   * @param intersects
+   */
   public raycast(raycaster: Raycaster, intersects: any[]) {
     super.raycast(raycaster, intersects)
 
