@@ -1,3 +1,4 @@
+import { Color } from 'three'
 import { ModelType, TwinsThreeModel, TwinsThreeScene } from '../../packages/twins-three/src/index'
 
 /**
@@ -14,5 +15,6 @@ modelLoader.load(ModelType.GLTF, './monkey.glb')!.then((gltf) => {
   scene.add((gltf as any).scene)
 })
 
+scene.scene!.background = new Color('#222')
 scene.render(document.querySelector('#app')!)
 scene.startFrameAnimate()
