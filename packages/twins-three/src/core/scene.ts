@@ -1,6 +1,7 @@
 import type { Object3D } from 'three'
 import { ACESFilmicToneMapping, PerspectiveCamera, Raycaster, Scene, Vector2, Vector3, WebGLRenderer } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { emitter } from '../utils'
 
 interface TwinsThreeSceneOptions {
   /**
@@ -148,6 +149,7 @@ class TwinsThreeScene {
    */
   private onPointerPointerup(event: PointerEvent) {
     this.getPointerPosition(event)
+    emitter.emit('pointerup')
     this.updateRaycaster()
   }
 
@@ -157,6 +159,7 @@ class TwinsThreeScene {
    */
   private onPointerDown(event: PointerEvent) {
     this.getPointerPosition(event)
+    emitter.emit('pointerdown')
     this.updateRaycaster()
   }
 
@@ -166,6 +169,7 @@ class TwinsThreeScene {
    */
   private onPointerMove(event: PointerEvent) {
     this.getPointerPosition(event)
+    emitter.emit('pointermove')
     this.updateRaycaster()
   }
 
@@ -175,14 +179,19 @@ class TwinsThreeScene {
    */
   private onPointerLeave(event: PointerEvent) {
     this.getPointerPosition(event)
+    emitter.emit('pointerleave')
     this.updateRaycaster()
   }
 
+  /**
+   * handle event register
+   * @param target
+   */
   private registerEvent(target: HTMLCanvasElement) {
     target.addEventListener('pointerup', (e: PointerEvent) => this.onPointerPointerup(e))
     target.addEventListener('pointerdown', (e: PointerEvent) => this.onPointerDown(e))
-    // target.addEventListener('pointermove', (e: PointerEvent) => this.onPointerMove(e))
-    // target.addEventListener('pointerleave', (e: PointerEvent) => this.onPointerLeave(e))
+    target.addEventListener('pointermove', (e: PointerEvent) => this.onPointerMove(e))
+    target.addEventListener('pointerleave', (e: PointerEvent) => this.onPointerLeave(e))
   }
 
   render(target: HTMLElement) {
