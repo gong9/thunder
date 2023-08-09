@@ -4,7 +4,7 @@ import { debounce } from 'lodash'
 import { emitter } from '../utils'
 import type { CubeEventType, EventHandleFn } from '../type'
 
-class TwinsThreeMesh extends Mesh {
+class Anov3DMesh extends Mesh {
   private natureEventMap: Map<CubeEventType, EventHandleFn<CubeEventType>[]> = new Map()
   private isMove = false
 
@@ -53,7 +53,7 @@ class TwinsThreeMesh extends Mesh {
    */
   private eventHandle(intersects: Intersection[], natureEvent: EventHandleFn<CubeEventType>[]) {
     const intersect = intersects[0]
-    const object = intersect.object as TwinsThreeMesh
+    const object = intersect.object as Anov3DMesh
 
     if (object === this) {
       // get nature event
@@ -119,4 +119,4 @@ class TwinsThreeMesh extends Mesh {
   }
 }
 
-export default TwinsThreeMesh
+export default Anov3DMesh

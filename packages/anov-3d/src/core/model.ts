@@ -3,7 +3,7 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { ModelType } from '../commonEnu'
 
-class TwinsThreeModel {
+class Anov3DModelLoader {
   load(type: ModelType, url: string) {
     switch (type) {
       case ModelType.GLTF:
@@ -52,4 +52,4 @@ class TwinsThreeModel {
   loadFbx() {}
 }
 
-export default TwinsThreeModel
+export default Anov3DModelLoader

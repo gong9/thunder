@@ -1,11 +1,11 @@
 import { BufferGeometry, CameraHelper, Float32BufferAttribute, Group, MathUtils, MeshBasicMaterial, OrthographicCamera, PerspectiveCamera, Points, PointsMaterial, SphereGeometry, Vector3 } from 'three'
-import { TwinsThreeMesh, TwinsThreeScene } from '../../packages/anov-3d/src/index'
+import { Anov3DMesh, Anove3DScene } from '../../packages/anov-3d/src/index'
 
 let activeCamera: PerspectiveCamera | OrthographicCamera | null = null
 let activeHelper: CameraHelper | null = null
 const aspect = window.innerWidth / window.innerHeight
 const frustumSize = 600
-const scene = new TwinsThreeScene({
+const scene = new Anove3DScene({
   defCameraOps: {
     position: new Vector3(0, 0, 2500),
     fov: 50,
@@ -36,20 +36,20 @@ cameraRig.add(cameraOrtho)
 
 scene.add(cameraRig)
 
-const mesh = new TwinsThreeMesh(
+const mesh = new Anov3DMesh(
   new SphereGeometry(100, 16, 8),
   new MeshBasicMaterial({ color: 0xFFFFFF, wireframe: true }),
 )
 scene.add(mesh)
 
-const mesh2 = new TwinsThreeMesh(
+const mesh2 = new Anov3DMesh(
   new SphereGeometry(50, 16, 8),
   new MeshBasicMaterial({ color: 0x00FF00, wireframe: true }),
 )
 mesh2.position.y = 150
 mesh.add(mesh2)
 
-const mesh3 = new TwinsThreeMesh(
+const mesh3 = new Anov3DMesh(
   new SphereGeometry(5, 16, 8),
   new MeshBasicMaterial({ color: 0x0000FF, wireframe: true }),
 )

@@ -1,7 +1,7 @@
-import TwinsThreeScene from './core/scene'
-import TwinsThreeMesh from './core/mesh'
-import TwinsThreeModel from './core/model'
+import Anove3DScene from './core/scene'
+import Anov3DMesh from './core/mesh'
+import Anov3DModelLoader from './core/model'
 
 import { ModelType } from './commonEnu'
 
-export { TwinsThreeScene, TwinsThreeMesh, TwinsThreeModel, ModelType }
+export { Anove3DScene, Anov3DMesh, Anov3DModelLoader, ModelType }

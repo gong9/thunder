@@ -1,15 +1,15 @@
-import { ModelType, TwinsThreeModel, TwinsThreeScene } from '../../packages/anov-3d/src/index'
+import { Anov3DModelLoader, Anove3DScene, ModelType } from '../../packages/anov-3d/src/index'
 
 /**
  * example-03
  * load gltf model
  */
 
-const scene = new TwinsThreeScene({
+const scene = new Anove3DScene({
   orbitControls: true,
   ambientLight: true,
 })
-const modelLoader = new TwinsThreeModel()
+const modelLoader = new Anov3DModelLoader()
 
 modelLoader.load(ModelType.GLTF, './tree.glb')!.then((gltf) => {
   scene.add((gltf as any).scene)

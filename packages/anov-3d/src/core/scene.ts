@@ -3,7 +3,7 @@ import { ACESFilmicToneMapping, AmbientLight, PerspectiveCamera, Raycaster, Scen
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { emitter } from '../utils'
 
-interface TwinsThreeSceneOptions {
+interface Anov3DSceneOptions {
   /**
    * renderer options
    */
@@ -49,8 +49,8 @@ interface TwinsThreeSceneOptions {
 
 }
 
-class TwinsThreeScene {
-  private opts: TwinsThreeSceneOptions = {}
+class Anov3DScene {
+  private opts: Anov3DSceneOptions = {}
   private pointer: Vector2 = new Vector2()
   scene: Scene | null = null
   raycaster: Raycaster | null = null
@@ -58,7 +58,7 @@ class TwinsThreeScene {
   renderer: WebGLRenderer | null = null
   controls: OrbitControls | null = null
 
-  constructor(opts: TwinsThreeSceneOptions) {
+  constructor(opts: Anov3DSceneOptions) {
     this.opts = opts ?? {}
     this.scene = new Scene()
     this.raycaster = new Raycaster()
@@ -246,4 +246,4 @@ class TwinsThreeScene {
   }
 }
 
-export default TwinsThreeScene
+export default Anov3DScene
