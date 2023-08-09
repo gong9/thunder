@@ -72,10 +72,6 @@ importers:
 
   packages/anov-3d-vue3: {}
 
-  packages/twins-analysis: {}
-
-  packages/twins-cic: {}
-
 packages:
 
   /@ampproject/remapping@2.2.0:
