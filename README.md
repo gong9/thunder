@@ -12,13 +12,15 @@ packages
 - anov-3d-vue3 3d 引擎 vue3 扩展包
 - ...
 
+playground
+
+开发调试
+
 ### development
 
 ```bash
 pnpm i
 ```
-
-use playground
 
 pnpm 常用命令
 
