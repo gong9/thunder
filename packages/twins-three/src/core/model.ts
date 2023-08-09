@@ -1,4 +1,5 @@
 import type { GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { ModelType } from '../commonEnu'
 
@@ -26,6 +27,12 @@ class TwinsThreeModel {
     onProgress?: (event: ProgressEvent) => void,
     onError?: (event: ErrorEvent) => void) {
     const loader = new GLTFLoader()
+    const dracoLoader = new DRACOLoader()
+
+    dracoLoader.setDecoderPath('./draco/')
+    dracoLoader.setDecoderConfig({ type: 'js' })
+    dracoLoader.preload()
+    loader.setDRACOLoader(dracoLoader)
 
     return new Promise((resolve, reject) => {
       loader.load(url,
