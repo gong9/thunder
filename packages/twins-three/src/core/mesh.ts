@@ -49,6 +49,9 @@ class TwinsThreeMesh extends Mesh {
    * @param intersects
    */
   public raycast(raycaster: Raycaster, intersects: any[]) {
+    if (this.natureEventMap.size === 0)
+      return
+
     super.raycast(raycaster, intersects)
 
     // is this object intersected with raycaster

@@ -41,6 +41,8 @@ class TwinsThreeModel {
         })
     })
   }
+
+  loadFbx() {}
 }
 
 export default TwinsThreeModel

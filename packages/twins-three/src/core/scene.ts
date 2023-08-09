@@ -122,6 +122,14 @@ class TwinsThreeScene {
   }
 
   /**
+   * scene add object3d
+   * @param object3d
+   */
+  public add(object3d: Object3D) {
+    this.scene!.add(object3d)
+  }
+
+  /**
    * update raycaster
    */
   private updateRaycaster() {
@@ -129,15 +137,52 @@ class TwinsThreeScene {
     this.raycaster!.intersectObjects(this.scene!.children)
   }
 
-  private onPointerClick(event: MouseEvent) {
+  private getPointerPosition(event: PointerEvent) {
     this.pointer.setX((event.clientX / window.innerWidth) * 2 - 1)
     this.pointer.setY(-(event.clientY / window.innerHeight) * 2 + 1)
+  }
 
+  /**
+   * handle pointerup event
+   * @param event
+   */
+  private onPointerPointerup(event: PointerEvent) {
+    this.getPointerPosition(event)
     this.updateRaycaster()
   }
 
-  public add(object3d: Object3D) {
-    this.scene!.add(object3d)
+  /**
+   * handle pointerdown event
+   * @param event
+   */
+  private onPointerDown(event: PointerEvent) {
+    this.getPointerPosition(event)
+    this.updateRaycaster()
+  }
+
+  /**
+   * handle pointermove event
+   * @param event
+   */
+  private onPointerMove(event: PointerEvent) {
+    this.getPointerPosition(event)
+    this.updateRaycaster()
+  }
+
+  /**
+   * handle pointerleave event
+   * @param event
+   */
+  private onPointerLeave(event: PointerEvent) {
+    this.getPointerPosition(event)
+    this.updateRaycaster()
+  }
+
+  private registerEvent(target: HTMLCanvasElement) {
+    target.addEventListener('pointerup', (e: PointerEvent) => this.onPointerPointerup(e))
+    target.addEventListener('pointerdown', (e: PointerEvent) => this.onPointerDown(e))
+    // target.addEventListener('pointermove', (e: PointerEvent) => this.onPointerMove(e))
+    // target.addEventListener('pointerleave', (e: PointerEvent) => this.onPointerLeave(e))
   }
 
   render(target: HTMLElement) {
@@ -148,7 +193,9 @@ class TwinsThreeScene {
       this.controls = new OrbitControls(camera, renderer.domElement)
 
     target.appendChild(renderer.domElement)
-    target.addEventListener('click', (e: MouseEvent) => this.onPointerClick(e))
+
+    this.registerEvent(renderer.domElement)
+
     target.addEventListener('resize', () => this.resetScene(camera, renderer))
   }
 
