@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@parcel/resolver-default": "^2.9.3",
     "@types/three": "^0.155.0",
     "parcel": "^2.9.3"
   },

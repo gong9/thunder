@@ -18,6 +18,8 @@ packages
 pnpm i
 ```
 
+use playground
+
 pnpm 常用命令
 
 - 根依赖按照 pnpm add xxx -w

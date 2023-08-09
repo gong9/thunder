@@ -18,14 +18,6 @@ box.addNatureEventListener('pointerdown', (object3D) => {
   (object3D.material as any).color.set(0xFF0000)
 })
 
-box.addNatureEventListener('pointermove', (object3D) => {
-  (object3D.material as any).color.set(0xFF0000)
-})
-
-box.addNatureEventListener('pointerleave', (object3D) => {
-  (object3D.material as any).color.set(0x00FF00)
-})
-
 scene.add(box)
 
 scene.render(document.querySelector('#app')!)
