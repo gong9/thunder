@@ -14,7 +14,6 @@
   "scripts": {
     "build": "father build",
     "build:deps": "father prebundle",
-    "prepublishOnly": "father doctor && npm run build",
     "test": "jest --maxWorkers 2"
   },
   "dependencies": {}

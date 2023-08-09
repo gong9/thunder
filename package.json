@@ -10,12 +10,16 @@
     "build": "pnpm -r build",
     "prepare": "husky install",
     "test": "pnpm -r test",
+    "changeset": "changeset",
+    "release": "changeset version",
+    "all-publish": "pnpm build && changeset publish",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
   "authors": [],
   "devDependencies": {
     "@antfu/eslint-config": "^0.38.5",
+    "@changesets/cli": "^2.26.2",
     "@commitlint/cli": "^17.1.2",
     "@commitlint/config-conventional": "^17.1.0",
     "@types/jest": "^27",
