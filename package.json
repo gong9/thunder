@@ -1,7 +1,8 @@
 {
-  "name": "twins-ecology",
+  "name": "anov-3d-monorepo",
   "version": "0.0.0",
-  "description": "twins-ecology",
+  "private": true,
+  "description": "anov-3d",
   "license": "MIT",
   "keywords": [],
   "scripts": {
