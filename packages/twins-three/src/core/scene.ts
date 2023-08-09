@@ -1,5 +1,5 @@
-import type { Object3D } from 'three'
-import { ACESFilmicToneMapping, PerspectiveCamera, Raycaster, Scene, Vector2, Vector3, WebGLRenderer } from 'three'
+import type { Color, Object3D } from 'three'
+import { ACESFilmicToneMapping, AmbientLight, PerspectiveCamera, Raycaster, Scene, Vector2, Vector3, WebGLRenderer } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { emitter } from '../utils'
 
@@ -24,10 +24,23 @@ interface TwinsThreeSceneOptions {
   }
 
   /**
+   * default ambient light options
+   */
+  defAmbientLightOps?: {
+    position?: Vector3
+    color?: Color
+    intensity?: number
+  }
+
+  /**
    * Controls
    */
-
   orbitControls?: boolean
+
+  /**
+   * if need ambient light
+   */
+  ambientLight?: boolean
 
   /**
    * on demand render scene, 按需渲染
@@ -102,6 +115,22 @@ class TwinsThreeScene {
     this.camera = camera
     this.scene!.add(camera)
     return camera
+  }
+
+  /**
+   * init ambient light
+   * @param position
+   * @param color
+   * @param intensity
+   * @returns
+   */
+  private initAmbientLight() {
+    const defConfigOps = this.opts.defAmbientLightOps || {}
+    const position = defConfigOps.position || new Vector3(0, 3, 10)
+    const ambientLight = new AmbientLight(defConfigOps.color || 0xFFFFFF, defConfigOps.intensity || 1)
+    ambientLight.position.set(position.x, position.y, position.z)
+
+    return ambientLight
   }
 
   /**
@@ -201,8 +230,12 @@ class TwinsThreeScene {
     if (this.opts.orbitControls)
       this.controls = new OrbitControls(camera, renderer.domElement)
 
-    target.appendChild(renderer.domElement)
+    if (this.opts.ambientLight) {
+      const ambientLight = this.initAmbientLight()
+      this.scene!.add(ambientLight)
+    }
 
+    target.appendChild(renderer.domElement)
     this.registerEvent(renderer.domElement)
 
     target.addEventListener('resize', () => this.resetScene(camera, renderer))
