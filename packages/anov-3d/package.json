@@ -5,7 +5,7 @@
   "author": "",
   "license": "MIT",
   "keywords": [],
-  "main": "dist/index.js",
+  "module": "dist/index.js",
   "files": [
     "dist",
     "readme.md",
