@@ -1,5 +1,5 @@
 import { BoxGeometry, MeshBasicMaterial } from 'three'
-import { TwinsThreeMesh, TwinsThreeScene } from '../../packages/twins-three/src/index'
+import { TwinsThreeMesh, TwinsThreeScene } from '../../packages/anov-3d/src/index'
 
 /**
  * example-01

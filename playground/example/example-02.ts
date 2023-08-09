@@ -1,5 +1,5 @@
 import { BufferGeometry, CameraHelper, Float32BufferAttribute, Group, MathUtils, MeshBasicMaterial, OrthographicCamera, PerspectiveCamera, Points, PointsMaterial, SphereGeometry, Vector3 } from 'three'
-import { TwinsThreeMesh, TwinsThreeScene } from '../../packages/twins-three/src/index'
+import { TwinsThreeMesh, TwinsThreeScene } from '../../packages/anov-3d/src/index'
 
 let activeCamera: PerspectiveCamera | OrthographicCamera | null = null
 let activeHelper: CameraHelper | null = null

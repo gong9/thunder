@@ -1,5 +1,5 @@
 {
-  "name": "@twins/three-vue3",
+  "name": "@anov/3d",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -17,5 +17,16 @@
     "prepublishOnly": "father doctor && npm run build",
     "test": "jest --maxWorkers 2"
   },
-  "dependencies": {}
+  "peerDependencies": {
+    "three": "^0.155.0"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.196",
+    "@types/three": "^0.155.0",
+    "three": "^0.155.0"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "mitt": "^3.0.1"
+  }
 }

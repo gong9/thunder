@@ -1,4 +1,4 @@
-import { TwinsThreeScene } from '../../packages/twins-three/src/index'
+import { TwinsThreeScene } from '../../packages/anov-3d/src/index'
 
 const scene = new TwinsThreeScene({
   orbitControls: true,

@@ -1,4 +1,4 @@
-import { ModelType, TwinsThreeModel, TwinsThreeScene } from '../../packages/twins-three/src/index'
+import { ModelType, TwinsThreeModel, TwinsThreeScene } from '../../packages/anov-3d/src/index'
 
 /**
  * example-03
