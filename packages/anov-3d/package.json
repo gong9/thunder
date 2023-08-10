@@ -6,6 +6,9 @@
   "license": "MIT",
   "keywords": [],
   "module": "dist/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "files": [
     "dist",
     "readme.md",
