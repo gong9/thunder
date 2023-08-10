@@ -32,15 +32,18 @@ const box2 = new Anov3DMesh(geometry2, materia2)
 const axesHelper = createAxesHelper(10)
 const gridHelper = createGridHelper(100, 30)
 
-box.position.set(-50, 0, 0)
-box2.position.set(50, 0, -50)
+box.position.set(0, 0, 0)
+box2.position.set(40, 0, 0)
 
 scene.add(box)
 scene.add(box2)
 scene.add(axesHelper)
 scene.add(gridHelper)
 
-utils.moveTo(box, box2, 10, 10000)
+// utils.move(box, box2)
+utils.moveTo(box, box2, 20, 1000)
+
+// scene.camera!.promote(box2, 10, 10000)
 
 scene.render(document.querySelector('#app')!)
 scene.startFrameAnimate()
