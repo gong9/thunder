@@ -34,7 +34,3 @@ pnpm 常用命令
 - pnpm all-publish 子包发布
 
 notes: 除 alpha、beta、rc 版本外可自行 publish 之外，正式版本请在`pnpm pnpm release` 更新子包 version 之后合入 main 分支，由 CI 自动发布
-
-```
-
-```
