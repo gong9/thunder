@@ -1,7 +1,6 @@
 import type { GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
-import { ModelType } from '../commonEnu'
 
 class Anov3DModelLoader {
   /**

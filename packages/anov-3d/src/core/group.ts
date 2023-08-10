@@ -6,8 +6,4 @@ class Anov3DGroup extends Group {
   }
 }
 
-/**
- *
- */
-
 export default Anov3DGroup
