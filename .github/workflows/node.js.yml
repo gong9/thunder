@@ -17,5 +17,6 @@ jobs:
           version: 7
       - run: pnpm install --no-frozen-lockfile
       - run: pnpm build
+      - run: pnpm all-publish --access public
         env:
-          NODE_AUTH_TOKEN: ${{secrets.LEGO}}
+          NODE_AUTH_TOKEN: ${{secrets.ANOV3D}}
