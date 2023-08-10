@@ -24,8 +24,8 @@ pnpm i
 
 pnpm 常用命令
 
-- 根依赖按照 pnpm add xxx -w
-- 子包依赖按照 pnpm add xxx --filter packageName
+- 根依赖安装 pnpm add xxx -w
+- 子包依赖安装 pnpm add xxx --filter packageName
 
 #### publish
 
