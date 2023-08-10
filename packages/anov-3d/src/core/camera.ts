@@ -1,5 +1,5 @@
 import type { Object3D, Vector3 } from 'three'
-import { Camera, PerspectiveCamera } from 'three'
+import { PerspectiveCamera } from 'three'
 
 /**
  * 向目标物体推进
@@ -8,7 +8,9 @@ import { Camera, PerspectiveCamera } from 'three'
  * @param animationMethod
  * @param duration
  */
-const promote = (targetObject3D: Object3D, distance: number, animationMethod: string, duration: number) => {}
+const promote = (targetObject3D: Object3D, distance: number, animationMethod: string, duration: number) => {
+
+}
 
 /**
  * 向目标物体后退
@@ -39,5 +41,8 @@ class Anov3DPerspectiveCamera extends PerspectiveCamera {
   demote,
   surround,
 }
+
+const a = new Anov3DPerspectiveCamera(50, 1, 0.1, 2000)
+console.log(a)
 
 export { Anov3DPerspectiveCamera }
