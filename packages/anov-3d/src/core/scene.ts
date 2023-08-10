@@ -1,7 +1,8 @@
 import type { Color, Object3D } from 'three'
-import { ACESFilmicToneMapping, AmbientLight, PerspectiveCamera, Raycaster, Scene, Vector2, Vector3, WebGLRenderer } from 'three'
+import { ACESFilmicToneMapping, AmbientLight, Raycaster, Scene, Vector2, Vector3, WebGLRenderer } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { emitter } from '../utils'
+import { Anov3DPerspectiveCamera } from './camera'
 
 interface Anov3DSceneOptions {
   /**
@@ -33,12 +34,12 @@ interface Anov3DSceneOptions {
   }
 
   /**
-   * Controls
+   * controls
    */
   orbitControls?: boolean
 
   /**
-   * if need ambient light
+   * 是否需要默认环境光
    */
   ambientLight?: boolean
 
@@ -54,14 +55,32 @@ class Anov3DScene {
   private pointer: Vector2 = new Vector2()
   scene: Scene | null = null
   raycaster: Raycaster | null = null
-  camera: PerspectiveCamera | null = null
+  ambientLight: AmbientLight | null = null
+  camera: Anov3DPerspectiveCamera | null = null
   renderer: WebGLRenderer | null = null
   controls: OrbitControls | null = null
 
-  constructor(opts: Anov3DSceneOptions) {
+  constructor(opts?: Anov3DSceneOptions) {
     this.opts = opts ?? {}
     this.scene = new Scene()
     this.raycaster = new Raycaster()
+
+    this.defaultInit()
+  }
+
+  private defaultInit() {
+    const camera = this.initDefaultPerspectiveCamera()
+    this.camera = camera
+    this.scene!.add(camera)
+
+    const renderer = this.initRenderer()
+    this.renderer = renderer
+
+    if (this.opts.ambientLight) {
+      const ambientLight = this.initAmbientLight()
+      this.ambientLight = ambientLight
+      this.scene!.add(ambientLight)
+    }
   }
 
   /**
@@ -69,7 +88,7 @@ class Anov3DScene {
    * @param camera
    * @param renderer
    */
-  public resetScene(camera: PerspectiveCamera, renderer: WebGLRenderer) {
+  public resetScene(camera: Anov3DPerspectiveCamera, renderer: WebGLRenderer) {
     camera.aspect = window.innerWidth / window.innerHeight
     camera.updateProjectionMatrix()
     renderer.setSize(window.innerWidth, window.innerHeight)
@@ -93,7 +112,6 @@ class Anov3DScene {
     renderer.toneMappingExposure = 0.3
     renderer.setPixelRatio(window.devicePixelRatio)
 
-    this.renderer = renderer
     return renderer
   }
 
@@ -102,7 +120,7 @@ class Anov3DScene {
    */
   private initDefaultPerspectiveCamera() {
     const rendererOps = this.opts.defCameraOps || {}
-    const camera = new PerspectiveCamera(
+    const camera = new Anov3DPerspectiveCamera(
       rendererOps.fov || 90,
       window.innerWidth / window.innerHeight,
       rendererOps.near || 0.1,
@@ -112,8 +130,6 @@ class Anov3DScene {
     const position = rendererOps.position || new Vector3(0, 3, 10)
     camera.position.set(position.x, position.y, position.z)
 
-    this.camera = camera
-    this.scene!.add(camera)
     return camera
   }
 
@@ -224,21 +240,13 @@ class Anov3DScene {
   }
 
   render(target: HTMLElement) {
-    const camera = this.initDefaultPerspectiveCamera()
-    const renderer = this.initRenderer()
-
     if (this.opts.orbitControls)
-      this.controls = new OrbitControls(camera, renderer.domElement)
+      this.controls = new OrbitControls(this.camera!, this.renderer!.domElement)
 
-    if (this.opts.ambientLight) {
-      const ambientLight = this.initAmbientLight()
-      this.scene!.add(ambientLight)
-    }
+    target.appendChild(this.renderer!.domElement)
+    this.registerEvent(this.renderer!.domElement)
 
-    target.appendChild(renderer.domElement)
-    this.registerEvent(renderer.domElement)
-
-    target.addEventListener('resize', () => this.resetScene(camera, renderer))
+    target.addEventListener('resize', () => this.resetScene(this.camera!, this.renderer!))
   }
 
   public destroy() {
