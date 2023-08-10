@@ -4,16 +4,6 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { ModelType } from '../commonEnu'
 
 class Anov3DModelLoader {
-  load(type: ModelType, url: string) {
-    switch (type) {
-      case ModelType.GLTF:
-        return this.loadGLTF(url)
-
-      default:
-        break
-    }
-  }
-
   /**
    * load gltf model
    * @param url
@@ -22,7 +12,7 @@ class Anov3DModelLoader {
    * @param onError
    * @returns
    */
-  loadGLTF(url: string,
+  public loadGLTF(url: string,
     onLoad?: (result: GLTF) => GLTF,
     onProgress?: (event: ProgressEvent) => void,
     onError?: (event: ErrorEvent) => void) {
@@ -49,7 +39,17 @@ class Anov3DModelLoader {
     })
   }
 
-  loadFbx() {}
+  /**
+   * fbx model loader
+   * @param url
+   * @param onLoad
+   * @param onProgress
+   * @param onError
+   */
+  public loadFbx(url: string,
+    onLoad?: (result: GLTF) => GLTF,
+    onProgress?: (event: ProgressEvent) => void,
+    onError?: (event: ErrorEvent) => void) {}
 }
 
 export default Anov3DModelLoader
