@@ -1,23 +1,6 @@
 import type { Camera, Object3D, Vector3 } from 'three'
 import { PerspectiveCamera } from 'three'
-
-/**
- * 向目标物体推进
- * @param targetObject3D
- * @param distance
- * @param animationMethod
- * @param duration
- */
-const promote = (instance: Camera, targetObject3D: Object3D, distance: number, animationMethod?: string, duration?: number) => {
-  const targetPosition = targetObject3D.position
-  const cameraPosition = instance.position
-
-  const toward = targetPosition.clone().sub(cameraPosition).normalize()
-
-  const target = targetPosition.clone().add(toward.multiplyScalar(distance))
-
-  instance.position.set(target.x, target.y, target.z)
-}
+import { moveTo } from '../utils/move'
 
 /**
  * 向目标物体后退
@@ -41,8 +24,15 @@ class Anov3DPerspectiveCamera extends PerspectiveCamera {
     super(fov, aspect, near, far)
   }
 
-  public promote(targetObject3D: Object3D, distance: number, animationMethod?: string, duration?: number) {
-    promote(this, targetObject3D, distance, animationMethod, duration)
+  /**
+   * 向目标物体推进
+   * @param targetObject3D
+   * @param distance
+   * @param duration
+   * @param animationMethod
+   */
+  public promote(targetObject3D: Object3D, distance: number, duration?: number, animationMethod?: string) {
+    moveTo(this, targetObject3D, distance, duration, animationMethod)
   }
 
   public demote = demote

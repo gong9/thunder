@@ -1,6 +1,7 @@
 import type { Color, Object3D } from 'three'
 import { ACESFilmicToneMapping, AmbientLight, Raycaster, Scene, Vector2, Vector3, WebGLRenderer } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import * as TWEEN from '@tweenjs/tween.js'
 import { emitter } from '../utils'
 import { Anov3DPerspectiveCamera } from './camera'
 
@@ -127,7 +128,7 @@ class Anov3DScene {
       rendererOps.far || 1000,
     )
 
-    const position = rendererOps.position || new Vector3(0, 3, 10)
+    const position = rendererOps.position || new Vector3(0, 10, 10)
     camera.position.set(position.x, position.y, position.z)
 
     return camera
@@ -163,6 +164,8 @@ class Anov3DScene {
       this.controls && this.controls.update()
       this.renderer!.render(this.scene!, this.camera!)
     }
+
+    TWEEN.update()
 
     requestAnimationFrame(() => this.startFrameAnimate(frameAnimate))
   }
