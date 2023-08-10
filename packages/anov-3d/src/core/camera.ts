@@ -33,16 +33,10 @@ class Anov3DPerspectiveCamera extends PerspectiveCamera {
   constructor(fov = 50, aspect = 1, near: 0.1, far = 2000) {
     super(fov, aspect, near, far)
   }
-}
 
-(Anov3DPerspectiveCamera.prototype as any).promote = {
-  ...Anov3DPerspectiveCamera.prototype,
-  promote,
-  demote,
-  surround,
+  public promote = promote
+  public demote = demote
+  public surround = surround
 }
-
-const a = new Anov3DPerspectiveCamera(50, 1, 0.1, 2000)
-console.log(a)
 
 export { Anov3DPerspectiveCamera }
