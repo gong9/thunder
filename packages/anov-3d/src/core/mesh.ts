@@ -57,8 +57,6 @@ class Anov3DMesh extends Mesh {
 
     if (object === this) {
       // get nature event
-      console.log(intersect.object)
-
       natureEvent.forEach((handlefn) => {
         handlefn(object)
       })
@@ -98,7 +96,6 @@ class Anov3DMesh extends Mesh {
     const pointermoveCallback = this.natureEventMap.get('pointermove')
     const pointerleaveCallback = this.natureEventMap.get('pointerleave')
 
-    console.log(intersects)
     if (intersects.length > 0) {
       emitter.on('pointerup', () => pointerupCallback && pointerupCallback.length > 0 && this.debounceEventHandle(intersects, pointerupCallback))
       emitter.on('pointerdown', () => pointerdownCallback && pointerdownCallback.length > 0 && this.debounceEventHandle(intersects, pointerdownCallback))
@@ -110,7 +107,6 @@ class Anov3DMesh extends Mesh {
       })
     }
     else {
-      console.log('pointerleave')
       emitter.on('pointerleave', () => {
         if (pointerleaveCallback && pointerleaveCallback.length > 0 && this.isMove)
           this.handlePointerleave(intersects, pointerleaveCallback)

@@ -1,4 +1,4 @@
-import { Anov3DModelLoader, Anove3DScene, ModelType } from '../../packages/anov-3d/src/index'
+import { Anov3DModelLoader, Anove3DScene } from '../../packages/anov-3d/src/index'
 
 /**
  * example-03
