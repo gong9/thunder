@@ -4,20 +4,32 @@ import * as TWEEN from '@tweenjs/tween.js'
 
 import globalControl from '../core/global'
 
+enum AnimationMethod {}
+
+export enum Direction {
+  plus = 'plus',
+  minus = 'minus',
+}
+
 /**
  * moveTo 直线移动
  * @param currentObject3D
  * @param targetObject3D
+ * @param direction
  * @param distance
- * @param animationMethod
  * @param duration
+ * @param animationMethod
  */
-export const moveTo = (currentObject3D: Object3D, targetObject3D: Object3D, distance: number, duration?: number, animationMethod?: string) => {
+export const moveTo = (currentObject3D: Object3D, targetObject3D: Object3D, distance: number, direction: Direction, duration?: number, animationMethod?: string) => {
   const targetPosition = targetObject3D.position
   const cameraPosition = currentObject3D.position
 
   // 单位方向向量
-  const toward = targetPosition.clone().sub(cameraPosition).normalize()
+  let toward = targetPosition.clone().sub(cameraPosition).normalize()
+
+  if (direction === Direction.minus)
+    toward = toward.negate()
+
   const target = cameraPosition.clone().add(toward.multiplyScalar(distance))
 
   const totalDistance = cameraPosition.distanceTo(targetPosition)
@@ -25,7 +37,7 @@ export const moveTo = (currentObject3D: Object3D, targetObject3D: Object3D, dist
 
   let lastPosition = target.clone()
 
-  if (currentDistance > totalDistance)
+  if (direction === Direction.minus && currentDistance > totalDistance)
     lastPosition = targetPosition
 
   const tween = new TWEEN.Tween(cameraPosition)
