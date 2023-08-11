@@ -1,4 +1,4 @@
-import type { Camera, Object3D, Vector3 } from 'three'
+import type { Object3D, Vector3 } from 'three'
 import { PerspectiveCamera } from 'three'
 import { moveTo } from '../utils/move'
 
