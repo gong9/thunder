@@ -6,6 +6,8 @@
     "eol-last": "off",
     "no-console": "off",
     "no-invalid-this": "off",
-    "@typescript-eslint/no-invalid-this": "off"
+    "@typescript-eslint/no-invalid-this": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/prefer-ts-expect-error": "off"
   }
 }

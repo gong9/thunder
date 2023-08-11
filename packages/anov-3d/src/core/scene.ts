@@ -3,6 +3,7 @@ import { ACESFilmicToneMapping, AmbientLight, Raycaster, Scene, Vector2, Vector3
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as TWEEN from '@tweenjs/tween.js'
 import { emitter } from '../utils'
+import globalControl from './global'
 import { Anov3DPerspectiveCamera } from './camera'
 
 interface Anov3DSceneOptions {
@@ -69,6 +70,9 @@ class Anov3DScene {
     this.defaultInit()
   }
 
+  /**
+   * init default scene components
+   */
   private defaultInit() {
     const camera = this.initDefaultPerspectiveCamera()
     this.camera = camera
@@ -157,15 +161,13 @@ class Anov3DScene {
     if (!this.renderer || !this.scene || !this.camera)
       throw new Error('scene or camera or renderer is not init')
 
-    if (frameAnimate) {
+    if (frameAnimate)
       frameAnimate(this.renderer)
-    }
-    else {
-      this.controls && this.controls.update()
-      this.renderer!.render(this.scene!, this.camera!)
-    }
 
+    this.renderer!.render(this.scene!, this.camera!)
     TWEEN.update()
+    globalControl.update()
+    this.controls && this.controls.update()
 
     requestAnimationFrame(() => this.startFrameAnimate(frameAnimate))
   }

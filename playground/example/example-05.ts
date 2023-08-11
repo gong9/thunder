@@ -14,7 +14,7 @@ const createGridHelper = (size = 10, divisions = 10) => {
 }
 
 /**
- * 测试相机的基本行为
+ * 做圆周运动
  */
 
 const scene = new Anove3DScene({
@@ -40,12 +40,7 @@ scene.add(box2)
 scene.add(axesHelper)
 scene.add(gridHelper)
 
-scene.camera!.lookAt(box2.position)
-
-// utils.moveLine(box, box2)
-// utils.moveTo(box, box2, 5, 1000)
-
-// scene.camera!.promote(box2, 10, 1000)
+utils.moveWithRound(box2, 0.2, 100000)
 
 scene.render(document.querySelector('#app')!)
 scene.startFrameAnimate()

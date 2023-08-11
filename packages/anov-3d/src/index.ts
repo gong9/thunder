@@ -4,11 +4,12 @@ import { Anov3DPerspectiveCamera } from './core/camera'
 import Anov3DModelLoader from './core/model'
 
 import { ModelType } from './commonEnu'
-import { move, moveTo } from './utils/move'
+import { moveLine, moveTo, moveWithRound } from './utils/move'
 
 const utils = {
   moveTo,
-  move,
+  moveLine,
+  moveWithRound,
 }
 
 export {
