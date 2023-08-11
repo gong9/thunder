@@ -1,6 +1,6 @@
 import type { Object3D, Vector3 } from 'three'
 import { PerspectiveCamera } from 'three'
-import { moveTo } from '../utils/move'
+import { Direction, moveTo } from '../utils/move'
 
 /**
  * 向目标物体后退
@@ -32,7 +32,7 @@ class Anov3DPerspectiveCamera extends PerspectiveCamera {
    * @param animationMethod
    */
   public promote(targetObject3D: Object3D, distance: number, duration?: number, animationMethod?: string) {
-    moveTo(this, targetObject3D, distance, duration, animationMethod)
+    moveTo(this, targetObject3D, distance, Direction.plus, duration, animationMethod)
   }
 
   public demote = demote

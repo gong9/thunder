@@ -1,23 +1,35 @@
 import type { Object3D, Vector3 } from 'three'
 import { BufferGeometry, CatmullRomCurve3, Line, LineBasicMaterial } from 'three'
 import * as TWEEN from '@tweenjs/tween.js'
+import globalObjectManage from '../core/global'
+import globalControl from '../core/globalControl'
 
-import globalControl from '../core/global'
+enum AnimationMethod {}
+
+export enum Direction {
+  plus = 'plus',
+  minus = 'minus',
+}
 
 /**
  * moveTo 直线移动
  * @param currentObject3D
  * @param targetObject3D
+ * @param direction
  * @param distance
- * @param animationMethod
  * @param duration
+ * @param animationMethod
  */
-export const moveTo = (currentObject3D: Object3D, targetObject3D: Object3D, distance: number, duration?: number, animationMethod?: string) => {
+export const moveTo = (currentObject3D: Object3D, targetObject3D: Object3D, distance: number, direction: Direction, duration?: number, animationMethod?: string) => {
   const targetPosition = targetObject3D.position
   const cameraPosition = currentObject3D.position
 
   // 单位方向向量
-  const toward = targetPosition.clone().sub(cameraPosition).normalize()
+  let toward = targetPosition.clone().sub(cameraPosition).normalize()
+
+  if (direction === Direction.minus)
+    toward = toward.negate()
+
   const target = cameraPosition.clone().add(toward.multiplyScalar(distance))
 
   const totalDistance = cameraPosition.distanceTo(targetPosition)
@@ -25,7 +37,7 @@ export const moveTo = (currentObject3D: Object3D, targetObject3D: Object3D, dist
 
   let lastPosition = target.clone()
 
-  if (currentDistance > totalDistance)
+  if (direction === Direction.minus && currentDistance > totalDistance)
     lastPosition = targetPosition
 
   const tween = new TWEEN.Tween(cameraPosition)
@@ -47,11 +59,11 @@ const createLine = (points: Vector3[]) => {
   const curvePoints = curve.getPoints(50)
   const geometry = new BufferGeometry().setFromPoints(curvePoints)
   const material = new LineBasicMaterial({ opacity: 1 })
-  return new Line(geometry, material)
+  return [new Line(geometry, material), curve] as [Line, CatmullRomCurve3]
 }
 
 export const moveWithLine = (points: Vector3[], duration?: number) => {
-  const line = createLine(points)
+  // const line = createLine(points)
 }
 
 /**
@@ -94,18 +106,10 @@ export const moveWithRound = (currentObject3d: Object3D, speed = 0.1, duration?:
  * @param targetObject3D
  */
 export const moveLine = (currentObject3D: Object3D, targetObject3D: Object3D) => {
-  if (currentObject3D.children) {
-    const moveLine = currentObject3D.children.find(child => child.name === '__moveline__')
-    if (moveLine)
-      currentObject3D.remove(moveLine)
-  }
-
-  const curveObject = createLine([
+  const [curveObject, curve] = createLine([
     currentObject3D.position,
     targetObject3D.position,
   ])
 
-  curveObject.name = '__moveline__'
-
-  currentObject3D.add(curveObject)
+  globalObjectManage.scene!.add(curveObject)
 }

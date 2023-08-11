@@ -1,5 +1,5 @@
 import { AxesHelper, BoxGeometry, GridHelper, MeshBasicMaterial } from 'three'
-import { Anov3DMesh, Anove3DScene, utils } from '../../packages/anov-3d/src/index'
+import { Anov3DMesh, Anove3DScene, Direction, utils } from '../../packages/anov-3d/src/index'
 
 const createAxesHelper = (size = 1) => {
   const axesHelper = new AxesHelper(size)
@@ -33,19 +33,15 @@ const axesHelper = createAxesHelper(10)
 const gridHelper = createGridHelper(100, 30)
 
 box.position.set(0, 0, 0)
-box2.position.set(10, 30, -30)
+box2.position.set(10, 0, 0)
 
 scene.add(box)
 scene.add(box2)
 scene.add(axesHelper)
 scene.add(gridHelper)
 
-scene.camera!.lookAt(box2.position)
-
-// utils.moveLine(box, box2)
-// utils.moveTo(box, box2, 5, 1000)
-
-// scene.camera!.promote(box2, 10, 1000)
+utils.moveLine(box, box2)
+utils.moveTo(box, box2, 5, Direction.minus, 1000)
 
 scene.render(document.querySelector('#app')!)
 scene.startFrameAnimate()
