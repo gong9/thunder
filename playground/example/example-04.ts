@@ -40,7 +40,7 @@ scene.add(box2)
 scene.add(axesHelper)
 scene.add(gridHelper)
 
-// utils.moveLine(box, box2)
+utils.moveLine(box, box2)
 utils.moveTo(box, box2, 5, Direction.minus, 1000)
 
 scene.render(document.querySelector('#app')!)

@@ -1,8 +1,8 @@
 import type { Object3D, Vector3 } from 'three'
 import { BufferGeometry, CatmullRomCurve3, Line, LineBasicMaterial } from 'three'
 import * as TWEEN from '@tweenjs/tween.js'
-
-import globalControl from '../core/global'
+import globalObjectManage from '../core/global'
+import globalControl from '../core/globalControl'
 
 enum AnimationMethod {}
 
@@ -59,11 +59,11 @@ const createLine = (points: Vector3[]) => {
   const curvePoints = curve.getPoints(50)
   const geometry = new BufferGeometry().setFromPoints(curvePoints)
   const material = new LineBasicMaterial({ opacity: 1 })
-  return new Line(geometry, material)
+  return [new Line(geometry, material), curve] as [Line, CatmullRomCurve3]
 }
 
 export const moveWithLine = (points: Vector3[], duration?: number) => {
-  const line = createLine(points)
+  // const line = createLine(points)
 }
 
 /**
@@ -106,18 +106,10 @@ export const moveWithRound = (currentObject3d: Object3D, speed = 0.1, duration?:
  * @param targetObject3D
  */
 export const moveLine = (currentObject3D: Object3D, targetObject3D: Object3D) => {
-  if (currentObject3D.children) {
-    const moveLine = currentObject3D.children.find(child => child.name === '__moveline__')
-    if (moveLine)
-      currentObject3D.remove(moveLine)
-  }
-
-  const curveObject = createLine([
+  const [curveObject, curve] = createLine([
     currentObject3D.position,
     targetObject3D.position,
   ])
 
-  curveObject.name = '__moveline__'
-
-  currentObject3D.add(curveObject)
+  globalObjectManage.scene!.add(curveObject)
 }

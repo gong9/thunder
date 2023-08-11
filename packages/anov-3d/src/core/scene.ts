@@ -3,7 +3,8 @@ import { ACESFilmicToneMapping, AmbientLight, Raycaster, Scene, Vector2, Vector3
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as TWEEN from '@tweenjs/tween.js'
 import { emitter } from '../utils'
-import globalControl from './global'
+import globalControl from './globalControl'
+import globalObjectManage from './global'
 import { Anov3DPerspectiveCamera } from './camera'
 
 interface Anov3DSceneOptions {
@@ -66,7 +67,7 @@ class Anov3DScene {
     this.opts = opts ?? {}
     this.scene = new Scene()
     this.raycaster = new Raycaster()
-
+    globalObjectManage.addScene(this.scene)
     this.defaultInit()
   }
 
