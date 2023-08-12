@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
+
+
+<body>
+    <div id="my-sandbox"></div>
+    <script type="importmap">
+        {
+        "imports": {
+            "three": "./source/three.module.min.js"
+        }
+        }
+    </script>
+    <script src="./source/3d.min.js"></script>
+
+    <script script type="module">
+        import * as THREE from 'three';
+
+       
+        const scene = new Anove3DScene({
+            orbitControls: true,
+        })
+
+        const geometry = new THREE.BoxGeometry(2, 2, 2)
+        const material = new THREE.MeshBasicMaterial({
+            color: 0x00FF00
+        })
+        const box = new Anov3DMesh(geometry, material)
+
+        box.addNatureEventListener('pointerdown', (object3D) => {
+            object3D.material.color.set(0xFF0000)
+        })
+
+        scene.add(box)
+
+        scene.render(document.querySelector('#my-sandbox'))
+        scene.startFrameAnimate()
+    </script>
+
+</body>
+
+</html>
