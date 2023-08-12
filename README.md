@@ -16,6 +16,10 @@ playground
 
 开发调试
 
+### example 
+
+[示例网站 (notes: 暂时需科学上网)](https://anov-3d-ecology.vercel.app/#base_scene)
+
 ### development
 
 ```bash
