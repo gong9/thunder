@@ -2,6 +2,7 @@
 	"base": [
 		"base_scene",
 		"base_move",
-		"base_move-round"
+		"base_move-round",
+		"base_gltf-model"
 	]
 }

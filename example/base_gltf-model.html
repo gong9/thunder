@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
+
+
+<body>
+    <div id="my-sandbox"></div>
+    <script type="importmap">
+        {
+        "imports": {
+            "three": "./source/three.module.min.js"
+        }
+        }
+    </script>
+    <script src="./source/3d.min.js"></script>
+    <script>
+        javascript: (function () {
+            var script = document.createElement('script');
+            script.onload = function () {
+                var stats = new Stats();
+                document.body.appendChild(stats.dom);
+                requestAnimationFrame(function loop() {
+                    stats.update();
+                    requestAnimationFrame(loop)
+                });
+            };
+            script.src = 'https://mrdoob.github.io/stats.js/build/stats.min.js';
+            document.head.appendChild(script);
+        })()
+    </script>
+    <script script type="module">
+        import * as THREE from 'three';
+
+        const scene = new Anove3DScene({
+            orbitControls: true,
+            ambientLight: true,
+        })
+
+        const modelLoader = new Anov3DModelLoader()
+
+        modelLoader.loadGLTF('./files/tree.glb').then((gltf) => {
+            scene.add(gltf.scene)
+        })
+
+        scene.render(document.querySelector('#my-sandbox'))
+        scene.startFrameAnimate()
+    </script>
+
+</body>
+
+</html>
