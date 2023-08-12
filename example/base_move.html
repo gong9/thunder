@@ -98,6 +98,11 @@
             },
         };
 
+        const folder = gui.addFolder('目标物体位置信息');
+        folder.add(box2.position, 'x', -100, 100).name('目标物体x')
+        folder.add(box2.position, 'y', -100, 100).name('目标物体y')
+        folder.add(box2.position, 'z', -100, 100).name('目标物体z')
+
         gui.add(params, 'options', { 推进: 'plus', 后退: 'minus' }).name('移动方向')
         gui.add(params, 'number').name('移动距离')
         gui.add(params, 'time', 10, 10000).name('移动时间')
