@@ -20,15 +20,33 @@
     <script type="importmap">
         {
         "imports": {
-            "three": "./source/three.module.min.js"
+            "three": "./source/three.module.min.js",
+            "dat.gui": "./source/lil-gui.esm.js"
         }
         }
     </script>
     <script src="./source/3d.min.js"></script>
 
-
+    <script>
+        javascript: (function () {
+            var script = document.createElement('script');
+            script.onload = function () {
+                var stats = new Stats();
+                document.body.appendChild(stats.dom);
+                requestAnimationFrame(function loop() {
+                    stats.update();
+                    requestAnimationFrame(loop)
+                });
+            };
+            script.src = 'https://mrdoob.github.io/stats.js/build/stats.min.js';
+            document.head.appendChild(script);
+        })()
+    </script>
     <script script type="module">
         import * as THREE from 'three';
+        import GUI from 'dat.gui';
+
+        const gui = new GUI();
 
         const createAxesHelper = (size = 1) => {
             const axesHelper = new THREE.AxesHelper(size)
@@ -65,10 +83,27 @@
         scene.add(axesHelper)
         scene.add(gridHelper)
 
-        utils.moveTo(box, box2, 5, 'minus', 1000)
-
         scene.render(document.querySelector('#my-sandbox'))
         scene.startFrameAnimate()
+
+        const params = {
+            options: 'minus',
+            number: 5,
+            time: 1000,
+            start: () => {
+                utils.moveTo(box, box2, params.number, params.options, params.time)
+            },
+            reset: () => {
+                box.position.set(0, 0, 0)
+            },
+        };
+
+        gui.add(params, 'options', { 推进: 'plus', 后退: 'minus' }).name('移动方向')
+        gui.add(params, 'number').name('移动距离')
+        gui.add(params, 'time', 10, 10000).name('移动时间')
+        gui.add(params, 'start').name('移动');
+        gui.add(params, 'reset').name('重置');
+
     </script>
 
 </body>
