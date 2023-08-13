@@ -1,12 +1,11 @@
 import type { Intersection, Raycaster } from 'three'
 import { Mesh } from 'three'
-import { debounce } from 'lodash'
-import { emitter } from '../utils'
 import type { CubeEventType, EventHandleFn } from '../type'
+import globalObjectManage from './global'
 
 class Anov3DMesh extends Mesh {
   private natureEventMap: Map<CubeEventType, EventHandleFn<CubeEventType>[]> = new Map()
-  private isMove = false
+  private entered = false
 
   constructor(geometry?: ConstructorParameters<typeof Mesh>[0], material?: ConstructorParameters<typeof Mesh>[1]) {
     super(geometry, material)
@@ -51,33 +50,38 @@ class Anov3DMesh extends Mesh {
    * @param intersects
    * @param eventType
    */
-  private eventHandle(intersects: Intersection[], natureEvent: EventHandleFn<CubeEventType>[]) {
-    const intersect = intersects[0]
-    const object = intersect.object as Anov3DMesh
+  private handleClick(natureEvent: EventHandleFn<CubeEventType>[]) {
+    if (!globalObjectManage.triggerClick)
+      return
 
-    if (object === this) {
-      // get nature event
-      natureEvent.forEach((handlefn) => {
-        handlefn(object)
-      })
-    }
+    // get nature event
+    natureEvent.forEach((handlefn) => {
+      handlefn(this)
+    })
   }
 
-  private debounceEventHandle = debounce(this.eventHandle, 50)
+  /**
+   * handle pointermove event
+   * @param intersects
+   * @param natureEvent
+   */
+  private handlePointerMove(natureEvent: EventHandleFn<CubeEventType>[]) {
+    natureEvent.forEach((handlefn) => {
+      handlefn(this)
+    })
+  }
 
   /**
    * handle pointerleave event
    * @param intersects
    * @param natureEvent
    */
-  private handlePointerleave(intersects: Intersection[], natureEvent: EventHandleFn<CubeEventType>[]) {
-    if (this.isMove) {
-      this.isMove = false
-
-      natureEvent.forEach((handlefn) => {
-        handlefn(this)
-      })
-    }
+  private handlePointerleave() {
+    const pointerleaveCallback = this.natureEventMap.get('pointerleave')
+    pointerleaveCallback && pointerleaveCallback.length > 0 && pointerleaveCallback.forEach((handlefn) => {
+      handlefn(this)
+    },
+    )
   }
 
   /**
@@ -91,26 +95,27 @@ class Anov3DMesh extends Mesh {
 
     super.raycast(raycaster, intersects)
 
+    const clickCallback = this.natureEventMap.get('click')
     const pointerupCallback = this.natureEventMap.get('pointerup')
     const pointerdownCallback = this.natureEventMap.get('pointerdown')
     const pointermoveCallback = this.natureEventMap.get('pointermove')
-    const pointerleaveCallback = this.natureEventMap.get('pointerleave')
 
-    if (intersects.length > 0) {
-      emitter.on('pointerup', () => pointerupCallback && pointerupCallback.length > 0 && this.debounceEventHandle(intersects, pointerupCallback))
-      emitter.on('pointerdown', () => pointerdownCallback && pointerdownCallback.length > 0 && this.debounceEventHandle(intersects, pointerdownCallback))
-      emitter.on('pointermove', () => {
-        if (pointermoveCallback && pointermoveCallback.length > 0) {
-          this.isMove = true
-          this.eventHandle(intersects, pointermoveCallback)
-        }
-      })
+    const intersect = intersects[0]
+    const object = intersect && intersect.object as Anov3DMesh
+
+    if (object === this) {
+      this.entered = true
+
+      clickCallback && clickCallback.length > 0 && this.handleClick(clickCallback)
+      pointerupCallback && pointerupCallback.length > 0 && this.handleClick(pointerupCallback)
+      pointerdownCallback && pointerdownCallback.length > 0 && this.handleClick(pointerdownCallback)
+      pointermoveCallback && pointermoveCallback.length > 0 && this.handlePointerMove(pointermoveCallback)
     }
     else {
-      emitter.on('pointerleave', () => {
-        if (pointerleaveCallback && pointerleaveCallback.length > 0 && this.isMove)
-          this.handlePointerleave(intersects, pointerleaveCallback)
-      })
+      if (this.entered) {
+        this.handlePointerleave()
+        this.entered = false
+      }
     }
   }
 }

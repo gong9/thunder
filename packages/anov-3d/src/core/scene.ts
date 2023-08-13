@@ -2,7 +2,6 @@ import type { Color, Object3D } from 'three'
 import { ACESFilmicToneMapping, AmbientLight, Raycaster, Scene, Vector2, Vector3, WebGLRenderer } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as TWEEN from '@tweenjs/tween.js'
-import { emitter } from '../utils'
 import globalControl from './globalControl'
 import globalObjectManage from './global'
 import { Anov3DPerspectiveCamera } from './camera'
@@ -199,8 +198,8 @@ class Anov3DScene {
    * @param event
    */
   private onPointerPointerup(event: PointerEvent) {
+    globalObjectManage.setTriggerClickState(false)
     this.getPointerPosition(event)
-    emitter.emit('pointerup')
     this.updateRaycaster()
   }
 
@@ -209,8 +208,8 @@ class Anov3DScene {
    * @param event
    */
   private onPointerDown(event: PointerEvent) {
+    globalObjectManage.setTriggerClickState(true)
     this.getPointerPosition(event)
-    emitter.emit('pointerdown')
     this.updateRaycaster()
   }
 
@@ -220,7 +219,6 @@ class Anov3DScene {
    */
   private onPointerMove(event: PointerEvent) {
     this.getPointerPosition(event)
-    emitter.emit('pointermove')
     this.updateRaycaster()
   }
 
@@ -230,7 +228,6 @@ class Anov3DScene {
    */
   private onPointerLeave(event: PointerEvent) {
     this.getPointerPosition(event)
-    emitter.emit('pointerleave')
     this.updateRaycaster()
   }
 
