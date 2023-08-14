@@ -37,7 +37,7 @@ export const moveTo = (currentObject3D: Object3D, targetObject3D: Object3D, dist
 
   let lastPosition = target.clone()
 
-  if (direction === Direction.minus && currentDistance > totalDistance)
+  if (direction === Direction.plus && currentDistance > totalDistance)
     lastPosition = targetPosition
 
   const tween = new TWEEN.Tween(cameraPosition)

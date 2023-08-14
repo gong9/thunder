@@ -11,6 +11,7 @@ const scene = new Anove3DScene({
 })
 const modelLoader = new Anov3DModelLoader()
 
+// gltf 资源调试时需要手动放入dist目录
 modelLoader.loadGLTF('./tree.glb')!.then((gltf) => {
   scene.add((gltf as any).scene)
 })
