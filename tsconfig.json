@@ -5,7 +5,8 @@
     "skipLibCheck": true,
     "baseUrl": "./",
     "esModuleInterop": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "downlevelIteration": true
   },
   "exclude": [
     "dist"

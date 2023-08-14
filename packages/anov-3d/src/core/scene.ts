@@ -2,6 +2,7 @@ import type { Color, Object3D } from 'three'
 import { ACESFilmicToneMapping, AmbientLight, Raycaster, Scene, Vector2, Vector3, WebGLRenderer } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as TWEEN from '@tweenjs/tween.js'
+import Cssrenderer from './cssRenderer'
 import globalControl from './globalControl'
 import globalObjectManage from './global'
 import { Anov3DPerspectiveCamera } from './camera'
@@ -50,6 +51,16 @@ interface Anov3DSceneOptions {
    */
   onDemand?: boolean
 
+  /**
+   * 是否开启css2d渲染
+   */
+  css2DRenderer?: boolean
+
+  /**
+   * 是否开启css3d渲染
+   */
+  css3DRenderer?: boolean
+
 }
 
 class Anov3DScene {
@@ -60,6 +71,7 @@ class Anov3DScene {
   ambientLight: AmbientLight | null = null
   camera: Anov3DPerspectiveCamera | null = null
   renderer: WebGLRenderer | null = null
+  cssRenderer: Cssrenderer | null = null
   controls: OrbitControls | null = null
 
   constructor(opts?: Anov3DSceneOptions) {
@@ -80,6 +92,11 @@ class Anov3DScene {
 
     const renderer = this.initRenderer()
     this.renderer = renderer
+
+    if (this.opts.css2DRenderer) {
+      const cssRenderer = this.initCssRenderer()
+      this.cssRenderer = cssRenderer
+    }
 
     if (this.opts.ambientLight) {
       const ambientLight = this.initAmbientLight()
@@ -118,6 +135,12 @@ class Anov3DScene {
     renderer.setPixelRatio(window.devicePixelRatio)
 
     return renderer
+  }
+
+  private initCssRenderer() {
+    const cssRenderer = new Cssrenderer('base')
+    cssRenderer.setSize(window.innerWidth, window.innerHeight)
+    return cssRenderer
   }
 
   /**
@@ -167,6 +190,7 @@ class Anov3DScene {
     globalControl.update()
     TWEEN.update()
     this.renderer!.render(this.scene!, this.camera!)
+    this.cssRenderer && this.cssRenderer.render(this.scene!, this.camera!)
 
     this.controls && this.controls.update()
     requestAnimationFrame(() => this.startFrameAnimate(frameAnimate))
@@ -235,7 +259,7 @@ class Anov3DScene {
    * handle event register
    * @param target
    */
-  private registerEvent(target: HTMLCanvasElement) {
+  private registerEvent(target: HTMLElement) {
     target.addEventListener('pointerup', (e: PointerEvent) => this.onPointerPointerup(e))
     target.addEventListener('pointerdown', (e: PointerEvent) => this.onPointerDown(e))
     target.addEventListener('pointermove', (e: PointerEvent) => this.onPointerMove(e))
@@ -243,11 +267,21 @@ class Anov3DScene {
   }
 
   render(target: HTMLElement) {
+    let currentControlDom: HTMLElement | null = null
+
+    if (this.cssRenderer) {
+      currentControlDom = this.cssRenderer.cssRenderer.domElement
+      target.appendChild(currentControlDom)
+      currentControlDom.style.position = 'absolute'
+      currentControlDom.style.top = '0'
+    }
+
     if (this.opts.orbitControls)
-      this.controls = new OrbitControls(this.camera!, this.renderer!.domElement)
+      this.controls = new OrbitControls(this.camera!, currentControlDom || this.renderer!.domElement)
 
     target.appendChild(this.renderer!.domElement)
-    this.registerEvent(this.renderer!.domElement)
+
+    this.registerEvent(currentControlDom || this.renderer!.domElement)
 
     target.addEventListener('resize', () => this.resetScene(this.camera!, this.renderer!))
   }
