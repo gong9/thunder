@@ -164,11 +164,11 @@ class Anov3DScene {
     if (frameAnimate)
       frameAnimate(this.renderer)
 
-    this.renderer!.render(this.scene!, this.camera!)
-    TWEEN.update()
     globalControl.update()
-    this.controls && this.controls.update()
+    TWEEN.update()
+    this.renderer!.render(this.scene!, this.camera!)
 
+    this.controls && this.controls.update()
     requestAnimationFrame(() => this.startFrameAnimate(frameAnimate))
   }
 

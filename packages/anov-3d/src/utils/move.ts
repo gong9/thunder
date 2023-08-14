@@ -1,6 +1,7 @@
 import type { Object3D, Vector3 } from 'three'
 import { BufferGeometry, CatmullRomCurve3, Line, LineBasicMaterial } from 'three'
 import * as TWEEN from '@tweenjs/tween.js'
+import { Anov3DPerspectiveCamera } from '../core/camera'
 import globalObjectManage from '../core/global'
 import globalControl from '../core/globalControl'
 
@@ -44,6 +45,16 @@ export const moveTo = (currentObject3D: Object3D, targetObject3D: Object3D, dist
 
   tween.to(lastPosition, duration || 1000)
   tween.start()
+
+  if (currentObject3D instanceof Anov3DPerspectiveCamera) {
+    globalControl.add(() => {
+      currentObject3D.lookAt(targetPosition)
+    }, (duration || 1000) * 1.01)
+
+    globalControl.start()
+  }
+
+  return tween
 }
 
 /**
