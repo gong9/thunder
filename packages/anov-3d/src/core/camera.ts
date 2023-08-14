@@ -3,15 +3,6 @@ import { PerspectiveCamera } from 'three'
 import { Direction, moveTo } from '../utils/move'
 
 /**
- * 向目标物体后退
- * @param targetObject3D
- * @param distance
- * @param animationMethod
- * @param duration
- */
-const demote = (targetObject3D: Object3D, distance: number, animationMethod: string, duration: number) => {}
-
-/**
  * 相机围绕目标物体旋转
  * @param targetObject3D
  * @param radius
@@ -32,10 +23,20 @@ class Anov3DPerspectiveCamera extends PerspectiveCamera {
    * @param animationMethod
    */
   public promote(targetObject3D: Object3D, distance: number, duration?: number, animationMethod?: string) {
-    moveTo(this, targetObject3D, distance, Direction.plus, duration, animationMethod)
+    return moveTo(this, targetObject3D, distance, Direction.plus, duration, animationMethod)
   }
 
-  public demote = demote
+  /**
+   * 向目标物体推进
+   * @param targetObject3D
+   * @param distance
+   * @param duration
+   * @param animationMethod
+   */
+  public demote = (targetObject3D: Object3D, distance: number, duration?: number, animationMethod?: string) => {
+    return moveTo(this, targetObject3D, distance, Direction.minus, duration, animationMethod)
+  }
+
   public surround = surround
 }
 
