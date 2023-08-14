@@ -11,7 +11,6 @@ class GlobalControl {
 
   public update() {
     if (this.task.size > 0) {
-      // @ts-ignore
       [...this.task.keys()].forEach((cb) => {
         cb()
       })

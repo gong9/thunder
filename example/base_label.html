@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="./source/base.css" />
+    <style>
+        .class-a,
+        .class-b {
+            color: aliceblue;
+        }
+    </style>
+    </style>
+</head>
+
+
+<body>
+    <div id="describe">label 示例</div>
+    <div id="my-sandbox"></div>
+    <script type="importmap">
+        {
+        "imports": {
+            "three": "./source/three.module.min.js"
+        }
+        }
+    </script>
+    <script src="./source/3d.min.js"></script>
+    <script>
+        javascript: (function () {
+            var script = document.createElement('script');
+            script.onload = function () {
+                var stats = new Stats();
+                document.body.appendChild(stats.dom);
+                requestAnimationFrame(function loop() {
+                    stats.update();
+                    requestAnimationFrame(loop)
+                });
+            };
+            script.src = 'https://mrdoob.github.io/stats.js/build/stats.min.js';
+            document.head.appendChild(script);
+        })()
+    </script>
+    <script script type="module">
+        import * as THREE from 'three';
+        const scene = new Anove3DScene({
+            orbitControls: true,
+            css2DRenderer: true,
+        })
+
+        const geometry = new THREE.BoxGeometry(2, 2, 2)
+        const material = new THREE.MeshBasicMaterial({
+            color: 0x00FF00
+        })
+        const box = new Anov3DMesh(geometry, material)
+
+        const geometry2 = new THREE.BoxGeometry(2, 2, 2)
+        const material2 = new THREE.MeshBasicMaterial({ color: 0x00FF00 })
+        const box2 = new Anov3DMesh(geometry2, material2)
+
+        box.addNatureEventListener('pointermove', (object3D) => {
+            object3D.material.color.set(0xFF0000)
+        })
+        box.addNatureEventListener('pointerleave', (object3D) => {
+            object3D.material.color.set('#ccc')
+        })
+
+        box2.addNatureEventListener('click', (object3D) => {
+            object3D.material.color.set(0xFF0000)
+        })
+        box2.addNatureEventListener('pointerleave', (object3D) => {
+            object3D.material.color.set('#fff')
+        })
+
+        const labelObject2d = createLabel(dom.createElement("div", {
+            id: "el-id",
+            class: "class-a",
+            textContent: "box1",
+        }))
+
+        const labelObject2d2 = createLabel(dom.createElement("div", {
+            id: "el-id",
+            class: "class-b",
+            textContent: "box2",
+        }))
+
+        labelObject2d.position.set(0, 3, 0)
+        box.add(labelObject2d)
+
+        labelObject2d2.position.set(0, 3, 0)
+        box2.add(labelObject2d2)
+
+        box2.position.set(5, 0, 0)
+        scene.add(box)
+        scene.add(box2)
+
+        scene.render(document.querySelector('#my-sandbox'))
+        scene.startFrameAnimate()
+    </script>
+
+</body>
+
+</html>
