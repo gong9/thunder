@@ -59,8 +59,11 @@
             orbitControls: true,
         })
 
+        const texture = new THREE.TextureLoader().load( 'files/crate.gif' );
+        texture.colorSpace = THREE.SRGBColorSpace;
+
         const geometry2 = new THREE.BoxGeometry(2, 2, 2)
-        const materia2 = new THREE.MeshBasicMaterial({ color: '#ccc' })
+        const materia2 = new THREE.MeshBasicMaterial({ map: texture })
         const box2 = new Anov3DMesh(geometry2, materia2)
 
         const axesHelper = createAxesHelper(10)
