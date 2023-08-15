@@ -1,13 +1,13 @@
 import type { Intersection, Raycaster } from 'three'
-import { Mesh } from 'three'
+import { Mesh as TMesh } from 'three'
 import type { CubeEventType, EventHandleFn } from '../type'
 import globalObjectManage from './global'
 
-class Anov3DMesh extends Mesh {
+class Mesh extends TMesh {
   private natureEventMap: Map<CubeEventType, EventHandleFn<CubeEventType>[]> = new Map()
   private entered = false
 
-  constructor(geometry?: ConstructorParameters<typeof Mesh>[0], material?: ConstructorParameters<typeof Mesh>[1]) {
+  constructor(geometry?: ConstructorParameters<typeof TMesh>[0], material?: ConstructorParameters<typeof TMesh>[1]) {
     super(geometry, material)
   }
 
@@ -101,7 +101,7 @@ class Anov3DMesh extends Mesh {
     const pointermoveCallback = this.natureEventMap.get('pointermove')
 
     const intersect = intersects[0]
-    const object = intersect && intersect.object as Anov3DMesh
+    const object = intersect && intersect.object as Mesh
 
     if (object === this) {
       this.entered = true
@@ -120,4 +120,4 @@ class Anov3DMesh extends Mesh {
   }
 }
 
-export default Anov3DMesh
+export default Mesh

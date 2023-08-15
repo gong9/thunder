@@ -1,5 +1,4 @@
-import { AxesHelper, BoxGeometry, GridHelper, MeshBasicMaterial } from 'three'
-import { Anov3DMesh, Anove3DScene, Direction, utils } from '../../packages/anov-3d/src/index'
+import { Mesh, Scene, AxesHelper, BoxGeometry, GridHelper, MeshBasicMaterial } from '../../packages/anov-3d/src/index'
 
 const createAxesHelper = (size = 1) => {
   const axesHelper = new AxesHelper(size)
@@ -17,17 +16,17 @@ const createGridHelper = (size = 10, divisions = 10) => {
  * 物体运动
  */
 
-const scene = new Anove3DScene({
+const scene = new Scene({
   orbitControls: true,
 })
 
 const geometry = new BoxGeometry(2, 2, 2)
 const material = new MeshBasicMaterial({ color: 0x00FF00 })
-const box = new Anov3DMesh(geometry, material)
+const box = new Mesh(geometry, material)
 
 const geometry2 = new BoxGeometry(2, 2, 2)
 const materia2 = new MeshBasicMaterial({ color: '#ccc' })
-const box2 = new Anov3DMesh(geometry2, materia2)
+const box2 = new Mesh(geometry2, materia2)
 
 const axesHelper = createAxesHelper(10)
 const gridHelper = createGridHelper(100, 30)
@@ -40,7 +39,7 @@ scene.add(box2)
 scene.add(axesHelper)
 scene.add(gridHelper)
 
-scene.camera!.promote(box2,100,10000)
+scene.camera!.promote(box2, 100, 10000)
 // scene.camera!.demote(box2,100,10000)
 
 scene.render(document.querySelector('#app')!)

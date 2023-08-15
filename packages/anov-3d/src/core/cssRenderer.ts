@@ -3,7 +3,7 @@ import { CSS2DRenderer } from 'three/examples/jsm/renderers/CSS2DRenderer'
 import { CSS3DRenderer } from 'three/examples/jsm/renderers/CSS3DRenderer'
 
 export type CssRendererType = 'base' | 'normal'
-class AnovCssRenderer {
+class CssRenderer {
   private baseCssRenderer: CSS2DRenderer = new CSS2DRenderer()
   private normalCssRenderer: CSS3DRenderer = new CSS3DRenderer()
   public cssRenderer: CSS2DRenderer | CSS3DRenderer
@@ -25,4 +25,4 @@ class AnovCssRenderer {
   }
 }
 
-export default AnovCssRenderer
+export default CssRenderer

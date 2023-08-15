@@ -1,22 +1,21 @@
-import { BoxGeometry, MeshBasicMaterial } from 'three'
-import { Anov3DMesh, Anove3DScene } from '../../packages/anov-3d/src/index'
+import { Mesh, Scene,BoxGeometry ,MeshBasicMaterial} from '../../packages/anov-3d/src/index'
 
 /**
  * example-01
  * base usage
  */
 
-const scene = new Anove3DScene({
+const scene = new Scene({
   orbitControls: true,
 })
 
 const geometry = new BoxGeometry(2, 2, 2)
 const material = new MeshBasicMaterial({ color: 0x00FF00 })
-const box = new Anov3DMesh(geometry, material)
+const box = new Mesh(geometry, material)
 
 const geometry2 = new BoxGeometry(2, 2, 2)
 const material2 = new MeshBasicMaterial({ color: 0x00FF00 })
-const box2 = new Anov3DMesh(geometry2, material2)
+const box2 = new Mesh(geometry2, material2)
 
 
 box.addNatureEventListener('pointermove', (object3D) => {

@@ -1,8 +1,8 @@
-import Anove3DScene from './core/scene'
-import Anov3DMesh from './core/mesh'
-import { Anov3DPerspectiveCamera } from './core/camera'
-import Anov3DModelLoader from './core/model'
-
+/* eslint-disable import/export */
+import Scene from './core/scene'
+import Mesh from './core/mesh'
+import { PerspectiveCamera } from './core/camera'
+import ModelLoader from './core/model'
 import { ModelType } from './commonEnu'
 import { createLabel } from './utils/createLabel'
 import { Direction, moveLine, moveTo, moveWithRound } from './utils/move'
@@ -23,11 +23,14 @@ const dom = {
   setEventListeners,
 }
 
+export * from 'three'
+export * from './threeCell'
+
 export {
-  Anove3DScene,
-  Anov3DMesh,
-  Anov3DPerspectiveCamera,
-  Anov3DModelLoader,
+  Scene,
+  Mesh,
+  PerspectiveCamera,
+  ModelLoader,
   createLabel,
   ModelType,
   Direction,

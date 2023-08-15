@@ -14,11 +14,6 @@
     <div id="describe">gltf模型示例</div>
     <div id="my-sandbox"></div>
     <script type="importmap">
-        {
-        "imports": {
-            "three": "./source/three.module.min.js"
-        }
-        }
     </script>
     <script src="./source/3d.min.js"></script>
     <script>
@@ -36,21 +31,19 @@
             document.head.appendChild(script);
         })()
     </script>
-    <script script type="module">
-        import * as THREE from 'three';
-
-        const scene = new Anove3DScene({
+    <script type="module">
+        const scene = new Scene({
             orbitControls: true,
             ambientLight: true,
         })
 
-        const modelLoader = new Anov3DModelLoader()
+        const modelLoader = new ModelLoader()
 
         modelLoader.loadGLTF('./files/tree.glb').then((gltf) => {
             scene.add(gltf.scene)
         })
 
-        scene.scene.background = new THREE.Color('#345')
+        scene.scene.background = new Color('#345')
 
         scene.render(document.querySelector('#my-sandbox'))
         scene.startFrameAnimate()

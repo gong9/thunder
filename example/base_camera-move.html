@@ -16,7 +16,6 @@
     <script type="importmap">
         {
         "imports": {
-            "three": "./source/three.module.min.js",
             "dat.gui": "./source/lil-gui.esm.js"
         }
         }
@@ -38,33 +37,33 @@
             document.head.appendChild(script);
         })()
     </script>
-    <script script type="module">
-        import * as THREE from 'three';
+    <script type="module">
         import GUI from 'dat.gui';
+
 
         const gui = new GUI();
 
         const createAxesHelper = (size = 1) => {
-            const axesHelper = new THREE.AxesHelper(size)
+            const axesHelper = new AxesHelper(size)
 
             return axesHelper
         }
 
         const createGridHelper = (size = 10, divisions = 10) => {
-            const gridHelper = new THREE.GridHelper(size, divisions)
+            const gridHelper = new GridHelper(size, divisions)
 
             return gridHelper
         }
-        const scene = new Anove3DScene({
+        const scene = new Scene({
             orbitControls: true,
         })
 
-        const texture = new THREE.TextureLoader().load( 'files/crate.gif' );
-        texture.colorSpace = THREE.SRGBColorSpace;
+        const texture = new TextureLoader().load( 'files/crate.gif' );
+        texture.colorSpace = SRGBColorSpace;
 
-        const geometry2 = new THREE.BoxGeometry(2, 2, 2)
-        const materia2 = new THREE.MeshBasicMaterial({ map: texture })
-        const box2 = new Anov3DMesh(geometry2, materia2)
+        const geometry2 = new BoxGeometry(2, 2, 2)
+        const materia2 = new MeshBasicMaterial({ map: texture })
+        const box2 = new Mesh(geometry2, materia2)
 
         const axesHelper = createAxesHelper(10)
         const gridHelper = createGridHelper(100, 30)
