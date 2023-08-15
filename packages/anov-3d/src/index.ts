@@ -5,13 +5,14 @@ import { PerspectiveCamera } from './core/camera'
 import ModelLoader from './core/model'
 import { ModelType } from './commonEnu'
 import { createLabel } from './utils/createLabel'
-import { Direction, moveLine, moveTo, moveWithRound } from './utils/move'
+import { Direction, moveLine, moveTo, moveWithLine, moveWithRound } from './utils/move'
 import { appendChildren, create, createElement, setAttributes, setClassList, setEventListeners } from './utils/createElement'
 
 const utils = {
   moveTo,
   moveLine,
   moveWithRound,
+  moveWithLine,
 }
 
 const dom = {

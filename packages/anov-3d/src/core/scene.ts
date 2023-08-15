@@ -179,6 +179,7 @@ class Scene {
 
   /**
    * frame render
+   * @param frameAnimate
    */
   public startFrameAnimate(frameAnimate?: (renderer: WebGLRenderer) => void) {
     if (!this.renderer || !this.scene || !this.camera)

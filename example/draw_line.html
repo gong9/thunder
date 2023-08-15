@@ -1,0 +1,345 @@
+ <!DOCTYPE html>
+ <html lang="en">
+
+ <head>
+     <meta charset="UTF-8">
+     <title>画直线</title>
+     <style>
+         body {
+             margin: 0;
+             overflow: hidden;
+         }
+     </style>
+ </head>
+
+ <body>
+     <script src="./source/3d.min.js"></script>
+     <script>
+         var scene, camera, renderer, controls;
+
+         /* 地面网格所需变量 */
+         var length = 200; /*线段长度*/
+
+         function initScene() {
+
+             scene = new Scene();
+
+         }
+
+         function initCamera() {
+             camera = new PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 10000);
+             camera.position.set(0, 200, 250);
+             camera.lookAt(new Vector3(0, 0, 0));
+         }
+
+         function initRender() {
+             renderer = new WebGLRenderer({
+                 antialias: true
+             });
+             renderer.setSize(window.innerWidth, window.innerHeight);
+             document.body.appendChild(renderer.domElement);
+
+         }
+
+         /* 灯光 */
+         function initLight() {
+
+             var ambientLight = new AmbientLight(0x333333);
+             scene.add(ambientLight);
+
+             var directionalLight = new DirectionalLight(0xffffff, 1);
+             directionalLight.position.set(100, 300, 200);
+             scene.add(directionalLight);
+
+         }
+
+         /* 控制器 */
+         function initControls() {
+
+             controls = new OrbitControls(camera, renderer.domElement);
+             /* 其它属性默认 */
+
+         }
+
+         /* 场景内容 */
+         function initContent() {
+             var geometry = new BufferGeometry(); /* 简单基础几何 */
+             var lineMaterial = new LineBasicMaterial({
+                 color: 0x808080
+             }); /* 基础线材质 */
+
+             var planeGeometry = new PlaneGeometry(length, 10); /* 平面 width：200,、height：10 */
+             var planeMaterial = new MeshBasicMaterial({
+                 color: 0xD9D9D9,
+                 side: DoubleSide
+             }); /* 平面材质 */
+
+             const vertices = new Float32Array([
+                 -length / 2, 0, 0,
+                 length / 2, 0, 0
+             ]);
+
+             const positionBuffer = new BufferAttribute(vertices, 3);
+             geometry.setAttribute('position', positionBuffer);
+
+             /* 循环创建线段 */
+             for (var i = 0; i <= length / 10; i++) {
+
+                 /* 横向线段 */
+                 var lineX = new Line(geometry, lineMaterial);
+                 lineX.position.z = (i * 10) - length / 2;
+                 scene.add(lineX);
+
+                 /* 纵向线段 */
+                 var lineY = new Line(geometry, lineMaterial);
+                 lineY.rotation.y = 0.5 * Math.PI;
+                 lineY.position.x = (i * 10) - length / 2;
+                 scene.add(lineY);
+
+             }
+         }
+
+         /* 获取射线与平面相交的交点 */
+         function getIntersects(event) {
+
+             var raycaster = new Raycaster();
+             var mouse = new Vector2();
+
+             mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+             mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+             var normal = new Vector3(0, 1, 0);
+             /* 创建平面 */
+             var planeGround = new Plane(normal, 0);
+
+             /* 从相机发出一条射线经过鼠标点击的位置 */
+             raycaster.setFromCamera(mouse, camera);
+
+             /* 获取射线 */
+             var ray = raycaster.ray;
+
+             /* 计算相机到射线的对象，可能有多个对象，返回一个数组，按照距离相机远近排列 */
+             var intersects = ray.intersectPlane(planeGround);
+
+             /* 返回向量 */
+             return intersects;
+
+         }
+
+         var pointsArray = [];
+         var window_mouse = true;
+         /* 鼠标按下事件 */
+         function onMouseDown(event) {
+
+             /* 获取相机发出的射线与 Plane 相交点*/
+             var intersects = getIntersects(event);
+
+             /* 存放网格的三维坐标 */
+             var vector3_x, vector3_z;
+
+             /* 鼠标左键按下时，创建点和线段 */
+             if (event.button === 0) {
+
+                 if (!window_mouse) {
+
+                     window.addEventListener('mousemove', onMouseMove, false);
+
+                     /* 依据 windwo_mouse 标识避免事件的重复添加 */
+                     window_mouse = true;
+
+                 }
+
+                 /* 判断交点是否在 x(-100, 100) ，z(-100, 100)(平面)之间 */
+                 if (Math.abs(intersects.x) < length / 2 && Math.abs(intersects.z) < length / 2) {
+
+                     /* 若交点此时在平面之内则创建点（Points） */
+                     var pointsGeometry = new Geometry();
+                     pointsGeometry.vertices.push(intersects);
+
+                     var pointsMaterial = new PointsMaterial({
+                         color: 0xff0000,
+                         size: 3
+                     });
+                     var points = new Points(pointsGeometry, pointsMaterial);
+
+                     pointsArray.push(points);
+
+                     /* 创建线段 */
+                     var lineGeometry = new Geometry();
+                     var lineMaterial = new LineBasicMaterial({
+                         color: 0x00ff00
+                     });
+
+                     if (pointsArray.length >= 2) {
+
+                         lineGeometry.vertices.push(pointsArray[0].geometry.vertices[0], pointsArray[1].geometry
+                             .vertices[0]);
+
+                         var line = new Line(lineGeometry, lineMaterial);
+                         pointsArray.shift();
+                         scene.add(line);
+
+                     }
+
+                     scene.add(points);
+
+                 }
+
+             }
+
+             /* 鼠标右键按下时 回退到上一步的点，并中断绘制 */
+             if (event.button === 2) {
+
+                 window.removeEventListener('mousemove', onMouseMove, false);
+
+                 /* 移除事件之后，要设置为 false 为了避免事件的重复添加 */
+                 window_mouse = false;
+
+                 /* 鼠标左键未点击时线段的移动状态 */
+                 if (scene.getObjectByName('line_move')) {
+
+                     scene.remove(scene.getObjectByName('line_move'));
+
+                     /* 删除数组中的元素，否则的话再次重绘会链接之前的点接着重绘 */
+                     pointsArray.shift();
+
+                 }
+
+             }
+
+         }
+
+         /* 鼠标移动事件 */
+         function onMouseMove(event) {
+
+             var intersects = getIntersects(event);
+
+             /* 判断交点是否在 x(-100, 100) ，z(-100, 100)(平面)之间 */
+             if (Math.abs(intersects.x) < length / 2 && Math.abs(intersects.z) < length / 2) {
+
+                 /* 鼠标左键未点击时线段的移动状态 */
+                 if (scene.getObjectByName('line_move')) {
+
+                     scene.remove(scene.getObjectByName('line_move'));
+
+                 }
+                 /* 创建线段 */
+                 var lineGeometry = new Geometry();
+                 var lineMaterial = new LineBasicMaterial({
+                     color: 0x00ff00
+                 });
+
+                 if (pointsArray.length > 0) {
+
+                     lineGeometry.vertices.push(pointsArray[0].geometry.vertices[0]);
+
+                     var mouseVector3 = new Vector3(intersects.x, 0, intersects.z);
+
+                     lineGeometry.vertices.push(mouseVector3);
+
+                     var line = new Line(lineGeometry, lineMaterial);
+                     line.name = 'line_move';
+
+                     scene.add(line);
+
+                 }
+
+             }
+
+         }
+
+         /* 键盘按下事件 */
+         function onKeyDown(event) {
+
+             /* ESC键 回退上一步绘制，结束绘制*/
+             if (event.key === 'Escape') {
+
+                 window.removeEventListener('mousemove', onMouseMove, false);
+
+                 /* 移除事件之后，要设置为 false 为了避免 mousemove 事件的重复添加 */
+                 window_mouse = false;
+
+                 /* 鼠标左键未点击时线段的移动状态 */
+                 if (scene.getObjectByName('line_move')) {
+
+                     scene.remove(scene.getObjectByName('line_move'));
+
+                     /* 删除数组中的元素，否则的话再次重绘会链接之前的点接着重绘 */
+                     pointsArray.shift();
+
+                 }
+
+                 var length = scene.children.length - 1;
+                 /* 按步骤移除点和先 */
+                 if (scene.children[length].isLine || scene.children[length].isPoints) {
+
+                     scene.children.pop();
+                     length = scene.children.length - 1;
+
+                     /* 若最后一项不是线段或者点就不移除 */
+                     if (!scene.children[length].isMesh) {
+
+                         scene.children.pop();
+
+                     }
+
+                 }
+
+             }
+
+         }
+
+         /* 更新数据 */
+         function update() {
+             controls.update();
+
+         }
+
+         /* 窗口自动适应 */
+         function onWindowResize() {
+
+             camera.aspect = window.innerWidth / window.innerHeight;
+             camera.updateProjectionMatrix();
+             renderer.setSize(window.innerWidth, window.innerHeight);
+
+         }
+
+         /* 循环调用 */
+         function animate() {
+
+             requestAnimationFrame(animate);
+             renderer.render(scene, camera);
+             update();
+
+         }
+
+         /* 初始化 */
+         function init() {
+
+             /* 兼容性判断 */
+             //if (!Detector.webgl) Detector.addGetWebGLMessage();
+
+             initScene();
+             initCamera();
+             initRender();
+             initLight();
+             initContent();
+             initControls();
+
+             /* 事件监听 */
+             window.addEventListener('resize', onWindowResize, false);
+             window.addEventListener('mousedown', onMouseDown, false); /* 使用mousedown的时候可以判断出点击的鼠标左右键之分 */
+             window.addEventListener('mousemove', onMouseMove, false);
+             window.addEventListener('keydown', onKeyDown, false); /* 使用事件的时候要把前面的on给去掉 */
+
+         }
+
+         /* 初始加载 */
+         (function () {
+             init();
+             animate();
+         })();
+     </script>
+ </body>
+
+ </html>

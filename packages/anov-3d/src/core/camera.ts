@@ -1,14 +1,7 @@
 import type { Object3D, Vector3 } from 'three'
-import { PerspectiveCamera as TPerspectiveCamera } from 'three'
-import { Direction, moveTo } from '../utils/move'
-
-/**
- * 相机围绕目标物体旋转
- * @param targetObject3D
- * @param radius
- * @param toward
- */
-const surround = (targetObject3D: Object3D, radius: number, toward: Vector3) => {}
+import { BufferGeometry, CatmullRomCurve3, Line, LineBasicMaterial, PerspectiveCamera as TPerspectiveCamera } from 'three'
+import { Direction, moveTo, moveWithLine } from '../utils/move'
+import globalObjectManage from './global'
 
 class PerspectiveCamera extends TPerspectiveCamera {
   constructor(fov: number, aspect: number, near: number, far: number) {
@@ -37,7 +30,26 @@ class PerspectiveCamera extends TPerspectiveCamera {
     return moveTo(this, targetObject3D, distance, Direction.minus, duration, animationMethod)
   }
 
-  public surround = surround
+  /**
+   * 相机漫游
+   * @param lookat
+   * @param vec
+   * @param points
+   * @param helpLine
+   */
+  public surround = (lookat: Vector3, vec: Vector3[], points = 5, helpLine?: boolean) => {
+    const curve = new CatmullRomCurve3([
+      ...vec,
+    ], true)
+
+    const geometry = new BufferGeometry().setFromPoints(curve.getPoints(points))
+    const material = new LineBasicMaterial({ color: '#fff' })
+    const curveObject = new Line(geometry, material)
+
+    globalObjectManage.scene!.add(curveObject)
+
+    moveWithLine(this, curve, lookat)
+  }
 }
 
 export { PerspectiveCamera }
