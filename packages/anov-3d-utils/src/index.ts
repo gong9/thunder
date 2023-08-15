@@ -1,5 +1,5 @@
-const add = (a: number, b: number) => {
-  return a + b
-}
+import { mouseDraweLine } from './core/mouseDrawe'
 
-export default add
+export {
+  mouseDraweLine,
+}

@@ -73,19 +73,34 @@ const createLine = (points: Vector3[]) => {
   return [new Line(geometry, material), curve] as [Line, CatmullRomCurve3]
 }
 
-export const moveWithLine = (points: Vector3[], duration?: number) => {
-  // const line = createLine(points)
-}
-
 /**
- * 圆周运动
- * 1. 一个法向量
- * 2. 一个半径
- * 3. 圆心位置
- * 4. 需要运动的物体
- * 5. 运动的时间
- * 6. 运动的方式
+ * 曲线路径移动
+ * @param currentObject
+ * @param curve
+ * @param lookat
  */
+export const moveWithLine = (currentObject: Object3D, curve: CatmullRomCurve3, lookat?: Vector3) => {
+  const totlePoints = curve.getPoints(1000)
+  const totle = totlePoints.length
+  let index = -1
+
+  const calcIndex = (index: number) => index > totle ? index - totle - 1 : index
+
+  const handleCallback = () => {
+    if (index >= totle)
+      index = -1
+
+    const nextPoint = totlePoints[calcIndex((index + 1)) % totle]
+    currentObject.position.set(nextPoint.x, nextPoint.y, nextPoint.z)
+
+    currentObject.lookAt(totlePoints[calcIndex((index + 3)) % totle])
+
+    index++
+  }
+
+  globalControl.add(handleCallback, 100000)
+  globalControl.start()
+}
 
 /**
  * base 圆周运动
@@ -112,7 +127,6 @@ export const moveWithRound = (currentObject3d: Object3D, speed = 0.1, duration?:
 
 /**
  * move 方法2 移动辅助线
- * todo bug待修复
  * @param currentObject3D
  * @param targetObject3D
  */

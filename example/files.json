@@ -5,6 +5,7 @@
 		"base_move-round",
 		"base_gltf-model",
 		"base_camera-move",
+		"base_move-line",
 		"base_label"
 	]
 }

@@ -71,7 +71,11 @@ importers:
 
   packages/anov-3d-gis: {}
 
-  packages/anov-3d-utils: {}
+  packages/anov-3d-utils:
+    dependencies:
+      '@anov/3d':
+        specifier: workspace:0.0.1-alpha.4
+        version: link:../anov-3d
 
   packages/anov-3d-vue3: {}
 

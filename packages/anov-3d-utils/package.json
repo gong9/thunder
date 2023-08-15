@@ -20,5 +20,7 @@
     "build:deps": "father prebundle",
     "test": "jest --maxWorkers 2"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@anov/3d": "workspace:0.0.1-alpha.4"
+  }
 }
