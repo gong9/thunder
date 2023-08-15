@@ -1,7 +1,7 @@
-import { Group } from 'three'
+import { Group as TGroup } from 'three'
 import type { CubeEventType, EventHandleFn } from '../type'
 
-class Anov3DGroup extends Group {
+class Group extends TGroup {
   private natureEventMap: Map<CubeEventType, EventHandleFn<CubeEventType>[]> = new Map()
 
   constructor() {
@@ -51,4 +51,4 @@ class Anov3DGroup extends Group {
   }
 }
 
-export default Anov3DGroup
+export default Group

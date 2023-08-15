@@ -2,7 +2,7 @@ import type { GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 
-class Anov3DModelLoader {
+class ModelLoader {
   /**
    * load gltf model
    * @param url
@@ -51,4 +51,4 @@ class Anov3DModelLoader {
     onError?: (event: ErrorEvent) => void) {}
 }
 
-export default Anov3DModelLoader
+export default ModelLoader

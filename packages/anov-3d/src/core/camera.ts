@@ -1,5 +1,5 @@
 import type { Object3D, Vector3 } from 'three'
-import { PerspectiveCamera } from 'three'
+import { PerspectiveCamera as TPerspectiveCamera } from 'three'
 import { Direction, moveTo } from '../utils/move'
 
 /**
@@ -10,7 +10,7 @@ import { Direction, moveTo } from '../utils/move'
  */
 const surround = (targetObject3D: Object3D, radius: number, toward: Vector3) => {}
 
-class Anov3DPerspectiveCamera extends PerspectiveCamera {
+class PerspectiveCamera extends TPerspectiveCamera {
   constructor(fov: number, aspect: number, near: number, far: number) {
     super(fov, aspect, near, far)
   }
@@ -27,7 +27,7 @@ class Anov3DPerspectiveCamera extends PerspectiveCamera {
   }
 
   /**
-   * 向目标物体推进
+   * 向目标物体后退
    * @param targetObject3D
    * @param distance
    * @param duration
@@ -40,4 +40,4 @@ class Anov3DPerspectiveCamera extends PerspectiveCamera {
   public surround = surround
 }
 
-export { Anov3DPerspectiveCamera }
+export { PerspectiveCamera }

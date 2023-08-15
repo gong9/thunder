@@ -15,16 +15,15 @@ pnpm add @anov/3d
 init a base scene 「wip」
 
 ```ts
-import { Anov3DMesh, Anove3DScene  } from '@anov/3d'
-import { BoxGeometry, MeshBasicMaterial } from 'three'
+import { Mesh, Scene, BoxGeometry, MeshBasicMaterial } from '@anov/3d'
 
-const scene = new Anove3DScene({
+const scene = new Scene({
   orbitControls: true,
 })
 
 const geometry = new BoxGeometry(2, 2, 2)
 const material = new MeshBasicMaterial({ color: 0x00FF00 })
-const box = new Anov3DMesh(geometry, material)
+const box = new Mesh(geometry, material)
 
 box.addNatureEventListener('pointermove', (object3D) => {
   (object3D.material as any).color.set(0xFF0000)
@@ -42,20 +41,19 @@ scene.startFrameAnimate()
 base object3d motion 「wip」
 
 ```ts
-import { Anov3DMesh, Anove3DScene, utils } from '@anov/3d'
-import { AxesHelper, BoxGeometry, GridHelper, MeshBasicMaterial } from 'three'
+import { Mesh, Scene, utils, AxesHelper, BoxGeometry, GridHelper, MeshBasicMaterial } from '@anov/3d'
 
-const scene = new Anove3DScene({
+const scene = new Scene({
   orbitControls: true,
 })
 
 const geometry = new BoxGeometry(2, 2, 2)
 const material = new MeshBasicMaterial({ color: 0x00FF00 })
-const box = new Anov3DMesh(geometry, material)
+const box = new Mesh(geometry, material)
 
 const geometry2 = new BoxGeometry(2, 2, 2)
 const materia2 = new MeshBasicMaterial({ color: '#ccc' })
-const box2 = new Anov3DMesh(geometry2, materia2)
+const box2 = new Mesh(geometry2, materia2)
 
 box.position.set(0, 0, 0)
 box2.position.set(10, 30, -30)

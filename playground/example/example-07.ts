@@ -1,18 +1,18 @@
-import { BoxGeometry, MeshBasicMaterial,Color } from 'three'
-import { Anov3DMesh, Anove3DScene, dom, createLabel } from '../../packages/anov-3d/src/index'
+
+import { BoxGeometry, MeshBasicMaterial, Color, Mesh, Scene, dom, createLabel } from '../../packages/anov-3d/src/index'
 
 /**
  * add label
  */
 
-const scene = new Anove3DScene({
+const scene = new Scene({
   orbitControls: true,
   css2DRenderer: true,
 })
 
 const geometry = new BoxGeometry(2, 2, 2)
 const material = new MeshBasicMaterial({ color: 0x00FF00 })
-const box = new Anov3DMesh(geometry, material)
+const box = new Mesh(geometry, material)
 
 box.addNatureEventListener('pointermove', (object3D) => {
   (object3D.material as any).color.set(0xFF0000)

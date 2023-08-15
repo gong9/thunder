@@ -1,11 +1,11 @@
 import type { Color, Object3D } from 'three'
-import { ACESFilmicToneMapping, AmbientLight, Raycaster, Scene, Vector2, Vector3, WebGLRenderer } from 'three'
+import { ACESFilmicToneMapping, AmbientLight, Raycaster, Scene as TScene, Vector2, Vector3, WebGLRenderer } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as TWEEN from '@tweenjs/tween.js'
 import Cssrenderer from './cssRenderer'
 import globalControl from './globalControl'
 import globalObjectManage from './global'
-import { Anov3DPerspectiveCamera } from './camera'
+import { PerspectiveCamera } from './camera'
 
 interface Anov3DSceneOptions {
   /**
@@ -63,20 +63,20 @@ interface Anov3DSceneOptions {
 
 }
 
-class Anov3DScene {
+class Scene {
   private opts: Anov3DSceneOptions = {}
   private pointer: Vector2 = new Vector2()
-  scene: Scene | null = null
+  scene: TScene | null = null
   raycaster: Raycaster | null = null
   ambientLight: AmbientLight | null = null
-  camera: Anov3DPerspectiveCamera | null = null
+  camera: PerspectiveCamera | null = null
   renderer: WebGLRenderer | null = null
   cssRenderer: Cssrenderer | null = null
   controls: OrbitControls | null = null
 
   constructor(opts?: Anov3DSceneOptions) {
     this.opts = opts ?? {}
-    this.scene = new Scene()
+    this.scene = new TScene()
     this.raycaster = new Raycaster()
     globalObjectManage.addScene(this.scene)
     this.defaultInit()
@@ -110,7 +110,7 @@ class Anov3DScene {
    * @param camera
    * @param renderer
    */
-  public resetScene(camera: Anov3DPerspectiveCamera, renderer: WebGLRenderer) {
+  public resetScene(camera: PerspectiveCamera, renderer: WebGLRenderer) {
     camera.aspect = window.innerWidth / window.innerHeight
     camera.updateProjectionMatrix()
     renderer.setSize(window.innerWidth, window.innerHeight)
@@ -148,7 +148,7 @@ class Anov3DScene {
    */
   private initDefaultPerspectiveCamera() {
     const rendererOps = this.opts.defCameraOps || {}
-    const camera = new Anov3DPerspectiveCamera(
+    const camera = new PerspectiveCamera(
       rendererOps.fov || 90,
       window.innerWidth / window.innerHeight,
       rendererOps.near || 0.1,
@@ -291,4 +291,4 @@ class Anov3DScene {
   }
 }
 
-export default Anov3DScene
+export default Scene
