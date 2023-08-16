@@ -50,13 +50,13 @@ class Mesh extends TMesh {
    * @param intersects
    * @param eventType
    */
-  private handleClick(natureEvent: EventHandleFn<CubeEventType>[]) {
+  private handleClick(natureEvent: EventHandleFn<CubeEventType>[], intersect: Intersection) {
     if (!globalObjectManage.triggerClick)
       return
 
     // get nature event
     natureEvent.forEach((handlefn) => {
-      handlefn(this)
+      handlefn(this, intersect)
     })
   }
 
@@ -65,9 +65,9 @@ class Mesh extends TMesh {
    * @param intersects
    * @param natureEvent
    */
-  private handlePointerMove(natureEvent: EventHandleFn<CubeEventType>[]) {
+  private handlePointerMove(natureEvent: EventHandleFn<CubeEventType>[], intersect: Intersection) {
     natureEvent.forEach((handlefn) => {
-      handlefn(this)
+      handlefn(this, intersect)
     })
   }
 
@@ -106,10 +106,10 @@ class Mesh extends TMesh {
     if (object === this) {
       this.entered = true
 
-      clickCallback && clickCallback.length > 0 && this.handleClick(clickCallback)
-      pointerupCallback && pointerupCallback.length > 0 && this.handleClick(pointerupCallback)
-      pointerdownCallback && pointerdownCallback.length > 0 && this.handleClick(pointerdownCallback)
-      pointermoveCallback && pointermoveCallback.length > 0 && this.handlePointerMove(pointermoveCallback)
+      clickCallback && clickCallback.length > 0 && this.handleClick(clickCallback, intersect)
+      pointerupCallback && pointerupCallback.length > 0 && this.handleClick(pointerupCallback, intersect)
+      pointerdownCallback && pointerdownCallback.length > 0 && this.handleClick(pointerdownCallback, intersect)
+      pointermoveCallback && pointermoveCallback.length > 0 && this.handlePointerMove(pointermoveCallback, intersect)
     }
     else {
       if (this.entered) {

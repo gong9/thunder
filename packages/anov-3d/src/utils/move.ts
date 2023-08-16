@@ -73,33 +73,55 @@ const createLine = (points: Vector3[]) => {
   return [new Line(geometry, material), curve] as [Line, CatmullRomCurve3]
 }
 
+export interface ControlsRetuenFuncType {
+  remove: () => void
+  increaseSpeed: (currentStep: number) => void
+  recoverSpeed: () => void
+}
+type ControlsFuncType = () => ControlsRetuenFuncType
+
 /**
  * 曲线路径移动
  * @param currentObject
  * @param curve
- * @param lookat
+ * @param points 曲线分割数, 同时也决定了运动速度
+ * @param lookat 默认曲线方向
  */
-export const moveWithLine = (currentObject: Object3D, curve: CatmullRomCurve3, lookat?: Vector3) => {
-  const totlePoints = curve.getPoints(1000)
+export const moveWithLine = (currentObject: Object3D, curve: CatmullRomCurve3, points = 500, lookat?: Vector3) => {
+  const totlePoints = curve.getPoints(points)
   const totle = totlePoints.length
-  let index = -1
+  let index = 0
+  let step = 1
 
   const calcIndex = (index: number) => index > totle ? index - totle - 1 : index
 
   const handleCallback = () => {
     if (index >= totle)
-      index = -1
+      index = calcIndex(index)
 
-    const nextPoint = totlePoints[calcIndex((index + 1)) % totle]
+    const nextPoint = totlePoints[calcIndex(index) % totle]
     currentObject.position.set(nextPoint.x, nextPoint.y, nextPoint.z)
 
-    currentObject.lookAt(totlePoints[calcIndex((index + 3)) % totle])
+    if (lookat)
+      currentObject.lookAt(lookat)
+    else
+      currentObject.lookAt(totlePoints[calcIndex(index + 1) % totle])
 
-    index++
+    index += step
   }
 
   globalControl.add(handleCallback, 100000)
   globalControl.start()
+
+  return {
+    remove: () => globalControl.remove(handleCallback),
+    increaseSpeed: (currentStep = 1) => {
+      step = currentStep + step
+    },
+    recoverSpeed: () => {
+      step = 1
+    },
+  } as ControlsRetuenFuncType
 }
 
 /**

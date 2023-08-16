@@ -25,11 +25,25 @@ const gridHelper = createGridHelper(100, 30)
 modelLoader.loadGLTF('./car.glb')!.then((gltf) => {
     const car = (gltf as any).scene
     car.scale.set(0.3, 0.3, 0.3)
-    utils.moveWithLine(car, curve as any)
+    const controls = utils.moveWithLine(car, curve as any, 1000)
+
+    let currentSpeed = 1
+
+    const timer = setInterval(() => {
+        currentSpeed += 1
+        controls.increaseSpeed(currentSpeed)
+    }, 500)
+
+
+    setTimeout(() => {
+        clearInterval(timer)
+        controls.recoverSpeed()
+    }, 10000)
+
     scene.add(car)
 })
 
-scene.add(axesHelper)
+// scene.add(axesHelper)
 scene.add(gridHelper)
 
 const points = [
