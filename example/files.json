@@ -1,6 +1,7 @@
 {
 	"base": [
 		"base_scene",
+		"base_point-cube",
 		"base_move",
 		"base_move-round",
 		"base_gltf-model",
