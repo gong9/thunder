@@ -31,13 +31,15 @@ class PerspectiveCamera extends TPerspectiveCamera {
   }
 
   /**
-   * 相机漫游
-   * @param lookat
+   * 相机曲线漫游
    * @param vec
    * @param points
+   * @param linePoints
    * @param helpLine
+   * @param lookat
+   * @returns
    */
-  public surround = (lookat: Vector3, vec: Vector3[], points = 5, helpLine?: boolean) => {
+  public surround = (vec: Vector3[], points = 5, linePoints = 500, helpLine?: boolean, lookat?: Vector3) => {
     const curve = new CatmullRomCurve3([
       ...vec,
     ], true)
@@ -48,7 +50,7 @@ class PerspectiveCamera extends TPerspectiveCamera {
 
     globalObjectManage.scene!.add(curveObject)
 
-    moveWithLine(this, curve, lookat)
+    return moveWithLine(this, curve, linePoints, lookat)
   }
 }
 
