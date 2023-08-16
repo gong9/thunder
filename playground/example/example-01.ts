@@ -1,4 +1,4 @@
-import { Mesh, Scene,BoxGeometry ,MeshBasicMaterial} from '../../packages/anov-3d/src/index'
+import { Mesh, Scene, BoxGeometry, MeshBasicMaterial } from '../../packages/anov-3d/src/index'
 
 /**
  * example-01
