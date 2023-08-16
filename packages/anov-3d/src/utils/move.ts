@@ -5,7 +5,7 @@ import { PerspectiveCamera } from '../core/camera'
 import globalObjectManage from '../core/global'
 import globalControl from '../core/globalControl'
 
-enum AnimationMethod {}
+enum AnimationMethod { }
 
 export enum Direction {
   plus = 'plus',
