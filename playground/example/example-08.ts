@@ -22,23 +22,34 @@ const scene = new Scene({
 const axesHelper = createAxesHelper(10)
 const gridHelper = createGridHelper(100, 30)
 
+const points = [
+    new Vector3(0, 0, 0),
+    new Vector3(10, 0, 0),
+    new Vector3(10, 0, -10),
+    new Vector3(0, 0, -10),
+]
+
 modelLoader.loadGLTF('./car.glb')!.then((gltf) => {
     const car = (gltf as any).scene
     car.scale.set(0.3, 0.3, 0.3)
+
     const controls = utils.moveWithLine(car, curve as any, 1000)
 
-    let currentSpeed = 1
+    // 加速
+    // const timer = setInterval(() => {
+    //     currentSpeed += 1
+    //     controls.increaseSpeed(currentSpeed)
+    // }, 500)
 
-    const timer = setInterval(() => {
-        currentSpeed += 1
-        controls.increaseSpeed(currentSpeed)
-    }, 500)
 
+    // setTimeout(() => {
+    //     clearInterval(timer)
+    //     controls.recoverSpeed()
+    // }, 10000)
 
     setTimeout(() => {
-        clearInterval(timer)
-        controls.recoverSpeed()
-    }, 10000)
+        scene.camera!.surround(points, 5, 1000)
+    }, 500)
 
     scene.add(car)
 })
@@ -46,12 +57,6 @@ modelLoader.loadGLTF('./car.glb')!.then((gltf) => {
 // scene.add(axesHelper)
 scene.add(gridHelper)
 
-const points = [
-    new Vector3(0, 0, 0),
-    new Vector3(10, 0, 0),
-    new Vector3(10, 0, -10),
-    new Vector3(0, 0, -10),
-]
 const createLine = () => {
     const curve = new CatmullRomCurve3(points, true)
 

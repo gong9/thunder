@@ -66,3 +66,79 @@ utils.moveWithRound(box2, 0.2, 100000)
 scene.render(document.querySelector('#app')!)
 scene.startFrameAnimate()
 ```
+
+## umd usage
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="./source/base.css" />
+    </style>
+</head>
+
+<body>
+    <div id="describe">基本场景，鼠标点击移入移出点击交互</div>
+    <div id="my-sandbox"></div>
+    <script>
+        javascript: (function () {
+            var script = document.createElement('script');
+            script.onload = function () {
+                var stats = new Stats();
+                document.body.appendChild(stats.dom);
+                requestAnimationFrame(function loop() {
+                    stats.update();
+                    requestAnimationFrame(loop)
+                });
+            };
+            script.src = 'https://mrdoob.github.io/stats.js/build/stats.min.js';
+            document.head.appendChild(script);
+        })()
+    </script>
+    // umd包 
+    <script src="./3d.min.js"></script>
+
+    <script script type="module">
+        const scene = new ANOV.Scene({
+            orbitControls: true,
+        })
+
+        const geometry = new ANOV.BoxGeometry(2, 2, 2)
+        const material = new ANOV.MeshBasicMaterial()
+        const box = new ANOV.Mesh(geometry, material)
+
+        const geometry2 = new ANOV.BoxGeometry(2, 2, 2)
+        const material2 = new ANOV.MeshBasicMaterial()
+        const box2 = new ANOV.Mesh(geometry2, material2)
+
+        box.addNatureEventListener('pointermove', (object3D) => {
+            object3D.material.color.set(0xFF0000)
+        })
+        box.addNatureEventListener('pointerleave', (object3D) => {
+            object3D.material.color.set('#ccc')
+        })
+
+        box2.addNatureEventListener('click', (object3D) => {
+            object3D.material.color.set(0xFF0000)
+        })
+        box2.addNatureEventListener('pointerleave', (object3D) => {
+            object3D.material.color.set('#fff')
+        })
+
+        box2.position.set(5, 0, 0)
+        scene.add(box)
+        scene.add(box2)
+
+        scene.scene.background = new ANOV.Color('#345')
+        scene.render(document.querySelector('#my-sandbox'))
+        scene.startFrameAnimate()
+    </script>
+
+</body>
+
+</html>
+```
