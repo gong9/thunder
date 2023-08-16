@@ -100,7 +100,7 @@ scene.startFrameAnimate()
         })()
     </script>
     // umd包 
-    <script src="./3d.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@anov/3d@0.0.1-alpha.5/lib/3d.min.js"></script>
 
     <script script type="module">
         const scene = new ANOV.Scene({
