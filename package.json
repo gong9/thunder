@@ -9,6 +9,7 @@
     "start:p": "cd playground && npm i && pnpm start",
     "build": "pnpm -r build",
     "prepare": "husky install",
+    "batch-importes": "ts-node ./scripts/batch-importes.ts",
     "test": "pnpm -r test",
     "changeset": "changeset",
     "release": "changeset version",
@@ -19,9 +20,14 @@
   "authors": [],
   "devDependencies": {
     "@antfu/eslint-config": "^0.38.5",
+    "@babel/core": "^7.22.10",
+    "@babel/preset-env": "^7.22.10",
+    "@babel/preset-typescript": "^7.22.5",
     "@changesets/cli": "^2.26.2",
     "@commitlint/cli": "^17.1.2",
     "@commitlint/config-conventional": "^17.1.0",
+    "@types/babel__core": "^7.20.1",
+    "@types/babel__preset-env": "^7.9.2",
     "@types/jest": "^27",
     "@types/node": "^18.14.1",
     "@umijs/lint": "^4",
@@ -30,7 +36,7 @@
     "father": "^4.1.5",
     "husky": "^8.0.1",
     "jest": "^27",
-    "ts-node": "^10",
+    "ts-node": "^10.9.1",
     "typescript": "^4"
   },
   "commitlint": {
