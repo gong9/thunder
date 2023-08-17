@@ -1,12 +1,24 @@
 {
   "name": "@anov/3d",
-  "version": "0.0.1-alpha.6",
-  "description": "",
+  "version": "0.0.1-alpha.7",
+  "description": "anov-3d",
   "author": "",
   "license": "MIT",
-  "keywords": [],
+  "keywords": [
+    "3d",
+    "webgl"
+  ],
   "types": "dist/index.d.ts",
   "module": "dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js"
+    },
+    "./examples/fonts/*": "./examples/fonts/*",
+    "./examples/jsm/*": "./examples/jsm/*",
+    "./addons/*": "./examples/jsm/*",
+    "./nodes": "./examples/jsm/nodes/Nodes.js"
+  },
   "publishConfig": {
     "access": "public"
   },
@@ -14,10 +26,11 @@
     "dist",
     "lib",
     "readme.md",
+    "examples",
     "package.json"
   ],
   "scripts": {
-    "build": "father build",
+    "build": "father build && ts-node ../../scripts/build-translate",
     "build:deps": "father prebundle",
     "test": "jest --maxWorkers 2"
   },

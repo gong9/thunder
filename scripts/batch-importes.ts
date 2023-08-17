@@ -2,6 +2,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import * as babel from '@babel/core'
 import presetEnv from '@babel/preset-env'
+import { consola } from 'consola'
 
 // @ts-ignore
 import presetTypescript from '@babel/preset-typescript'
@@ -43,7 +44,7 @@ const removeFileExtension = (filename: string) => {
 }
 
 const run = (cpath: string, outPath: string, filename: string) => {
-    console.log('正在处理...')
+    consola.info('正在处理...')
 
     const files = getJsTsFilesInDirectory(cpath)
     const noExportFiles = files.filter(file => checkExportInFile(file))
