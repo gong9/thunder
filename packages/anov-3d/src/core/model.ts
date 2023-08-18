@@ -18,9 +18,11 @@ class ModelLoader {
     const loader = new GLTFLoader()
     const dracoLoader = new DRACOLoader()
 
+    // todo: 调优
     dracoLoader.setDecoderPath('./draco/')
     dracoLoader.setDecoderConfig({ type: 'js' })
     dracoLoader.preload()
+
     loader.setDRACOLoader(dracoLoader)
 
     return new Promise((resolve, reject) => {
@@ -48,7 +50,7 @@ class ModelLoader {
   public loadFbx(url: string,
     onLoad?: (result: GLTF) => GLTF,
     onProgress?: (event: ProgressEvent) => void,
-    onError?: (event: ErrorEvent) => void) {}
+    onError?: (event: ErrorEvent) => void) { }
 }
 
 export default ModelLoader
