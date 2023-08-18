@@ -10,22 +10,17 @@ const scene = new Scene({
   orbitControls: true,
 })
 
-let transformControl: TransformControls | null = null
-
-const points = [new Vector3(2, 4, 5),
-new Vector3(- 57, 1, - 1),
-new Vector3(- 9, 17, - 6)
+const points = [new Vector3(-5, 0, 0),
+new Vector3(0, 0, 0),
+new Vector3(5, 0, 0)
 ]
 
-createTransformControls().then((control) => {
-  transformControl = control
-  scene.add(transformControl)
-
-  const curve = createControlLine(points, transformControl)
+createTransformControls(0.7).then((control) => {
+  const curve = createControlLine(points, control)
+  scene.add(control)
   scene.add(curve.mesh)
 })
 
 scene.render(document.querySelector('#app')!)
 scene.scene!.background = new Color(0xf0f0f0);
-scene.camera?.position.set(0, 0, 20);
 scene.startFrameAnimate()
