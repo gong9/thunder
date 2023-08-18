@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="./source/base.css" />
+    </style>
+</head>
+
+
+<body>
+    <div id="describe">转换控制器</div>
+    <div id="my-sandbox"></div>
+    <script type="importmap">
+    </script>
+    <script src="./lib/3d.min.js"></script>
+    <script>
+        javascript: (function () {
+            var script = document.createElement('script');
+            script.onload = function () {
+                var stats = new Stats();
+                document.body.appendChild(stats.dom);
+                requestAnimationFrame(function loop() {
+                    stats.update();
+                    requestAnimationFrame(loop)
+                });
+            };
+            script.src = 'https://mrdoob.github.io/stats.js/build/stats.min.js';
+            document.head.appendChild(script);
+        })()
+    </script>
+    <script type="module">
+        let transformControl = null
+
+        const scene = new Scene({
+            orbitControls: true,
+        })
+
+        const texture = new TextureLoader().load( 'files/crate.gif' );
+        texture.colorSpace = SRGBColorSpace;
+
+        const geometry = new BoxGeometry(2, 2, 2)
+        const material = new MeshBasicMaterial({ map: texture })
+        const box = new Mesh(geometry, material)
+
+        const geometry2 = new BoxGeometry(2, 2, 2)
+        const material2 = new MeshBasicMaterial({ map: texture })
+        const box2 = new Mesh(geometry2, material2)
+
+        box.addNatureEventListener('pointermove', (object3D) => {
+            transformControl && transformControl.attach(object3D)
+        })
+
+
+        box2.addNatureEventListener('pointermove', (object3D) => {
+            transformControl && transformControl.attach(object3D)
+        })
+
+        box2.position.set(5, 0, 0)
+        scene.add(box)
+        scene.add(box2)
+
+        scene.scene.background = new Color('#345')
+        scene.render(document.querySelector('#my-sandbox'))
+        transformControl = createTransformControls()
+        scene.startFrameAnimate()
+    </script>
+
+</body>
+
+</html>
