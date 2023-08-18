@@ -19,7 +19,7 @@ async function remove(filePath: string) {
     fs.rmdirSync(filePath)
 }
 
-async function move(srcPath: string, path: string) {
+export async function move(srcPath: string, path: string) {
     consola.info('start move...')
     consola.info('移动路径', srcPath)
     consola.info('目标路径', path)
@@ -37,5 +37,3 @@ async function move(srcPath: string, path: string) {
         consola.error(err)
     }
 }
-
-move(path.resolve(process.cwd(), './node_modules/three/examples'), path.resolve(process.cwd(), './examples'))

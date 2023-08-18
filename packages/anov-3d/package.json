@@ -30,7 +30,7 @@
     "package.json"
   ],
   "scripts": {
-    "build": "father build && ts-node ../../scripts/build-translate",
+    "build": "father build && ts-node ../../scripts/move-anov3d.ts",
     "build:deps": "father prebundle",
     "test": "jest --maxWorkers 2"
   },

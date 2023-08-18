@@ -8,6 +8,7 @@
   "scripts": {
     "start:p": "cd playground && npm i && pnpm start",
     "build": "pnpm -r build",
+    "build-doc": "pnpm -r build && ts-node ./scripts/move-example.ts",
     "prepare": "husky install",
     "batch-importes": "ts-node ./scripts/batch-importes.ts",
     "test": "pnpm -r test",
