@@ -8,5 +8,8 @@
 		"base_camera-move",
 		"base_move-line",
 		"base_label"
+	],
+	"controls": [
+		"controls_transform-controls"
 	]
 }
