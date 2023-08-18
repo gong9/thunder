@@ -1,3 +1,4 @@
+import type { Object3D } from 'three'
 import { Vector3 } from 'three'
 import mitt from 'mitt'
 
@@ -10,9 +11,60 @@ export const emitter = {
   all: emitterHandle.all,
 }
 
+interface Node {
+  children?: Node[]
+  [k: string]: any
+}
+
 /**
- * 鼠标点转换为3D点
- * todo: bugfix
+ * getAncestorsNodes
+ * @param array
+ * @param targetId
+ * @param key
+ * @returns
+ */
+export const getAncestorsNodes = <T extends Node>(array: T[], targetId: string | number, key = 'id') => {
+  const ancestorsNodes: T[] = []
+
+  const run = <U extends Node>(currentAttr: U[]) => {
+    for (let i = 0; i < currentAttr.length; i++) {
+      if (!currentAttr[i][key])
+        throw new Error(`The key ${key} is not defined in the object`)
+
+      if (currentAttr[i][key] && currentAttr[i][key] === targetId)
+        return true
+
+      if (currentAttr[i].children && Array.isArray(currentAttr[i].children)) {
+        const endRecursiveLoop = run(currentAttr[i].children!)
+        if (endRecursiveLoop) {
+          ancestorsNodes.push(currentAttr[i] as any as T)
+          return true
+        }
+        run(currentAttr[i].children!)
+      }
+    }
+  }
+
+  run<T>(array)
+
+  return ancestorsNodes
+}
+
+export const getObject3dAncestorsNodes = (object3d: Object3D) => {
+  const ancestorsNodes: Object3D[] = []
+
+  let currentObject3d = object3d
+
+  while (currentObject3d.parent) {
+    ancestorsNodes.push(currentObject3d.parent)
+    currentObject3d = currentObject3d.parent
+  }
+
+  return ancestorsNodes
+}
+
+/**
+ * mousePointTo3DPoint
  * @param mouseX
  * @param mouseY
  * @param camera

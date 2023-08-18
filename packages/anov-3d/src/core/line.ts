@@ -3,6 +3,8 @@ import type { TransformControls } from './control/transformControls'
 import Mesh from './mesh'
 import globalObjectManage from './global'
 
+const point = new Vector3(0, 0, 0)
+
 const createSplineControlObject3d = (position: Vector3, transformControl: TransformControls, width = 1, height = 1, depth = 1) => {
     const boxGeometry = new BoxGeometry(width, height, depth)
     const material = new MeshBasicMaterial({ color: Math.random() * 0xFFFFFF })
@@ -36,10 +38,10 @@ const createCatmullRomCurve3 = (positions: Vector3[]) => {
 }
 
 const updateCatmullRomCurve3 = (curve: CatmullRomCurve3WithMesh) => {
-    const point = new Vector3()
     const splineMesh = curve.mesh
     const position = splineMesh.geometry.attributes.position
 
+    // update 200 points
     for (let i = 0; i < 200; i++) {
         const t = i / (200 - 1)
         curve.getPoint(t, point)
@@ -65,6 +67,10 @@ export const createControlLine = (points: Vector3[], transformControl: Transform
     const curve = createCatmullRomCurve3(points)
 
     updateCatmullRomCurve3(curve)
+
+    transformControl.addEventListener('objectChange', () => {
+        updateCatmullRomCurve3(curve)
+    })
 
     return curve
 }
