@@ -1,6 +1,6 @@
 import type { Scene } from 'three'
 import type { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import type { TransformControls } from 'three/examples/jsm/controls/TransformControls.js'
+import type { TransformControls } from './control/transformControls'
 import type { PerspectiveCamera } from './camera'
 
 class GlobalObjectManage {
@@ -9,7 +9,7 @@ class GlobalObjectManage {
   public camera: PerspectiveCamera | null = null
   public domElement: HTMLElement | null = null
   public orbitControls: OrbitControls | null = null
-  public transformControls: TransformControls | null = null
+  public transformControls: TransformControls[] = []
   constructor() {
 
   }
@@ -31,7 +31,7 @@ class GlobalObjectManage {
   }
 
   public setTransformControls(transformControls: TransformControls) {
-    this.transformControls = transformControls
+    this.transformControls.push(transformControls)
   }
 
   public setTriggerClickState(state: boolean) {

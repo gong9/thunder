@@ -1,6 +1,5 @@
 // control
 export { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-export { TransformControls } from 'three/examples/jsm/controls/TransformControls.js'
 
 // loader
 export { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'

@@ -16,13 +16,15 @@ const geometry = new BoxGeometry(2, 2, 2)
 const material = new MeshBasicMaterial({ color: 0x00FF00 })
 const box = new Mesh(geometry, material)
 
+createTransformControls().then((transformControls) => {
+  transformControl = transformControls
+  scene.add(transformControl)
+})
 
 box.addNatureEventListener('pointermove', (object3D) => {
   transformControl && transformControl.attach(object3D)
 })
 
 scene.add(box)
-
 scene.render(document.querySelector('#app')!)
-transformControl = createTransformControls()
 scene.startFrameAnimate()
