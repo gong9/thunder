@@ -2,6 +2,8 @@ import type { Color, Object3D } from 'three'
 import { ACESFilmicToneMapping, AmbientLight, Raycaster, Scene as TScene, Vector2, Vector3, WebGLRenderer } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as TWEEN from '@tweenjs/tween.js'
+import { emitter } from '../utils'
+import Mesh from './mesh'
 import Cssrenderer from './cssRenderer'
 import globalControl from './globalControl'
 import globalObjectManage from './global'
@@ -211,7 +213,13 @@ class Scene {
    */
   private updateRaycaster() {
     this.raycaster!.setFromCamera(this.pointer, this.camera!)
-    this.raycaster!.intersectObjects(this.scene!.children)
+
+    // need expand
+    const object3ds = this.scene!.children.filter((item: Object3D) => {
+      return item instanceof Mesh
+    })
+
+    this.raycaster!.intersectObjects(object3ds)
   }
 
   private getPointerPosition(event: PointerEvent) {
@@ -226,10 +234,13 @@ class Scene {
   private onPointerPointerup(event: PointerEvent) {
     globalObjectManage.setTriggerClickState(false)
 
-    const transformControl = globalObjectManage.transformControls
+    const transformControls = globalObjectManage.transformControls
 
-    if (transformControl)
-      transformControl.detach()
+    if (transformControls.length > 0) {
+      transformControls.forEach((transformControl) => {
+        transformControl.detach()
+      })
+    }
 
     this.getPointerPosition(event)
     this.updateRaycaster()
@@ -275,8 +286,11 @@ class Scene {
   }
 
   render(target: HTMLElement) {
+    emitter.emit('before-render')
+
     let currentControlDom: HTMLElement | null = null
     const domElement = this.renderer!.domElement
+    console.log('render', 111)
 
     if (this.cssRenderer) {
       currentControlDom = this.cssRenderer.cssRenderer.domElement
@@ -296,6 +310,8 @@ class Scene {
 
     this.registerEvent(currentControlDom || domElement)
     target.addEventListener('resize', () => this.resetScene(this.camera!, this.renderer!))
+
+    emitter.emit('after-render')
   }
 
   public destroy() {

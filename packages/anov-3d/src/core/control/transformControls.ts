@@ -1,30 +1,26 @@
-import { TransformControls } from 'three/examples/jsm/controls/TransformControls.js'
+import { TransformControls as TTransformControls } from 'three/examples/jsm/controls/TransformControls.js'
 import type { Camera } from 'three'
 import globalObjectManage from '../global'
+import { emitter } from '../../utils'
 
-// class TransformControls extends TTransformControls {
-//     constructor(object: Camera, domElement?: HTMLElement) {
-//         super(object, domElement)
-//     }
+export class TransformControls extends TTransformControls {
+    constructor(object: Camera, domElement?: HTMLElement) {
+        super(object, domElement)
+    }
 
-//     public init() {
-//         const transformControl = new TransformControls(globalObjectManage.camera as Camera, globalObjectManage.domElement as HTMLElement)
+    public dispose() {
+        super.dispose()
 
-//         // todo 按需渲染时处理
-//         transformControl.addEventListener('change', () => { })
-//         transformControl.addEventListener('dragging-changed', (event) => {
-//             const controls = globalObjectManage.orbitControls
-//             if (controls)
-//                 controls.enabled = !event.value
-//         })
+        const index = globalObjectManage.transformControls.findIndex((item: TransformControls) => item === this)
 
-//         return transformControl
-//     }
-// }
+        if (index > -1)
+            globalObjectManage.transformControls.splice(index, 1)
+    }
+}
 
-export const createTransformControls = () => {
+const create = (size = 0.5) => {
     const transformControl = new TransformControls(globalObjectManage.camera as Camera, globalObjectManage.domElement as HTMLElement)
-    // todo 按需渲染时处理
+    transformControl.size = size
     transformControl.addEventListener('change', () => { })
 
     transformControl.addEventListener('dragging-changed', (event) => {
@@ -34,6 +30,28 @@ export const createTransformControls = () => {
     })
 
     globalObjectManage.setTransformControls(transformControl)
+
+    // maybe many controls
     globalObjectManage.scene!.add(transformControl)
     return transformControl
+}
+
+/**
+ * 创建TransformControls
+ * note: 不可使用await，否则会导致渲染器无法完成初始化
+ * @returns
+ */
+export const createTransformControls = (size = 0.5) => {
+    const promise = new Promise<TransformControls>((resolve) => {
+        if (!(globalObjectManage.camera && globalObjectManage.domElement)) {
+            emitter.on('after-render', () => {
+                resolve(create(size))
+            })
+        }
+        else {
+            resolve(create(size))
+        }
+    })
+
+    return promise
 }
