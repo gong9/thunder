@@ -1,5 +1,6 @@
 import { Group as TGroup } from 'three'
 import type { CubeEventType, EventHandleFn } from '../type'
+import globalObjectManage from './global'
 
 class Group extends TGroup {
   private natureEventMap: Map<CubeEventType, EventHandleFn<CubeEventType>[]> = new Map()
@@ -43,11 +44,58 @@ class Group extends TGroup {
   }
 
   /**
-   * 由子孙向上冒泡触发
+ * handle intersect event
+ * @param intersects
+ * @param eventType
+ */
+  private handleClick(natureEvent: EventHandleFn<CubeEventType>[]) {
+    if (!globalObjectManage.triggerClick)
+      return
+
+    // get nature event
+    natureEvent.forEach((handlefn) => {
+      // handlefn(this)
+    })
+  }
+
+  /**
+   * handle pointermove event
+   * @param intersects
+   * @param natureEvent
+   */
+  private handlePointerMove(natureEvent: EventHandleFn<CubeEventType>[]) {
+    natureEvent.forEach((handlefn) => {
+      // handlefn(this)
+    })
+  }
+
+  /**
+   * handle pointerleave event
+   * @param intersects
+   * @param natureEvent
+   */
+  private handlePointerleave() {
+    const pointerleaveCallback = this.natureEventMap.get('pointerleave')
+    pointerleaveCallback && pointerleaveCallback.length > 0 && pointerleaveCallback.forEach((handlefn) => {
+      // handlefn(this)
+    },
+    )
+  }
+
+  /**
+   * raycastGroup
    * handle intersect event
    */
   public raycastGroup() {
-    //
+    // const clickCallback = this.natureEventMap.get('click')
+    // const pointerupCallback = this.natureEventMap.get('pointerup')
+    // const pointerdownCallback = this.natureEventMap.get('pointerdown')
+    // const pointermoveCallback = this.natureEventMap.get('pointermove')
+
+    // clickCallback && clickCallback.length > 0 && this.handleClick(clickCallback)
+    // pointerupCallback && pointerupCallback.length > 0 && this.handleClick(pointerupCallback)
+    // pointerdownCallback && pointerdownCallback.length > 0 && this.handleClick(pointerdownCallback)
+    // pointermoveCallback && pointermoveCallback.length > 0 && this.handlePointerMove(pointermoveCallback)
   }
 }
 

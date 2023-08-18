@@ -37,7 +37,7 @@ const create = (size = 0.5) => {
 }
 
 /**
- * 创建TransformControls
+ * create TransformControls
  * note: 不可使用await，否则会导致渲染器无法完成初始化
  * @returns
  */
