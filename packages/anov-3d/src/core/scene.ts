@@ -88,6 +88,7 @@ class Scene {
   private defaultInit() {
     const camera = this.initDefaultPerspectiveCamera()
     this.camera = camera
+    globalObjectManage.setCamera(camera)
     this.scene!.add(camera)
 
     const renderer = this.initRenderer()
@@ -224,6 +225,12 @@ class Scene {
    */
   private onPointerPointerup(event: PointerEvent) {
     globalObjectManage.setTriggerClickState(false)
+
+    const transformControl = globalObjectManage.transformControls
+
+    if (transformControl)
+      transformControl.detach()
+
     this.getPointerPosition(event)
     this.updateRaycaster()
   }
@@ -269,6 +276,7 @@ class Scene {
 
   render(target: HTMLElement) {
     let currentControlDom: HTMLElement | null = null
+    const domElement = this.renderer!.domElement
 
     if (this.cssRenderer) {
       currentControlDom = this.cssRenderer.cssRenderer.domElement
@@ -277,13 +285,16 @@ class Scene {
       currentControlDom.style.top = '0'
     }
 
-    if (this.opts.orbitControls)
-      this.controls = new OrbitControls(this.camera!, currentControlDom || this.renderer!.domElement)
+    if (this.opts.orbitControls) {
+      this.controls = new OrbitControls(this.camera!, currentControlDom || domElement)
+      globalObjectManage.setOrbitControls(this.controls)
+    }
 
-    target.appendChild(this.renderer!.domElement)
+    globalObjectManage.setDomElement(currentControlDom || domElement)
 
-    this.registerEvent(currentControlDom || this.renderer!.domElement)
+    target.appendChild(domElement)
 
+    this.registerEvent(currentControlDom || domElement)
     target.addEventListener('resize', () => this.resetScene(this.camera!, this.renderer!))
   }
 

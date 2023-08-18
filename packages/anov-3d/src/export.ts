@@ -5,6 +5,7 @@ import { PerspectiveCamera } from './core/camera'
 import ModelLoader from './core/model'
 import { ModelType } from './commonEnu'
 import { createLabel } from './utils/createLabel'
+import { createTransformControls } from './core/control/transformControls'
 import { Direction, moveLine, moveTo, moveWithLine, moveWithRound } from './utils/move'
 import { appendChildren, create, createElement, setAttributes, setClassList, setEventListeners } from './utils/createElement'
 
@@ -35,6 +36,7 @@ export {
     createLabel,
     ModelType,
     Direction,
+    createTransformControls,
     utils,
     dom,
 }
