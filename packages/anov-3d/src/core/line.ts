@@ -1,7 +1,7 @@
 import { BoxGeometry, BufferAttribute, BufferGeometry, CatmullRomCurve3, Line, LineBasicMaterial, MeshBasicMaterial, Vector3 } from 'three'
 import type { TransformControls } from './control/transformControls'
 import Mesh from './mesh'
-import globalObjectManage from './global'
+import globalObjectManage from './global/global'
 
 const point = new Vector3(0, 0, 0)
 

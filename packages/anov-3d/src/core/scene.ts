@@ -5,8 +5,8 @@ import * as TWEEN from '@tweenjs/tween.js'
 import { emitter } from '../utils'
 import Mesh from './mesh'
 import Cssrenderer from './cssRenderer'
-import globalControl from './globalControl'
-import globalObjectManage from './global'
+import globalControl from './global/globalControl'
+import globalObjectManage from './global/global'
 import { PerspectiveCamera } from './camera'
 
 interface Anov3DSceneOptions {
@@ -190,6 +190,9 @@ class Scene {
 
     if (frameAnimate)
       frameAnimate(this.renderer)
+
+    if (globalObjectManage.frameCallbacks.size > 0)
+      globalObjectManage.frameCallbacks.forEach((cb) => { cb() })
 
     globalControl.update()
     TWEEN.update()

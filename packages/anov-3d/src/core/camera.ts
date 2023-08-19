@@ -1,7 +1,7 @@
 import type { Object3D, Vector3 } from 'three'
 import { BufferGeometry, CatmullRomCurve3, Line, LineBasicMaterial, PerspectiveCamera as TPerspectiveCamera } from 'three'
 import { Direction, moveTo, moveWithLine } from '../utils/move'
-import globalObjectManage from './global'
+import globalObjectManage from './global/global'
 
 class PerspectiveCamera extends TPerspectiveCamera {
   constructor(fov: number, aspect: number, near: number, far: number) {

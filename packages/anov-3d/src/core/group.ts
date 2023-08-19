@@ -1,6 +1,6 @@
 import { Group as TGroup } from 'three'
 import type { CubeEventType, EventHandleFn } from '../type'
-import globalObjectManage from './global'
+import globalObjectManage from './global/global'
 
 class Group extends TGroup {
   private natureEventMap: Map<CubeEventType, EventHandleFn<CubeEventType>[]> = new Map()

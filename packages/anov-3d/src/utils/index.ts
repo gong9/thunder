@@ -17,7 +17,7 @@ interface Node {
 }
 
 /**
- * getAncestorsNodes
+ * get ancestors nodes
  * @param array
  * @param targetId
  * @param key
@@ -50,6 +50,11 @@ export const getAncestorsNodes = <T extends Node>(array: T[], targetId: string |
   return ancestorsNodes
 }
 
+/**
+ * get object3d ancestors nodes
+ * @param object3d
+ * @returns
+ */
 export const getObject3dAncestorsNodes = (object3d: Object3D) => {
   const ancestorsNodes: Object3D[] = []
 

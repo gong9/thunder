@@ -1,6 +1,6 @@
 import { TransformControls as TTransformControls } from 'three/examples/jsm/controls/TransformControls.js'
 import type { Camera } from 'three'
-import globalObjectManage from '../global'
+import globalObjectManage from '../global/global'
 import { emitter } from '../../utils'
 
 export class TransformControls extends TTransformControls {

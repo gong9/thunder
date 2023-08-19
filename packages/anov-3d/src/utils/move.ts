@@ -2,8 +2,8 @@ import type { Object3D, Vector3 } from 'three'
 import { BufferGeometry, CatmullRomCurve3, Line, LineBasicMaterial } from 'three'
 import * as TWEEN from '@tweenjs/tween.js'
 import { PerspectiveCamera } from '../core/camera'
-import globalObjectManage from '../core/global'
-import globalControl from '../core/globalControl'
+import globalObjectManage from '../core/global/global'
+import globalControl from '../core/global/globalControl'
 
 enum AnimationMethod { }
 

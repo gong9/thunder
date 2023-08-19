@@ -3,7 +3,7 @@ import { Mesh as TMesh } from 'three'
 import type { CubeEventType, EventHandleFn } from '../type'
 import { getObject3dAncestorsNodes } from '../utils'
 import Group from './group'
-import globalObjectManage from './global'
+import globalObjectManage from './global/global'
 
 class Mesh extends TMesh {
   private natureEventMap: Map<CubeEventType, EventHandleFn<CubeEventType>[]> = new Map()
