@@ -8,8 +8,6 @@
     "3d",
     "webgl"
   ],
-  "types": "dist/index.d.ts",
-  "module": "dist/index.js",
   "exports": {
     ".": {
       "import": "./dist/index.js"
@@ -19,6 +17,8 @@
     "./addons/*": "./examples/jsm/*",
     "./nodes": "./examples/jsm/nodes/Nodes.js"
   },
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
   "publishConfig": {
     "access": "public"
   },
@@ -34,14 +34,14 @@
     "build:deps": "father prebundle",
     "test": "jest --maxWorkers 2"
   },
-  "devDependencies": {
-    "@types/lodash": "^4.14.196"
-  },
   "dependencies": {
     "@tweenjs/tween.js": "^21.0.0",
+    "@types/three": "^0.155.0",
     "lodash": "^4.17.21",
     "mitt": "^3.0.1",
-    "three": "^0.155.0",
-    "@types/three": "^0.155.0"
+    "three": "^0.155.0"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.196"
   }
 }

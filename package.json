@@ -6,7 +6,7 @@
   "license": "MIT",
   "keywords": [],
   "scripts": {
-    "start:p": "cd playground && npm i && pnpm start",
+    "start:p": "cd playground && pnpm start",
     "build": "pnpm -r build",
     "build-doc": "pnpm -r build && ts-node ./scripts/move-example.ts",
     "prepare": "husky install",

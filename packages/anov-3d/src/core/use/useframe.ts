@@ -5,9 +5,9 @@ import globalObjectManage from '../global/global'
  * @param cb
  */
 const useframe = (cb: () => void) => {
-    globalObjectManage.addFrameCallback(cb)
+  globalObjectManage.addFrameCallback(cb)
 
-    return globalObjectManage.removeFrameCallback.bind(globalObjectManage, cb)
+  return globalObjectManage.removeFrameCallback.bind(globalObjectManage, cb)
 }
 
 export default useframe

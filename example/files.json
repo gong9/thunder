@@ -11,5 +11,9 @@
 	],
 	"controls": [
 		"controls_transform-controls"
+	],
+	"points": [
+		"points_rain",
+		"points_snow"
 	]
 }

@@ -4,4 +4,5 @@ lib/
 .parcel-cache/
 .DS_Store
 packages/anov-3d/examples/
+lib-utils
 

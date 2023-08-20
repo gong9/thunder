@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="./source/base.css" />
+</head>
+
+
+<body>
+    <div id="describe">下雨</div>
+    <div id="my-sandbox"></div>
+    <script type="importmap">
+    </script>
+    <script src="./lib/3d.min.js"></script>
+    <script src="./lib-utils/3d-utils.min.js"></script>
+    <script>
+        javascript: (function () {
+            var script = document.createElement('script');
+            script.onload = function () {
+                var stats = new Stats();
+                document.body.appendChild(stats.dom);
+                requestAnimationFrame(function loop() {
+                    stats.update();
+                    requestAnimationFrame(loop)
+                });
+            };
+            script.src = 'https://mrdoob.github.io/stats.js/build/stats.min.js';
+            document.head.appendChild(script);
+        })()
+    </script>
+    <script type="module">
+        const scene = new Scene({
+            orbitControls: true,
+            defCameraOps: {
+                position: new Vector3(0, 100, -200)
+            }
+        })
+
+        const [rain, rainAnimation] = createRain(2, 1000, {}, 1, 600)
+
+        scene.add(rain)
+        rainAnimation()
+
+        scene.render(document.querySelector('#my-sandbox'))
+        scene.startFrameAnimate()
+    </script>
+
+</body>
+
+</html>

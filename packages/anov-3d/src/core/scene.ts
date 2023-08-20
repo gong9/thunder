@@ -155,7 +155,7 @@ class Scene {
       rendererOps.fov || 90,
       window.innerWidth / window.innerHeight,
       rendererOps.near || 0.1,
-      rendererOps.far || 1000,
+      rendererOps.far || 5000,
     )
 
     const position = rendererOps.position || new Vector3(0, 10, 10)

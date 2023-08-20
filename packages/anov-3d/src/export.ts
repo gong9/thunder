@@ -9,37 +9,45 @@ import { createControlLine } from './core/line'
 import { TransformControls, createTransformControls } from './core/control/transformControls'
 import { Direction, moveLine, moveTo, moveWithLine, moveWithRound } from './utils/move'
 import { appendChildren, create, createElement, setAttributes, setClassList, setEventListeners } from './utils/createElement'
+import globalObjectManage from './core/global/global'
+import useframe from './core/use/useframe'
 
 const utils = {
-    moveTo,
-    moveLine,
-    moveWithRound,
-    moveWithLine,
+  moveTo,
+  moveLine,
+  moveWithRound,
+  moveWithLine,
 }
 
 const dom = {
-    appendChildren,
-    create,
-    createElement,
-    setAttributes,
-    setClassList,
-    setEventListeners,
+  appendChildren,
+  create,
+  createElement,
+  setAttributes,
+  setClassList,
+  setEventListeners,
+}
+
+const use = {
+  useframe,
 }
 
 export * from 'three'
 export * from './threeCell'
 
 export {
-    Scene,
-    Mesh,
-    PerspectiveCamera,
-    ModelLoader,
-    TransformControls,
-    createControlLine,
-    createLabel,
-    ModelType,
-    Direction,
-    createTransformControls,
-    utils,
-    dom,
+  Scene,
+  Mesh,
+  PerspectiveCamera,
+  ModelLoader,
+  TransformControls,
+  createControlLine,
+  createLabel,
+  ModelType,
+  Direction,
+  createTransformControls,
+  utils,
+  dom,
+  use,
+  globalObjectManage,
 }

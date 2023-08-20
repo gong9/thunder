@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="./source/base.css" />
+</head>
+
+
+<body>
+    <div id="describe">下雪</div>
+    <div id="my-sandbox"></div>
+    <script type="importmap">
+    </script>
+    <script src="./lib/3d.min.js"></script>
+    <script src="./lib-utils/3d-utils.min.js"></script>
+    <script>
+        javascript: (function () {
+            var script = document.createElement('script');
+            script.onload = function () {
+                var stats = new Stats();
+                document.body.appendChild(stats.dom);
+                requestAnimationFrame(function loop() {
+                    stats.update();
+                    requestAnimationFrame(loop)
+                });
+            };
+            script.src = 'https://mrdoob.github.io/stats.js/build/stats.min.js';
+            document.head.appendChild(script);
+        })()
+    </script>
+    <script type="module">
+        const scene = new Scene({
+            orbitControls: true,
+            defCameraOps: {
+                position: new Vector3(0, 200, -350)
+            }
+        })
+
+
+        const [snow, snowAnimation] = createSnow(10, 1000, {
+            x: 1,
+            y: 20,
+        }, 1, 600)
+
+        scene.add(snow)
+        snowAnimation()
+
+        scene.render(document.querySelector('#my-sandbox'))
+        scene.startFrameAnimate()
+    </script>
+
+</body>
+
+</html>
