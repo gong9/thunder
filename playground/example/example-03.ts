@@ -1,4 +1,4 @@
-import { ModelLoader, Scene } from '../../packages/anov-3d/src/index'
+import { ModelLoader, Scene } from '@anov/3d'
 
 /**
  * example-03

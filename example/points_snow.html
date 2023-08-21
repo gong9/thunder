@@ -41,13 +41,12 @@
         })
 
 
-        const [snow, snowAnimation] = createSnow(10, 1000, {
+        const [start] = createSnow(10, 1000, {
             x: 1,
             y: 20,
         }, 1, 600)
 
-        scene.add(snow)
-        snowAnimation()
+        start()
 
         scene.render(document.querySelector('#my-sandbox'))
         scene.startFrameAnimate()
