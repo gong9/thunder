@@ -15,5 +15,8 @@
 	"points": [
 		"points_rain",
 		"points_snow"
+	],
+	"move":[
+		"move_car-line"
 	]
 }
