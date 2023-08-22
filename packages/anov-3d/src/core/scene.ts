@@ -293,7 +293,6 @@ class Scene {
 
     let currentControlDom: HTMLElement | null = null
     const domElement = this.renderer!.domElement
-    console.log('render', 111)
 
     if (this.cssRenderer) {
       currentControlDom = this.cssRenderer.cssRenderer.domElement
