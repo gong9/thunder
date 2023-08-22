@@ -40,10 +40,9 @@
             }
         })
 
-        const [rain, rainAnimation] = createRain(2, 1000, {}, 1, 600)
+        const [start, stop] = createRain(2, 1000, {}, 1, 600)
 
-        scene.add(rain)
-        rainAnimation()
+        start()
 
         scene.render(document.querySelector('#my-sandbox'))
         scene.startFrameAnimate()

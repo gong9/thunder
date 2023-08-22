@@ -18,13 +18,16 @@ const material = new MeshBasicMaterial({ color: 0x00FF00 })
 const box = new Mesh(geometry, material)
 
 
-const [rain, rainAnimation] = createSnow(10, 1000, {
+const [start, stop] = createSnow(10, 1000, {
     x: 1,
     y: 20,
 }, 1, 600)
 
-scene.add(rain)
-rainAnimation()
+
+start()
+setTimeout(()=>{
+    stop()
+},2000)
 
 scene.add(box)
 console.log(scene.scene?.children)

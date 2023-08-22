@@ -1,4 +1,4 @@
-import { BufferGeometry, Points, PointsMaterial, TextureLoader, Vector3, globalObjectManage } from '@anov/3d'
+import { BufferGeometry, Points, PointsMaterial, TextureLoader, Vector3 } from '@anov/3d'
 import type { SpeedType } from '../rain'
 
 interface EnvPointsOptions {
@@ -18,7 +18,7 @@ export type AVector3 = Vector3 & {
 
 class EnvironmentPoints {
   private opts: EnvPointsOptions = {} as EnvPointsOptions
-  private points: AVector3[] = []
+  public points: AVector3[] = []
 
   public material: PointsMaterial | null = null
   public geometry: BufferGeometry | null = null
