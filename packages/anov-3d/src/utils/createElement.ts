@@ -1,3 +1,5 @@
+import { handleCamelCaseString } from '../utils'
+
 export interface OpsType {
   textContent?: string
   innerHTML?: string
@@ -5,6 +7,9 @@ export interface OpsType {
   class?: string
   classList?: string[]
   attrs?: {
+    [key: string]: string
+  }
+  style?: {
     [key: string]: string
   }
   events?: {
@@ -22,6 +27,15 @@ export const setAttributes = (el: HTMLElement, attrs: OpsType['attrs'] = {}) => 
     if (attrs[attrName])
       el.setAttribute(attrName, attrs[attrName])
   })
+}
+
+const setStyle = (el: HTMLElement, style: OpsType['style'] = {}) => {
+  const styleString = Object.keys(style).reduce((pre: string, cur: string) => {
+    return `${pre} ${handleCamelCaseString(cur)}:${style[cur]};`
+  },
+  '')
+
+  el.setAttribute('style', styleString)
 }
 
 /**
@@ -63,6 +77,8 @@ export const appendChildren = (node: HTMLElement, children: HTMLElement[]) => {
  */
 export const createElement = (tag: string, options: OpsType = {}, children: HTMLElement[] = []) => {
   const result = document.createElement(tag)
+  const parent = document.createElement('div')
+  parent.appendChild(result)
 
   if (options.textContent)
     result.textContent = options.textContent
@@ -76,10 +92,11 @@ export const createElement = (tag: string, options: OpsType = {}, children: HTML
   setAttributes(result, options.attrs)
   setClassList(result, options.classList || [])
   setEventListeners(result, options.events)
+  setStyle(result, options.style || {})
 
   appendChildren(result, children)
 
-  return result
+  return parent
 }
 /**
  * create

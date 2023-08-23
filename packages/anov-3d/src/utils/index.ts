@@ -69,6 +69,29 @@ export const getObject3dAncestorsNodes = (object3d: Object3D) => {
 }
 
 /**
+ * handle small hump
+ * @param camelCaseString
+ * @returns
+ */
+export const handleCamelCaseString = (camelCaseString: string) => {
+  let result = ''
+
+  for (let i = 0; i < camelCaseString.length; i++) {
+    const char = camelCaseString[i]
+
+    if (char === char.toUpperCase())
+      result += `-${char.toLowerCase()}`
+    else
+      result += char
+  }
+
+  if (result && result[0] === '-')
+    result = result.slice(1)
+
+  return result
+}
+
+/**
  * mousePointTo3DPoint
  * @param mouseX
  * @param mouseY

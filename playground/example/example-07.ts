@@ -1,5 +1,5 @@
 
-import { BoxGeometry, MeshBasicMaterial, Color, Mesh, Scene, dom, createLabel } from '../../packages/anov-3d/src/index'
+import { BoxGeometry, MeshBasicMaterial, Color, Mesh, Scene, dom, createLabel } from '@anov/3d'
 
 /**
  * add label
@@ -23,7 +23,10 @@ box.addNatureEventListener('pointerleave', (object3D) => {
 
 const labelObject2d = createLabel(dom.createElement("div", {
   id: "el-id",
-  class: "class-a class-b",
+  style: {
+    color: 'red',
+    fontSize: '50px',
+  },
   textContent: "测试",
 }))
 
