@@ -1,5 +1,5 @@
 import type { Color, Object3D } from 'three'
-import { ACESFilmicToneMapping, AmbientLight, Raycaster, Scene as TScene, Vector2, Vector3, WebGLRenderer } from 'three'
+import { ACESFilmicToneMapping, AmbientLight, CubeTextureLoader, Raycaster, Scene as TScene, Vector2, Vector3, WebGLRenderer } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as TWEEN from '@tweenjs/tween.js'
 import { emitter } from '../utils'
@@ -63,7 +63,15 @@ interface Anov3DSceneOptions {
    */
   css3DRenderer?: boolean
 
+  background?: {
+    imgs?: Tuple<string>
+    color?: Color
+    panorama?: string
+  }
+
 }
+
+type Tuple<TItem> = [TItem, ...TItem[]] & { length: 6 }
 
 class Scene {
   private opts: Anov3DSceneOptions = {}
@@ -106,6 +114,9 @@ class Scene {
       this.ambientLight = ambientLight
       this.scene!.add(ambientLight)
     }
+
+    if (this.opts.background?.imgs)
+      this.initSkyBox(this.opts.background?.imgs)
   }
 
   /**
@@ -144,6 +155,21 @@ class Scene {
     const cssRenderer = new Cssrenderer('base')
     cssRenderer.setSize(window.innerWidth, window.innerHeight)
     return cssRenderer
+  }
+
+  private initSkyBox(imgs: Tuple<string>) {
+    const cubeTextureLoader = new CubeTextureLoader()
+
+    cubeTextureLoader.load([
+      imgs[0],
+      imgs[1],
+      imgs[2],
+      imgs[3],
+      imgs[4],
+      imgs[5],
+    ], (texture) => {
+      this.scene!.background = texture
+    })
   }
 
   /**
