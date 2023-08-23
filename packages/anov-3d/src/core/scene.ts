@@ -16,6 +16,7 @@ interface Anov3DSceneOptions {
   rendererOps?: {
     antialias?: boolean
     logarithmicDepthBuffer?: boolean
+    alpha?: boolean
   }
 
   /**
@@ -140,6 +141,7 @@ class Scene {
     const renderer = new WebGLRenderer({
       antialias: rendererOps.antialias ?? true,
       logarithmicDepthBuffer: rendererOps.logarithmicDepthBuffer ?? true,
+      alpha: rendererOps.alpha ?? false,
     })
 
     renderer.setSize(window.innerWidth, window.innerHeight)
