@@ -1,6 +1,8 @@
+import type { Group } from 'three'
 import type { GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 
 class ModelLoader {
   /**
@@ -48,9 +50,35 @@ class ModelLoader {
    * @param onError
    */
   public loadFbx(url: string,
-    onLoad?: (result: GLTF) => GLTF,
+    onLoad?: (result: Group) => Group,
     onProgress?: (event: ProgressEvent) => void,
-    onError?: (event: ErrorEvent) => void) { }
+    onError?: (event: ErrorEvent) => void) {
+    const fbxLoader = new FBXLoader()
+
+    return new Promise((resolve, reject) => {
+      fbxLoader.load(url,
+        (fbx) => {
+          onLoad ? resolve(onLoad(fbx)) : resolve(fbx)
+        },
+        (xhr) => {
+          onProgress && onProgress(xhr)
+        },
+        (err) => {
+          onError && onError(err)
+          reject(err)
+        })
+    })
+  }
+
+  /**
+   * parse fbx buffer
+   * @param buffer
+   * @param path
+   * @returns
+   */
+  public parseFbxBuffer(buffer: ArrayBuffer | string, path: string) {
+    return new FBXLoader().parse(buffer, path)
+  }
 }
 
 export default ModelLoader

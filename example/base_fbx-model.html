@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="./source/base.css" />
+</head>
+
+
+<body>
+    <div id="describe">fbx模型示例-北京城市白模</div>
+    <div id="my-sandbox"></div>
+    <script type="importmap">
+    </script>
+    <script src="./lib/3d.min.js"></script>
+    <script>
+        javascript: (function () {
+            var script = document.createElement('script');
+            script.onload = function () {
+                var stats = new Stats();
+                document.body.appendChild(stats.dom);
+                requestAnimationFrame(function loop() {
+                    stats.update();
+                    requestAnimationFrame(loop)
+                });
+            };
+            script.src = 'https://mrdoob.github.io/stats.js/build/stats.min.js';
+            document.head.appendChild(script);
+        })()
+    </script>
+    <script type="module">
+        const scene = new Scene({
+            orbitControls: true,
+            ambientLight: true,
+            defCameraOps: {
+                position: new Vector3(0, 100, 800)
+            }
+        })
+
+        const modelLoader = new ModelLoader()
+
+        // fbx
+        modelLoader.loadFbx('./files/beijing.fbx').then((object) => {
+            scene.add(object)
+        })
+
+        scene.scene.background = new Color('#345')
+
+        scene.render(document.querySelector('#my-sandbox'))
+        scene.startFrameAnimate()
+    </script>
+
+</body>
+
+</html>
