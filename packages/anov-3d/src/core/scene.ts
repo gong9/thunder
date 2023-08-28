@@ -1,4 +1,4 @@
-import type { Color, Object3D } from 'three'
+import type { Color, Intersection, Object3D, ToneMapping } from 'three'
 import { ACESFilmicToneMapping, AmbientLight, CubeTextureLoader, Raycaster, Scene as TScene, Vector2, Vector3, WebGLRenderer } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as TWEEN from '@tweenjs/tween.js'
@@ -17,6 +17,14 @@ interface Anov3DSceneOptions {
     antialias?: boolean
     logarithmicDepthBuffer?: boolean
     alpha?: boolean
+    shadowMap?: boolean
+    toneMapping?: ToneMapping
+    toneMappingExposure?: number
+    size?: {
+      width: number
+      height: number
+      updateStyle?: boolean
+    }
   }
 
   /**
@@ -37,6 +45,13 @@ interface Anov3DSceneOptions {
     position?: Vector3
     color?: Color
     intensity?: number
+  }
+
+  /**
+   * 默认射线检测配置
+   */
+  defRaycasterOps?: {
+    recursive?: boolean
   }
 
   /**
@@ -144,10 +159,10 @@ class Scene {
       alpha: rendererOps.alpha ?? false,
     })
 
-    renderer.setSize(window.innerWidth, window.innerHeight)
-    renderer.shadowMap.enabled = true
-    renderer.toneMapping = ACESFilmicToneMapping
-    renderer.toneMappingExposure = 0.3
+    renderer.setSize(rendererOps.size?.width ?? window.innerWidth, rendererOps.size?.height ?? window.innerHeight, rendererOps.size?.updateStyle ?? false)
+    renderer.shadowMap.enabled = rendererOps.shadowMap ?? true
+    renderer.toneMapping = (rendererOps.toneMapping ?? ACESFilmicToneMapping) as ToneMapping
+    renderer.toneMappingExposure = rendererOps.toneMappingExposure ?? 0.3
     renderer.setPixelRatio(window.devicePixelRatio)
 
     return renderer
@@ -243,6 +258,7 @@ class Scene {
    * update raycaster
    */
   private updateRaycaster() {
+    const raycasterOps = this.opts.defRaycasterOps || {}
     this.raycaster!.setFromCamera(this.pointer, this.camera!)
 
     // need expand
@@ -250,7 +266,16 @@ class Scene {
       return item instanceof Mesh
     })
 
-    this.raycaster!.intersectObjects(object3ds)
+    // todo 冒泡的问题
+    this.raycaster!.intersectObjects(object3ds, raycasterOps.recursive ?? false)
+
+    // group的拾取，构建一个mesh？
+
+    // const intersects = this.raycaster!.intersectObjects(this.scene!.children, false)
+    // globalObjectManage.groupCatch.forEach((group) => {
+    //   if (intersects.length > 0)
+    //     group.raycastGroup(intersects as Intersection<Object3D<Event>>[])
+    // })
   }
 
   private getPointerPosition(event: PointerEvent) {

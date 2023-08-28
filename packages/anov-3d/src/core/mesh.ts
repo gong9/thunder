@@ -87,18 +87,6 @@ class Mesh extends TMesh {
   }
 
   /**
-   * bubbling
-   */
-  private bubbling() {
-    const ancestorsNodes = getObject3dAncestorsNodes(this)
-
-    ancestorsNodes.forEach((node) => {
-      if (node instanceof Group)
-        node.raycastGroup()
-    })
-  }
-
-  /**
    * handle mesh raycaster
    * @param raycaster
    * @param intersects
@@ -119,9 +107,6 @@ class Mesh extends TMesh {
 
     if (object === this) {
       this.entered = true
-
-      // bubbling
-      // this.bubbling()
 
       clickCallback && clickCallback.length > 0 && this.handleClick(clickCallback, intersect)
       pointerupCallback && pointerupCallback.length > 0 && this.handleClick(pointerupCallback, intersect)
