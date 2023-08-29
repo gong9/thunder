@@ -139,7 +139,7 @@
                 side: DoubleSide,
                 linewidth: 0.02,
                 dashed: false,
-                
+
             });
             const line = new Line2(geometry, matLine);
             scene.add(line);
@@ -149,6 +149,7 @@
         const scene = new Scene({
             orbitControls: true,
             ambientLight: true,
+            cutout: true,
             background: {
                 imgs: [
                     './files/imgs/posx.jpg',
@@ -165,17 +166,26 @@
         })
 
         initWall()
+
         const curve = initLine()
+        const minCamera = new PerspectiveCamera(90, 1, 0.1, 1000)
+        scene.cutoutCamera = minCamera
 
         modelLoader.loadGLTF('./files/car.glb').then((gltf) => {
             const car = (gltf).scene
             car.scale.set(15, 15, 15)
 
-            const controls = utils.moveWithLine(car, curve, 1000)
+            utils.moveWithLine(car, curve, 1000)
+            utils.moveWithLine(minCamera, curve, 1000, {
+                x: 30,
+                y: 30,
+                z: 30
+
+            })
 
             scene.add(car)
         })
-
+        scene.add(minCamera)
         scene.render(document.querySelector('#my-sandbox'))
         scene.startFrameAnimate()
     </script>

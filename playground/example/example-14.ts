@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { Mesh, Vector3, Scene, utils, ModelLoader, BoxGeometry, MeshPhongMaterial, Vector3, DoubleSide, Color, CatmullRomCurve3, LineGeometry, LineMaterial, Line2 } from '../../packages/anov-3d/src/index'
+import { Mesh, Vector3, Scene, utils, ModelLoader, BoxGeometry, MeshPhongMaterial, Vector3, DoubleSide, Color, CatmullRomCurve3, LineGeometry, LineMaterial, Line2, PerspectiveCamera } from '../../packages/anov-3d/src/index'
 
 const modelLoader = new ModelLoader()
 
@@ -119,8 +119,15 @@ const scene = new Scene({
     ambientLight: true,
     defCameraOps: {
         position: new Vector3(0, 800, -300)
-    }
+    },
+    cutout: true,
 })
+
+
+const minCamera = new PerspectiveCamera(90, 1, 0.1, 1000)
+
+
+scene.cutoutCamera = minCamera
 
 initWall()
 const curve = initLine()
@@ -128,11 +135,16 @@ const curve = initLine()
 modelLoader.loadGLTF('./car.glb')!.then((gltf) => {
     const car = (gltf as any).scene
     car.scale.set(15, 15, 15)
+    utils.moveWithLine(car, curve as any, 1000)
+    utils.moveWithLine(minCamera, curve as any, 1000, {
+        x: 30,
+        y: 30,
+        z: 30
 
-    const controls = utils.moveWithLine(car, curve as any, 1000)
-
+    })
     scene.add(car)
 })
 
+scene.add(minCamera)
 scene.render(document.querySelector('#app')!)
 scene.startFrameAnimate()

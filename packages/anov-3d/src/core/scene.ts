@@ -61,6 +61,9 @@ interface SceneOptions {
   /** 是否开启css3d渲染 */
   css3DRenderer?: boolean
 
+  /** 是否开启裁剪 */
+  cutout?: boolean
+
   background?: {
     imgs?: Tuple<string>
     color?: Color
@@ -80,6 +83,7 @@ interface CutoutAreaType {
 class Scene {
   private opts: SceneOptions = {}
   private pointer: Vector2 = new Vector2()
+
   scene: TScene | null = null
   raycaster: Raycaster | null = null
   ambientLight: AmbientLight | null = null
@@ -87,9 +91,9 @@ class Scene {
   renderer: WebGLRenderer | null = null
   cssRenderer: Cssrenderer | null = null
   controls: OrbitControls | null = null
+  domElement: HTMLElement | null = null
 
   /** 裁剪相关 */
-  cutout = false
   cutoutCamera: PerspectiveCamera | null = null
   cutoutArea: CutoutAreaType = {
     x: 0,
@@ -114,9 +118,6 @@ class Scene {
     this.camera = camera
     globalObjectManage.setCamera(camera)
     this.scene!.add(camera)
-
-    const renderer = this.initRenderer()
-    this.renderer = renderer
 
     if (this.opts.css2DRenderer) {
       const cssRenderer = this.initCssRenderer()
@@ -177,16 +178,26 @@ class Scene {
     const h = rendererOps.size?.height ?? window.innerHeight
 
     renderer.setSize(w, h)
+    renderer.setClearColor('#000')
+    renderer.setScissor(0, 0, w, h)
 
-    if (this.cutout)
-      renderer.setScissor(0, 0, w, h)
+    renderer.render(this.scene!, this.camera!)
   }
 
+  /**
+   * mini view cut
+   * @param renderer
+   */
   private cutSub(renderer: WebGLRenderer) {
     const rendererOps = this.opts.rendererOps || {}
+    const w = rendererOps.size?.width ?? window.innerWidth
+    const h = rendererOps.size?.height ?? window.innerHeight
 
-    renderer.setScissor(window.innerWidth / 2, 0, window.innerWidth / 2, window.innerHeight)
-    renderer.setViewport(window.innerWidth / 2, 0, window.innerWidth / 2, window.innerHeight)
+    renderer.setClearColor('#222')
+    renderer.setScissor(w - 200, 0, 200, 200)
+    renderer.setViewport(w - 200, 0, 200, 200)
+
+    renderer.render(this.scene!, this.cutoutCamera!)
   }
 
   private initCssRenderer() {
@@ -264,7 +275,13 @@ class Scene {
 
     globalControl.update()
     TWEEN.update()
-    this.renderer!.render(this.scene!, this.camera!)
+
+    // if need cutout
+    if (this.opts.cutout)
+      this.updateRenderForCut()
+    else
+      this.renderer!.render(this.scene!, this.camera!)
+
     this.cssRenderer && this.cssRenderer.render(this.scene!, this.camera!)
 
     this.controls && this.controls.update()
@@ -366,11 +383,20 @@ class Scene {
     target.addEventListener('pointerleave', (e: PointerEvent) => this.onPointerLeave(e))
   }
 
+  /**
+   * render scene
+   * @param target
+   */
   public render(target: HTMLElement) {
     emitter.emit('before-render')
 
+    const renderer = this.initRenderer()
+    this.renderer = renderer
+
     let currentControlDom: HTMLElement | null = null
     const domElement = this.renderer!.domElement
+
+    this.domElement = domElement
 
     if (this.cssRenderer) {
       currentControlDom = this.cssRenderer.cssRenderer.domElement
@@ -392,6 +418,13 @@ class Scene {
     target.addEventListener('resize', () => this.resetScene(this.camera!, this.renderer!))
 
     emitter.emit('after-render')
+  }
+
+  private updateRenderForCut() {
+    this.renderer!.setScissorTest(true)
+
+    this.cutMain(this.renderer!)
+    this.cutSub(this.renderer!)
   }
 
   public destroy() {

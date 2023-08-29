@@ -1,8 +1,8 @@
 import { ModelLoader, Scene, Group, Vector3 } from '@anov/3d'
 
 /**
- * example-17
- * load fbx model
+ * example-18
+ * 测试模型鼠标交互
  */
 
 const scene = new Scene({
