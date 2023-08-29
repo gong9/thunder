@@ -80,7 +80,7 @@ export interface ControlsRetuenFuncType {
 }
 
 type ControlsFuncType = () => ControlsRetuenFuncType
-interface OffsetType {
+export interface OffsetType {
   x?: number
   y?: number
   z?: number
