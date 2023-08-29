@@ -10,9 +10,10 @@ const scene = new Scene({
   orbitControls: true,
 })
 
-const points = [new Vector3(-5, 0, 0),
-new Vector3(0, 0, 0),
-new Vector3(5, 0, 0)
+const points = [
+  new Vector3(-5, 0, 0),
+  new Vector3(0, 0, 0),
+  new Vector3(5, 0, 0)
 ]
 
 createTransformControls(0.7).then((control) => {

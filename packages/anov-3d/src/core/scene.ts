@@ -1,4 +1,4 @@
-import type { Color, Intersection, Object3D, ToneMapping } from 'three'
+import type { Color, Object3D, ToneMapping } from 'three'
 import { ACESFilmicToneMapping, AmbientLight, CubeTextureLoader, Raycaster, Scene as TScene, Vector2, Vector3, WebGLRenderer } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as TWEEN from '@tweenjs/tween.js'
@@ -9,10 +9,8 @@ import globalControl from './global/globalControl'
 import globalObjectManage from './global/global'
 import { PerspectiveCamera } from './camera'
 
-interface Anov3DSceneOptions {
-  /**
-   * renderer options
-   */
+interface SceneOptions {
+  /** renderer options */
   rendererOps?: {
     antialias?: boolean
     logarithmicDepthBuffer?: boolean
@@ -27,9 +25,7 @@ interface Anov3DSceneOptions {
     }
   }
 
-  /**
-   * default camera options
-   */
+  /** default camera options */
   defCameraOps?: {
     position?: Vector3
     fov?: number
@@ -38,45 +34,31 @@ interface Anov3DSceneOptions {
     far?: number
   }
 
-  /**
-   * default ambient light options
-   */
+  /** default ambient light options */
   defAmbientLightOps?: {
     position?: Vector3
     color?: Color
     intensity?: number
   }
 
-  /**
-   * 默认射线检测配置
-   */
+  /** 默认射线检测配置 */
   defRaycasterOps?: {
     recursive?: boolean
   }
 
-  /**
-   * controls
-   */
+  /** controls */
   orbitControls?: boolean
 
-  /**
-   * 是否需要默认环境光
-   */
+  /** 是否需要默认环境光 */
   ambientLight?: boolean
 
-  /**
-   * on demand render scene, 按需渲染
-   */
+  /** on demand render scene, 按需渲染 */
   onDemand?: boolean
 
-  /**
-   * 是否开启css2d渲染
-   */
+  /** 是否开启css2d渲染 */
   css2DRenderer?: boolean
 
-  /**
-   * 是否开启css3d渲染
-   */
+  /** 是否开启css3d渲染 */
   css3DRenderer?: boolean
 
   background?: {
@@ -88,9 +70,15 @@ interface Anov3DSceneOptions {
 }
 
 type Tuple<TItem> = [TItem, ...TItem[]] & { length: 6 }
+interface CutoutAreaType {
+  x: number
+  y: number
+  width: number
+  height: number
+}
 
 class Scene {
-  private opts: Anov3DSceneOptions = {}
+  private opts: SceneOptions = {}
   private pointer: Vector2 = new Vector2()
   scene: TScene | null = null
   raycaster: Raycaster | null = null
@@ -100,7 +88,17 @@ class Scene {
   cssRenderer: Cssrenderer | null = null
   controls: OrbitControls | null = null
 
-  constructor(opts?: Anov3DSceneOptions) {
+  /** 裁剪相关 */
+  cutout = false
+  cutoutCamera: PerspectiveCamera | null = null
+  cutoutArea: CutoutAreaType = {
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0,
+  }
+
+  constructor(opts?: SceneOptions) {
     this.opts = opts ?? {}
     this.scene = new TScene()
     this.raycaster = new Raycaster()
@@ -159,7 +157,8 @@ class Scene {
       alpha: rendererOps.alpha ?? false,
     })
 
-    renderer.setSize(rendererOps.size?.width ?? window.innerWidth, rendererOps.size?.height ?? window.innerHeight, rendererOps.size?.updateStyle ?? false)
+    this.cutMain(renderer)
+
     renderer.shadowMap.enabled = rendererOps.shadowMap ?? true
     renderer.toneMapping = (rendererOps.toneMapping ?? ACESFilmicToneMapping) as ToneMapping
     renderer.toneMappingExposure = rendererOps.toneMappingExposure ?? 0.3
@@ -168,12 +167,38 @@ class Scene {
     return renderer
   }
 
+  /**
+   * main view cut
+   * @param renderer
+   */
+  private cutMain(renderer: WebGLRenderer) {
+    const rendererOps = this.opts.rendererOps || {}
+    const w = rendererOps.size?.width ?? window.innerWidth
+    const h = rendererOps.size?.height ?? window.innerHeight
+
+    renderer.setSize(w, h)
+
+    if (this.cutout)
+      renderer.setScissor(0, 0, w, h)
+  }
+
+  private cutSub(renderer: WebGLRenderer) {
+    const rendererOps = this.opts.rendererOps || {}
+
+    renderer.setScissor(window.innerWidth / 2, 0, window.innerWidth / 2, window.innerHeight)
+    renderer.setViewport(window.innerWidth / 2, 0, window.innerWidth / 2, window.innerHeight)
+  }
+
   private initCssRenderer() {
     const cssRenderer = new Cssrenderer('base')
     cssRenderer.setSize(window.innerWidth, window.innerHeight)
     return cssRenderer
   }
 
+  /**
+   * init skybox
+   * @param imgs
+   */
   private initSkyBox(imgs: Tuple<string>) {
     const cubeTextureLoader = new CubeTextureLoader()
 
@@ -341,7 +366,7 @@ class Scene {
     target.addEventListener('pointerleave', (e: PointerEvent) => this.onPointerLeave(e))
   }
 
-  render(target: HTMLElement) {
+  public render(target: HTMLElement) {
     emitter.emit('before-render')
 
     let currentControlDom: HTMLElement | null = null

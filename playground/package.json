@@ -8,7 +8,7 @@
   "keywords": [],
   "main": "index.js",
   "scripts": {
-    "start": "parcel index.html"
+    "start": "ts-node ../scripts/remov-catch.ts && parcel index.html"
   },
   "dependencies": {
     "@anov/3d": "workspace:^",

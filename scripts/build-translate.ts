@@ -2,7 +2,7 @@ import path from 'node:path'
 import fs from 'fs-extra'
 import { consola } from 'consola'
 
-async function isExists(path: string) {
+export async function isExists(path: string) {
   return await fs.pathExists(path)
 }
 
