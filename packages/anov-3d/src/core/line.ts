@@ -3,8 +3,21 @@ import type { TransformControls } from './control/transformControls'
 import Mesh from './mesh'
 import globalObjectManage from './global/global'
 
+type CatmullRomCurve3WithMesh = CatmullRomCurve3 & {
+  mesh: Line
+}
+
 const point = new Vector3(0, 0, 0)
 
+/**
+ * create control mesh
+ * @param position
+ * @param transformControl
+ * @param width
+ * @param height
+ * @param depth
+ * @returns
+ */
 const createSplineControlObject3d = (position: Vector3, transformControl: TransformControls, width = 1, height = 1, depth = 1) => {
   const boxGeometry = new BoxGeometry(width, height, depth)
   const material = new MeshBasicMaterial({ color: Math.random() * 0xFFFFFF })
@@ -20,13 +33,15 @@ const createSplineControlObject3d = (position: Vector3, transformControl: Transf
   return object
 }
 
-type CatmullRomCurve3WithMesh = CatmullRomCurve3 & {
-  mesh: Line
-}
-
+/**
+ * create line
+ * @param positions
+ * @returns
+ */
 const createCatmullRomCurve3 = (positions: Vector3[]) => {
   const geometry = new BufferGeometry()
-  geometry.setAttribute('position', new BufferAttribute(new Float32Array(200 * 3), 3))
+  const attr = new BufferAttribute(new Float32Array(200 * 3), 3)
+  geometry.setAttribute('position', attr)
 
   const curve = new CatmullRomCurve3(positions) as CatmullRomCurve3WithMesh
   curve.mesh = new Line(geometry.clone(), new LineBasicMaterial({
@@ -37,6 +52,10 @@ const createCatmullRomCurve3 = (positions: Vector3[]) => {
   return curve
 }
 
+/**
+ * uodate line
+ * @param curve
+ */
 const updateCatmullRomCurve3 = (curve: CatmullRomCurve3WithMesh) => {
   const splineMesh = curve.mesh
   const position = splineMesh.geometry.attributes.position

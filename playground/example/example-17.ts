@@ -2,7 +2,7 @@ import { ModelLoader, Scene, Group, Vector3 } from '@anov/3d'
 
 /**
  * example-17
- * load fbx model
+ * fbx 模型加载
  */
 
 const scene = new Scene({

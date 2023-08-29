@@ -158,15 +158,7 @@ class Scene {
       alpha: rendererOps.alpha ?? false,
     })
 
-    if (this.opts.cutout) {
-      renderer.setScissorTest(true)
-
-      this.cutMain(renderer)
-      this.cutSub(renderer)
-    }
-    else {
-      this.cutMain(renderer)
-    }
+    this.cutMain(renderer)
 
     renderer.shadowMap.enabled = rendererOps.shadowMap ?? true
     renderer.toneMapping = (rendererOps.toneMapping ?? ACESFilmicToneMapping) as ToneMapping
@@ -187,9 +179,7 @@ class Scene {
 
     renderer.setSize(w, h)
     renderer.setClearColor('#000')
-
-    if (this.opts.cutout)
-      renderer.setScissor(0, 0, w, h)
+    renderer.setScissor(0, 0, w, h)
 
     renderer.render(this.scene!, this.camera!)
   }
@@ -199,9 +189,13 @@ class Scene {
    * @param renderer
    */
   private cutSub(renderer: WebGLRenderer) {
-    renderer.setClearColor('#ccc')
-    renderer.setScissor(0, 0, 500, 500)
-    renderer.setViewport(0, 0, 500, 500)
+    const rendererOps = this.opts.rendererOps || {}
+    const w = rendererOps.size?.width ?? window.innerWidth
+    const h = rendererOps.size?.height ?? window.innerHeight
+
+    renderer.setClearColor('#222')
+    renderer.setScissor(w - 200, 0, 200, 200)
+    renderer.setViewport(w - 200, 0, 200, 200)
 
     renderer.render(this.scene!, this.cutoutCamera!)
   }
@@ -282,12 +276,13 @@ class Scene {
     globalControl.update()
     TWEEN.update()
 
-    this.renderer!.render(this.scene!, this.camera!)
-    this.cssRenderer && this.cssRenderer.render(this.scene!, this.camera!)
-
     // if need cutout
     if (this.opts.cutout)
-      this.renderer!.render(this.scene!, this.cutoutCamera!)
+      this.updateRenderForCut()
+    else
+      this.renderer!.render(this.scene!, this.camera!)
+
+    this.cssRenderer && this.cssRenderer.render(this.scene!, this.camera!)
 
     this.controls && this.controls.update()
     requestAnimationFrame(() => this.startFrameAnimate(frameAnimate))
@@ -400,6 +395,7 @@ class Scene {
 
     let currentControlDom: HTMLElement | null = null
     const domElement = this.renderer!.domElement
+
     this.domElement = domElement
 
     if (this.cssRenderer) {
@@ -422,6 +418,13 @@ class Scene {
     target.addEventListener('resize', () => this.resetScene(this.camera!, this.renderer!))
 
     emitter.emit('after-render')
+  }
+
+  private updateRenderForCut() {
+    this.renderer!.setScissorTest(true)
+
+    this.cutMain(this.renderer!)
+    this.cutSub(this.renderer!)
   }
 
   public destroy() {

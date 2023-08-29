@@ -78,7 +78,13 @@ export interface ControlsRetuenFuncType {
   increaseSpeed: (currentStep: number) => void
   recoverSpeed: () => void
 }
+
 type ControlsFuncType = () => ControlsRetuenFuncType
+interface OffsetType {
+  x?: number
+  y?: number
+  z?: number
+}
 
 /**
  * 曲线路径移动
@@ -87,7 +93,7 @@ type ControlsFuncType = () => ControlsRetuenFuncType
  * @param points 曲线分割数, 同时也决定了运动速度
  * @param lookat 默认曲线方向
  */
-export const moveWithLine = (currentObject: Object3D, curve: CatmullRomCurve3, points = 500, lookat?: Vector3) => {
+export const moveWithLine = (currentObject: Object3D, curve: CatmullRomCurve3, points = 500, offset: OffsetType = { x: 0, y: 0, z: 0 }, lookat?: Vector3) => {
   const totlePoints = curve.getPoints(points)
   const totle = totlePoints.length
   let index = 0
@@ -100,7 +106,8 @@ export const moveWithLine = (currentObject: Object3D, curve: CatmullRomCurve3, p
       index = calcIndex(index)
 
     const nextPoint = totlePoints[calcIndex(index) % totle]
-    currentObject.position.set(nextPoint.x, nextPoint.y, nextPoint.z)
+
+    currentObject.position.set(nextPoint.x + offset.x! || 0, nextPoint.y + offset.y! || 0, nextPoint.z + offset.z! || 0)
 
     if (lookat)
       currentObject.lookAt(lookat)
