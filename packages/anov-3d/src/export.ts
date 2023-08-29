@@ -1,6 +1,7 @@
 /* eslint-disable import/export */
 import Scene from './core/scene'
 import Mesh from './core/mesh'
+import Group from './core/group'
 import { PerspectiveCamera } from './core/camera'
 import ModelLoader from './core/model'
 import { ModelType } from './commonEnu'
@@ -33,11 +34,13 @@ const use = {
 }
 
 export * from 'three'
+export { Scene as TScene } from 'three'
 export * from './threeCell'
 
 export {
   Scene,
   Mesh,
+  Group,
   PerspectiveCamera,
   ModelLoader,
   TransformControls,

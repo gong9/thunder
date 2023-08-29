@@ -149,8 +149,18 @@
         const scene = new Scene({
             orbitControls: true,
             ambientLight: true,
+            background: {
+                imgs: [
+                    './files/imgs/posx.jpg',
+                    './files/imgs/negx.jpg',
+                    './files/imgs/posy.jpg',
+                    './files/imgs/negy.jpg',
+                    './files/imgs/posz.jpg',
+                    './files/imgs/negz.jpg'
+                ]
+            },
             defCameraOps: {
-                position: new Vector3(0, 800, -300)
+                position: new Vector3(0, 300, -1000)
             }
         })
 

@@ -1,12 +1,24 @@
+import type { Intersection, Object3D } from 'three'
 import { Group as TGroup } from 'three'
 import type { CubeEventType, EventHandleFn } from '../type'
 import globalObjectManage from './global/global'
 
 class Group extends TGroup {
   private natureEventMap: Map<CubeEventType, EventHandleFn<CubeEventType>[]> = new Map()
+  private object3d: Object3D[] = []
 
   constructor() {
     super()
+    globalObjectManage.addCatch(this)
+  }
+
+  /**
+   * add model
+   * @param object
+   */
+  public addModel(object: Object3D) {
+    super.add(object)
+    this.object3d.push(object)
   }
 
   /**
@@ -44,10 +56,10 @@ class Group extends TGroup {
   }
 
   /**
- * handle intersect event
- * @param intersects
- * @param eventType
- */
+   * handle intersect event
+   * @param intersects
+   * @param eventType
+  */
   private handleClick(natureEvent: EventHandleFn<CubeEventType>[]) {
     if (!globalObjectManage.triggerClick)
       return
@@ -86,16 +98,8 @@ class Group extends TGroup {
    * raycastGroup
    * handle intersect event
    */
-  public raycastGroup() {
-    // const clickCallback = this.natureEventMap.get('click')
-    // const pointerupCallback = this.natureEventMap.get('pointerup')
-    // const pointerdownCallback = this.natureEventMap.get('pointerdown')
-    // const pointermoveCallback = this.natureEventMap.get('pointermove')
-
-    // clickCallback && clickCallback.length > 0 && this.handleClick(clickCallback)
-    // pointerupCallback && pointerupCallback.length > 0 && this.handleClick(pointerupCallback)
-    // pointerdownCallback && pointerdownCallback.length > 0 && this.handleClick(pointerdownCallback)
-    // pointermoveCallback && pointermoveCallback.length > 0 && this.handlePointerMove(pointermoveCallback)
+  public raycastGroup(intersets: Intersection<Object3D<Event>>[]) {
+    console.log('raycastGroup', intersets)
   }
 }
 
