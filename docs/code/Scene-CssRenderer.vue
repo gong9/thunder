@@ -1,6 +1,6 @@
 <script setup lang='ts'>
 import { onMounted, ref } from 'vue'
-import { BoxGeometry, Mesh, MeshBasicMaterial, Scene, createLabel, dom } from '../../packages/anov-3d/dist'
+import { BoxGeometry, Mesh, MeshBasicMaterial, Scene, createLabel, dom } from '@anov/3d'
 
 const divRef = ref(null)
 
