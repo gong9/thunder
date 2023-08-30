@@ -18,7 +18,11 @@ playground
 
 ### example 
 
-[示例网站 (notes: 暂时需科学上网)](https://anov-3d-ecology.vercel.app/#base_scene)
+> notes: 暂时需科学上网
+
+[示例网站](https://anov-3d-ecology.vercel.app/#base_scene)
+
+[使用文档](https://anov-3d-ecology-playground.vercel.app/)
 
 ### development
 
