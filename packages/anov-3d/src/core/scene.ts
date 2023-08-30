@@ -194,15 +194,18 @@ class Scene {
     const h = rendererOps.size?.height ?? window.innerHeight
 
     renderer.setClearColor('#222')
-    renderer.setScissor(w - 200, 0, 200, 200)
-    renderer.setViewport(w - 200, 0, 200, 200)
+    renderer.setScissor(w - this.cutoutArea.width, 0, this.cutoutArea.width, this.cutoutArea.height)
+    renderer.setViewport(w - this.cutoutArea.width, 0, this.cutoutArea.width, this.cutoutArea.height)
 
     renderer.render(this.scene!, this.cutoutCamera!)
   }
 
   private initCssRenderer() {
+    const rendererOps = this.opts.rendererOps || {}
+    const w = rendererOps.size?.width ?? window.innerWidth
+    const h = rendererOps.size?.height ?? window.innerHeight
     const cssRenderer = new Cssrenderer('base')
-    cssRenderer.setSize(window.innerWidth, window.innerHeight)
+    cssRenderer.setSize(w, h)
     return cssRenderer
   }
 
@@ -231,6 +234,7 @@ class Scene {
   private initDefaultPerspectiveCamera() {
     const rendererOps = this.opts.defCameraOps || {}
     const aspect = rendererOps.aspect || window.innerWidth / window.innerHeight
+
     const camera = new PerspectiveCamera(
       rendererOps.fov || 90,
       aspect,
@@ -322,8 +326,10 @@ class Scene {
   }
 
   private getPointerPosition(event: PointerEvent) {
-    this.pointer.setX((event.clientX / window.innerWidth) * 2 - 1)
-    this.pointer.setY(-(event.clientY / window.innerHeight) * 2 + 1)
+    const container = this.domElement!
+
+    this.pointer.setX(((event.clientX - container.getBoundingClientRect().left) / container.getBoundingClientRect().width) * 2 - 1)
+    this.pointer.setY(-((event.clientY - container.getBoundingClientRect().top) / container.getBoundingClientRect().height) * 2 + 1)
   }
 
   /**

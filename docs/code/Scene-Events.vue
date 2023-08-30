@@ -6,9 +6,10 @@ const divRef = ref(null)
 
 onMounted(() => {
   const scene = new Scene({
-    rendererOps:{
+    orbitControls: true,
+    rendererOps: {
       size: {
-        width: 1000,
+        width: 400,
         height: 400
       }
     },
@@ -24,6 +25,7 @@ onMounted(() => {
   box.addNatureEventListener('pointermove', (object3D) => {
     (object3D.material as any).color.set(0xFF0000)
   })
+
   box.addNatureEventListener('pointerleave', (object3D) => {
     (object3D.material as any).color.set(0x00FF00)
   })
