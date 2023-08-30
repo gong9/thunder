@@ -15,6 +15,9 @@
     "changeset": "changeset",
     "release": "changeset version",
     "all-publish": "pnpm build && changeset publish",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
@@ -37,6 +40,7 @@
     "consola": "^3.2.3",
     "eslint": "^8.23.0",
     "father": "^4.1.5",
+    "vitepress": "1.0.0-beta.1",
     "fs-extra": "^11.1.1",
     "husky": "^8.0.1",
     "jest": "^27",
