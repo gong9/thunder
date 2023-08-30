@@ -23,7 +23,7 @@
   },
   "authors": [],
   "devDependencies": {
-    "@anov/3d": "workspace:0.0.1-alpha.10",
+    "@anov/3d": "workspace:0.0.1-alpha.11",
     "@antfu/eslint-config": "^0.38.5",
     "@babel/core": "^7.22.10",
     "@babel/preset-env": "^7.22.10",

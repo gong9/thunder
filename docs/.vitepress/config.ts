@@ -13,9 +13,15 @@ export default defineConfig({
 
     sidebar: [
       {
-        text: 'core',
+        text: 'Core',
         items: [
-          { text: 'Scene', link: '/scene' }
+          { text: 'scene', link: '/scene' }
+        ],
+      },
+      {
+        text: 'Hooks',
+        items: [
+          { text: 'useframe', link: '/useframe' }
         ],
       },
     ],

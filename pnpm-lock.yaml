@@ -5,7 +5,7 @@ importers:
   .:
     devDependencies:
       '@anov/3d':
-        specifier: workspace:0.0.1-alpha.9
+        specifier: workspace:0.0.1-alpha.11
         version: link:packages/anov-3d
       '@antfu/eslint-config':
         specifier: ^0.38.5
@@ -116,7 +116,7 @@ importers:
   packages/anov-3d-utils:
     dependencies:
       '@anov/3d':
-        specifier: workspace:0.0.1-alpha.9
+        specifier: workspace:0.0.1-alpha.11
         version: link:../anov-3d
 
   packages/anov-3d-vue3: {}
