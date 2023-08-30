@@ -5,4 +5,5 @@ lib/
 .DS_Store
 packages/anov-3d/examples/
 lib-utils
+docs/.vitepress/cache
 
