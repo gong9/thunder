@@ -1,0 +1,48 @@
+<script setup lang='ts'>
+import { onMounted, ref } from 'vue'
+import { BoxGeometry, Mesh, MeshBasicMaterial, Scene } from '@anov/3d'
+
+const divRef = ref(null)
+
+onMounted(() => {
+  const scene = new Scene({
+    rendererOps:{
+      size: {
+        width: 1000,
+        height: 400
+      }
+    },
+    defCameraOps: {
+      aspect: 1
+    }
+  })
+
+  const geometry = new BoxGeometry(2, 2, 2)
+  const material = new MeshBasicMaterial({ color: 0x00FF00 })
+  const box = new Mesh(geometry, material)
+
+  box.addNatureEventListener('pointermove', (object3D) => {
+    (object3D.material as any).color.set(0xFF0000)
+  })
+  box.addNatureEventListener('pointerleave', (object3D) => {
+    (object3D.material as any).color.set(0x00FF00)
+  })
+
+  scene.add(box)
+
+  scene.render(divRef.value!)
+  scene.startFrameAnimate()
+})
+</script>
+
+<template>
+  <div ref="divRef" class="canvas" />
+</template>
+
+<style scoped lang='css'>
+.canvas {
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+}
+</style>

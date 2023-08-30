@@ -230,9 +230,10 @@ class Scene {
    */
   private initDefaultPerspectiveCamera() {
     const rendererOps = this.opts.defCameraOps || {}
+    const aspect = rendererOps.aspect || window.innerWidth / window.innerHeight
     const camera = new PerspectiveCamera(
       rendererOps.fov || 90,
-      window.innerWidth / window.innerHeight,
+      aspect,
       rendererOps.near || 0.1,
       rendererOps.far || 5000,
     )
