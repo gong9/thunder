@@ -10,10 +10,10 @@
 
 ## 场景创建
 
-Scene是3d中最重要的元素，区别于threejs在这里我们事先为大家做了一些预处理。比如渲染器、帧循环、默认相机等等。
+Scene是3d中最重要的元素，区别于threejs在这里我们做了一些预处理。比如渲染器、帧循环、默认相机等等。
 
 
-所以可以根据以下步骤，简单快速的创建一个3d场景
+所以你可以根据以下步骤，简单快速的创建一个3d场景
 
 1. 实例化场景对象
 2. 创建一个几何体，并加入到场景中
@@ -130,3 +130,111 @@ scene.startFrameAnimate()
 ```
 
 <SceneCutout/>
+
+## API
+
+#### 构造函数参数一览
+
+```ts
+interface SceneOptions {
+  /** 渲染器配置 */
+  rendererOps?: {
+    antialias?: boolean
+    logarithmicDepthBuffer?: boolean
+    alpha?: boolean
+    shadowMap?: boolean
+    toneMapping?: ToneMapping
+    toneMappingExposure?: number
+    size?: {
+      width: number
+      height: number
+      updateStyle?: boolean
+    }
+  }
+
+  /** 默认相机配置 */
+  defCameraOps?: {
+    position?: Vector3
+    fov?: number
+    aspect?: number
+    near?: number
+    far?: number
+  }
+
+  /** 默认环境光配置 */
+  defAmbientLightOps?: {
+    position?: Vector3
+    color?: Color
+    intensity?: number
+  }
+
+  /** 默认射线检测配置 */
+  defRaycasterOps?: {
+    recursive?: boolean
+  }
+
+  /** 是否需要轨道控制器 */
+  orbitControls?: boolean
+
+  /** 是否需要默认环境光 */
+  ambientLight?: boolean
+
+  /** 是否按需渲染 */
+  onDemand?: boolean
+
+  /** 是否开启css2d渲染 */
+  css2DRenderer?: boolean
+
+  /** 是否开启css3d渲染 */
+  css3DRenderer?: boolean
+
+  /** 是否开启裁剪 */
+  cutout?: boolean
+
+  /** 场景背景 */
+  background?: {
+    imgs?: Tuple<string>
+    color?: Color
+    panorama?: string
+  }
+
+}
+```
+
+可访问的实例属性
+
+```ts
+  {
+  /** 场景控件 */
+  scene: TScene | null = null
+  raycaster: Raycaster | null = null
+  ambientLight: AmbientLight | null = null
+  camera: PerspectiveCamera | null = null
+
+  /** 渲染器 */
+  renderer: WebGLRenderer | null = null
+  cssRenderer: Cssrenderer | null = null
+
+  /** 控制器 */
+  controls: OrbitControls | null = null
+
+  /** canvas dom */
+  domElement: HTMLElement | null = null
+
+  /** 裁剪相关 */
+  cutoutCamera: PerspectiveCamera | null = null
+  cutoutArea: CutoutAreaType = {
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0,
+  }
+}
+```
+
+#### 场景实例的核心API
+
+| API | 参数 | 说明 |
+| --- | --- | --- |
+| render | dom | 渲染3d场景 |
+| startFrameAnimate | ()=>void | 执行帧循环 |

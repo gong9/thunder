@@ -178,7 +178,6 @@ class Scene {
     const h = rendererOps.size?.height ?? window.innerHeight
 
     renderer.setSize(w, h)
-    renderer.setClearColor('#000')
     renderer.setScissor(0, 0, w, h)
 
     renderer.render(this.scene!, this.camera!)
@@ -193,6 +192,7 @@ class Scene {
     const w = rendererOps.size?.width ?? window.innerWidth
     const h = rendererOps.size?.height ?? window.innerHeight
 
+    // todo color 配置，位置定义
     renderer.setClearColor('#222')
     renderer.setScissor(w - this.cutoutArea.width, 0, this.cutoutArea.width, this.cutoutArea.height)
     renderer.setViewport(w - this.cutoutArea.width, 0, this.cutoutArea.width, this.cutoutArea.height)
@@ -313,7 +313,6 @@ class Scene {
       return item instanceof Mesh
     })
 
-    // todo 冒泡的问题
     this.raycaster!.intersectObjects(object3ds, raycasterOps.recursive ?? false)
 
     // group的拾取，构建一个mesh？

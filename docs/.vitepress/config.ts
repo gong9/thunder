@@ -43,7 +43,7 @@ export default defineConfig({
         ],
       },
       {
-        text: '环境信息模拟',
+        text: '环境模拟',
         items: [
           { text: '雨雪效果', link: '/environment' }
         ],
