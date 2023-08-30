@@ -3,6 +3,7 @@
     import SceneEvents from './code/Scene-Events.vue'
     import SceneCssRenderer from './code/Scene-CssRenderer.vue'
     import SceneCutout from './code/Scene-Cutout.vue'
+    import SceneSkyBox from './code/Scene-Sky.vue'
 
 </script>
 
@@ -38,6 +39,25 @@ scene.startFrameAnimate()
 ```
 
 <SceneInit/>
+
+## 天空盒
+
+```ts
+const scene = new Scene({
+            orbitControls: true,
+            background: {
+                imgs: [
+                    './files/imgs/posx.jpg',
+                    './files/imgs/negx.jpg',
+                    './files/imgs/posy.jpg',
+                    './files/imgs/negy.jpg',
+                    './files/imgs/posz.jpg',
+                    './files/imgs/negz.jpg'
+                ]
+            }
+      })
+```
+<SceneSkyBox/>
 
 ## 事件交互
 
@@ -130,6 +150,10 @@ scene.startFrameAnimate()
 ```
 
 <SceneCutout/>
+
+## 多场景
+
+> 开发中
 
 ## API
 

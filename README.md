@@ -22,7 +22,7 @@ playground
 
 [示例网站](https://anov-3d-ecology.vercel.app/#base_scene)
 
-[使用文档](https://anov-3d-ecology-playground.vercel.app/)
+使用文档：暂时需要拉去代码本地查看
 
 ### development
 
