@@ -170,6 +170,7 @@
         const curve = initLine()
         const minCamera = new PerspectiveCamera(90, 1, 0.1, 1000)
         scene.cutoutCamera = minCamera
+        scene.cutoutArea = { x: 0, y: 0, width: 200, height: 200 }
 
         modelLoader.loadGLTF('./files/car.glb').then((gltf) => {
             const car = (gltf).scene
