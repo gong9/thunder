@@ -7,6 +7,9 @@ importers:
       '@anov/3d':
         specifier: 0.0.1-alpha.11
         version: link:packages/anov-3d
+      '@anov/3d-utils':
+        specifier: workspace:^
+        version: link:packages/anov-3d-utils
       '@antfu/eslint-config':
         specifier: ^0.38.5
         version: 0.38.5(eslint@8.34.0)(jest@27.5.1)(typescript@4.8.4)

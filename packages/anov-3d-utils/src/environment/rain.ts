@@ -1,4 +1,3 @@
-import type { Points } from '@anov/3d'
 import { globalObjectManage, use } from '@anov/3d'
 import type { AVector3 } from './utils/points'
 import EnvironmentPoints from './utils/points'

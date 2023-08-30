@@ -1,14 +1,13 @@
 <script setup lang='ts'>
 import { onMounted, ref } from 'vue'
-import { BoxGeometry, Mesh, MeshBasicMaterial, Scene, createLabel, dom } from '@anov/3d'
+import { BoxGeometry, Mesh, MeshBasicMaterial, Scene, TransformControls, createTransformControls } from '@anov/3d'
 
 const divRef = ref(null)
 
 onMounted(() => {
   const scene = new Scene({
     orbitControls: true,
-    css2DRenderer: true,
-    rendererOps: {
+    rendererOps:{
       size: {
         width: 400,
         height: 400
@@ -19,19 +18,20 @@ onMounted(() => {
     }
   })
 
+  let transformControl: TransformControls | null = null
+
   const geometry = new BoxGeometry(2, 2, 2)
   const material = new MeshBasicMaterial({ color: 0x00FF00 })
   const box = new Mesh(geometry, material)
 
-  const labelObject2d = createLabel(dom.createElement("div", {
-    style: {
-      color: 'red',
-    },
-    textContent: "这是一个box",
-  }))
+  createTransformControls(1).then((transformControls) => {
+  transformControl = transformControls
+  scene.add(transformControl)
+})
 
-  labelObject2d.position.set(0, 3, 0)
-  box.add(labelObject2d)
+  box.addNatureEventListener('pointermove', (object3D) => {
+   transformControl && transformControl.attach(object3D)
+  })
 
   scene.add(box)
 
@@ -46,9 +46,8 @@ onMounted(() => {
 
 <style scoped lang='css'>
 .canvas {
-  width: 400px;
+  width: 100%;
   height: 400px;
   overflow: hidden;
-  position: relative;
 }
 </style>

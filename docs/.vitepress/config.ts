@@ -13,15 +13,39 @@ export default defineConfig({
 
     sidebar: [
       {
-        text: 'Core',
+        text: '核心',
         items: [
           { text: 'scene', link: '/scene' }
+        ],
+      },
+      {
+        text: '控制器',
+        items: [
+          { text: 'control', link: '/control' }
+        ],
+      },
+      {
+        text: '加载器',
+        items: [
+          { text: '模型加载', link: '/model' },
         ],
       },
       {
         text: 'Hooks',
         items: [
           { text: 'useframe', link: '/useframe' }
+        ],
+      },
+      {
+        text: '工具',
+        items: [
+          { text: 'move', link: '/' }
+        ],
+      },
+      {
+        text: '环境信息模拟',
+        items: [
+          { text: '雨雪效果', link: '/environment' }
         ],
       },
     ],

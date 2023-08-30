@@ -1,5 +1,3 @@
-# Scene
-
 <script setup>
     import SceneInit from './code/Scene-init.vue'
     import SceneEvents from './code/Scene-Events.vue'
@@ -8,10 +6,9 @@
 
 </script>
 
+# Scene
+
 ## 场景创建
-
-
-<SceneInit/>
 
 Scene是3d中最重要的元素，区别于threejs在这里我们事先为大家做了一些预处理。比如渲染器、帧循环、默认相机等等。
 
@@ -40,7 +37,9 @@ scene.render(document.querySelector('#app')!)
 scene.startFrameAnimate()
 ```
 
-## 鼠标交互
+<SceneInit/>
+
+## 事件交互
 
 anov3d提供了一些常用的鼠标交互，比如点击移出移出等。区别于3d引擎常用的射线检测，anov3d提供了一种更加符合前端开发习惯的交互方式。
 
@@ -58,9 +57,9 @@ box.addNatureEventListener('pointerleave', (object3D) => {
 ```
 <SceneEvents/>
 
-## 使用cssRenderer
+## cssRenderer
 
-在anov3d中，为进一步简化cssRenderer的使用。我们不用再去手动创建渲染器，还要做一些额外的与场景的关联工作。
+在anov3d中，为进一步简化cssRenderer的使用。我们不用再去手动创建渲染器、以及需要要做一些额外的与场景的关联工作。
 
 
 先来看一下这里使用步骤
@@ -103,7 +102,7 @@ scene.startFrameAnimate()
 <SceneCssRenderer/>
 
 
-## 使用渲染器剪裁
+## 渲染器剪裁
 
 ```ts
 import { BoxGeometry, Scene, Vector3, MeshBasicMaterial, Mesh, PerspectiveCamera } from '@anov/3d'
