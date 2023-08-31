@@ -1,8 +1,6 @@
 import type { Intersection, Raycaster } from 'three'
 import { Mesh as TMesh } from 'three'
 import type { CubeEventType, EventHandleFn } from '../type'
-import { getObject3dAncestorsNodes } from '../utils'
-import Group from './group'
 import globalObjectManage from './global/global'
 
 class Mesh extends TMesh {

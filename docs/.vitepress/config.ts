@@ -33,7 +33,7 @@ export default defineConfig({
       {
         text: 'Hooks',
         items: [
-          { text: 'useframe', link: '/useframe' }
+          { text: 'useframe', link: '/use' }
         ],
       },
       {

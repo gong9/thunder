@@ -12,6 +12,7 @@ import { Direction, moveLine, moveTo, moveWithLine, moveWithRound } from './util
 import { appendChildren, create, createElement, setAttributes, setClassList, setEventListeners } from './utils/createElement'
 import globalObjectManage from './core/global/global'
 import useframe from './core/use/useframe'
+import useScene from './core/use/useScene'
 
 const utils = {
   moveTo,
@@ -31,6 +32,7 @@ const dom = {
 
 const use = {
   useframe,
+  useScene,
 }
 
 export * from 'three'

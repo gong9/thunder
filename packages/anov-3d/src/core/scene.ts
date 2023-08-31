@@ -1,4 +1,4 @@
-import type { Color, Object3D, ToneMapping } from 'three'
+import type { Color, ColorRepresentation, Object3D, ToneMapping } from 'three'
 import { ACESFilmicToneMapping, AmbientLight, CubeTextureLoader, Raycaster, Scene as TScene, Vector2, Vector3, WebGLRenderer } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as TWEEN from '@tweenjs/tween.js'
@@ -64,10 +64,12 @@ interface SceneOptions {
   /** 是否开启裁剪 */
   cutout?: boolean
 
+  /** 场景背景相关 */
   background?: {
     imgs?: Tuple<string>
     color?: Color
     panorama?: string
+    alpha?: number
   }
 
 }
@@ -95,6 +97,8 @@ class Scene {
 
   /** 裁剪相关 */
   cutoutCamera: PerspectiveCamera | null = null
+  cutoutBackground: ColorRepresentation | null = null
+  cutoutBackgroundAlpha = 1
   cutoutArea: CutoutAreaType = {
     x: 0,
     y: 0,
@@ -177,6 +181,7 @@ class Scene {
     const w = rendererOps.size?.width ?? window.innerWidth
     const h = rendererOps.size?.height ?? window.innerHeight
 
+    renderer.setClearColor(this.opts.background?.color || 0x000000, this.opts.background?.alpha || 1)
     renderer.setSize(w, h)
     renderer.setScissor(0, 0, w, h)
 
@@ -190,10 +195,10 @@ class Scene {
   private cutSub(renderer: WebGLRenderer) {
     const rendererOps = this.opts.rendererOps || {}
     const w = rendererOps.size?.width ?? window.innerWidth
-    const h = rendererOps.size?.height ?? window.innerHeight
+    // const h = rendererOps.size?.height ?? window.innerHeight
 
-    // todo color 配置，位置定义
-    renderer.setClearColor('#222')
+    // 位置 目前默认右上角
+    renderer.setClearColor(this.cutoutBackground ?? 0x000000, this.cutoutBackgroundAlpha)
     renderer.setScissor(w - this.cutoutArea.width, 0, this.cutoutArea.width, this.cutoutArea.height)
     renderer.setViewport(w - this.cutoutArea.width, 0, this.cutoutArea.width, this.cutoutArea.height)
 
@@ -288,8 +293,8 @@ class Scene {
       this.renderer!.render(this.scene!, this.camera!)
 
     this.cssRenderer && this.cssRenderer.render(this.scene!, this.camera!)
-
     this.controls && this.controls.update()
+
     requestAnimationFrame(() => this.startFrameAnimate(frameAnimate))
   }
 

@@ -12,11 +12,13 @@ onMounted(() => {
       size: {
         width: 400,
         height: 400
-      }
+      },
+      alpha: true
     },
     defCameraOps: {
       aspect: 1
-    }
+    },
+    
   })
 
   const geometry = new BoxGeometry(2, 2, 2)
@@ -28,6 +30,7 @@ onMounted(() => {
   minCamera.position.copy(new Vector3(0, 5, 10))
   scene.cutoutCamera = minCamera
   scene.cutoutArea = { x: 0, y: 0, width: 100, height: 100 }
+  scene.cutoutBackground = '#111'
 
   scene.add(minCamera)
   scene.add(box)
