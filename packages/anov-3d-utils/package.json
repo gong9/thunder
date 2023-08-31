@@ -21,6 +21,6 @@
     "test": "jest --maxWorkers 2"
   },
   "dependencies": {
-    "@anov/3d": "workspace:0.0.1"
+    "@anov/3d": "workspace:0.0.2"
   }
 }
