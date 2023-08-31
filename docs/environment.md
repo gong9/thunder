@@ -18,6 +18,17 @@ snowStart()
  ```
 <Environment type='snow'/>
 
+### create Api
+
+
+| Property | Type                        | Default | Description                     |
+| -------- | --------------------------- | ------- | ------------------------------- |
+| size | number                     | false   | 雪大小                        |
+| range | number | -       | 降雪范围 |
+| speed | SpeedType({x:number,y:number,z:number}) | -       | 降雪速度 |
+| opacity | number | -       | 雪透明度 |
+| count | number | -       | 雪密度 |
+
 ## rain
 
 ```ts

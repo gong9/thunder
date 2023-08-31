@@ -33,13 +33,13 @@ export default defineConfig({
       {
         text: 'Hooks',
         items: [
-          { text: 'useframe', link: '/use' }
+          { text: 'use', link: '/use' }
         ],
       },
       {
         text: '工具',
         items: [
-          { text: 'move', link: '/' }
+          { text: 'move', link: '/move' }
         ],
       },
       {
