@@ -24,7 +24,7 @@
   "authors": [],
   "devDependencies": {
     "@anov/3d": "0.0.1-alpha.11",
-    "@anov/3d-utils": "workspace:^",
+    "@anov/3d-utils": "0.0.2",
     "@antfu/eslint-config": "^0.38.5",
     "@babel/core": "^7.22.10",
     "@babel/preset-env": "^7.22.10",
