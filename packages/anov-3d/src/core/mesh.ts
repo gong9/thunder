@@ -1,10 +1,12 @@
-import type { Intersection, Raycaster } from 'three'
+import type { Intersection, Object3D, Raycaster } from 'three'
 import { Mesh as TMesh } from 'three'
+import { getObject3dAncestorsNodes } from '../utils'
 import type { CubeEventType, EventHandleFn } from '../type'
+import Group from './group'
 import globalObjectManage from './global/global'
 
 class Mesh extends TMesh {
-  private natureEventMap: Map<CubeEventType, EventHandleFn<CubeEventType>[]> = new Map()
+  private natureEventMap: Map<CubeEventType, EventHandleFn[]> = new Map()
   private entered = false
 
   constructor(geometry?: ConstructorParameters<typeof TMesh>[0], material?: ConstructorParameters<typeof TMesh>[1]) {
@@ -16,7 +18,7 @@ class Mesh extends TMesh {
    * @param type
    * @param handlefn
    */
-  public addNatureEventListener<T extends CubeEventType>(type: T, handlefn: EventHandleFn<T>) {
+  public addNatureEventListener<T extends CubeEventType>(type: T, handlefn: EventHandleFn) {
     if (!this.natureEventMap.has(type))
       this.natureEventMap.set(type, [])
 
@@ -28,7 +30,7 @@ class Mesh extends TMesh {
    * @param type
    * @param handlefn
    */
-  public removeNatureEventListener<T extends CubeEventType>(type: T, handlefn: EventHandleFn<T>) {
+  public removeNatureEventListener<T extends CubeEventType>(type: T, handlefn: EventHandleFn) {
     if (!this.natureEventMap.has(type))
       return
 
@@ -50,7 +52,7 @@ class Mesh extends TMesh {
    * @param intersects
    * @param eventType
    */
-  private handleClick(natureEvent: EventHandleFn<CubeEventType>[], intersect: Intersection) {
+  private handleClick(natureEvent: EventHandleFn[], intersect: Intersection) {
     if (!globalObjectManage.triggerClick)
       return
 
@@ -65,7 +67,7 @@ class Mesh extends TMesh {
    * @param intersects
    * @param natureEvent
    */
-  private handlePointerMove(natureEvent: EventHandleFn<CubeEventType>[], intersect: Intersection) {
+  private handlePointerMove(natureEvent: EventHandleFn[], intersect: Intersection) {
     natureEvent.forEach((handlefn) => {
       handlefn(this, intersect)
     })
@@ -85,23 +87,54 @@ class Mesh extends TMesh {
   }
 
   /**
+   * handle bubbling 伪冒泡，仅触发上层group事件
+   * @param object3d
+   */
+  private HandleBubble(object3d: Object3D | undefined) {
+    if (object3d) {
+      const ancestorObject3d = getObject3dAncestorsNodes(object3d, object3d => object3d instanceof Group) as Group[]
+
+      for (let i = 0; i < ancestorObject3d.length; i++)
+        ancestorObject3d[i].raycastGroup()
+    }
+  }
+
+  /**
+   * emit parent group mouseleave event
+   * @param object3d
+   */
+  private cancelAncestorsBubble(object3d: Object3D | undefined) {
+    if (object3d) {
+      const ancestorObject3d = getObject3dAncestorsNodes(object3d, object3d => object3d instanceof Group) as Group[]
+
+      for (let i = 0; i < ancestorObject3d.length; i++)
+        ancestorObject3d[i].cancel()
+    }
+  }
+
+  /**
    * handle mesh raycaster
    * @param raycaster
    * @param intersects
    */
   public raycast(raycaster: Raycaster, intersects: Intersection[]) {
+    super.raycast(raycaster, intersects)
+
+    const intersect = intersects[0]
+    const object = intersect && intersect.object
+
+    object === this && this.HandleBubble(this)
+
+    if (object !== this)
+      this.cancelAncestorsBubble(this)
+
     if (this.natureEventMap.size === 0)
       return
-
-    super.raycast(raycaster, intersects)
 
     const clickCallback = this.natureEventMap.get('click')
     const pointerupCallback = this.natureEventMap.get('pointerup')
     const pointerdownCallback = this.natureEventMap.get('pointerdown')
     const pointermoveCallback = this.natureEventMap.get('pointermove')
-
-    const intersect = intersects[0]
-    const object = intersect && intersect.object as Mesh
 
     if (object === this) {
       this.entered = true

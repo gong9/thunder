@@ -55,13 +55,17 @@ export const getAncestorsNodes = <T extends Node>(array: T[], targetId: string |
  * @param object3d
  * @returns
  */
-export const getObject3dAncestorsNodes = (object3d: Object3D) => {
+export const getObject3dAncestorsNodes = (object3d: Object3D, filter?: (object3d: Object3D) => boolean) => {
   const ancestorsNodes: Object3D[] = []
 
   let currentObject3d = object3d
 
   while (currentObject3d.parent) {
-    ancestorsNodes.push(currentObject3d.parent)
+    if (filter)
+      filter(currentObject3d.parent) && ancestorsNodes.push(currentObject3d.parent)
+    else
+      ancestorsNodes.push(currentObject3d.parent)
+
     currentObject3d = currentObject3d.parent
   }
 
