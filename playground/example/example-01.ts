@@ -1,4 +1,4 @@
-import { Mesh, Scene, BoxGeometry, MeshBasicMaterial } from '@anov/3d'
+import { Mesh, SceneControl as Scene, BoxGeometry, MeshBasicMaterial } from '@anov/3d'
 
 
 /**

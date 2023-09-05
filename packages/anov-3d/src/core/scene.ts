@@ -82,7 +82,7 @@ interface CutoutAreaType {
   height: number
 }
 
-class Scene {
+class SceneControl {
   private opts: SceneOptions = {}
   private pointer: Vector2 = new Vector2()
 
@@ -443,4 +443,4 @@ class Scene {
   }
 }
 
-export default Scene
+export default SceneControl

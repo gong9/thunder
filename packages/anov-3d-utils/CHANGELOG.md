@@ -4,6 +4,14 @@
 
 ### Patch Changes
 
+- fix: adjust api Scene->SceneControl
+- Updated dependencies
+  - @anov/3d@0.0.3
+
+## 0.0.3
+
+### Patch Changes
+
 - Updated dependencies
   - @anov/3d@0.0.2
 

@@ -1,5 +1,5 @@
 /* eslint-disable import/export */
-import Scene from './core/scene'
+import SceneControl from './core/scene'
 import Mesh from './core/mesh'
 import Group from './core/group'
 import { PerspectiveCamera } from './core/camera'
@@ -36,11 +36,10 @@ const use = {
 }
 
 export * from 'three'
-export { Scene as TScene } from 'three'
 export * from './threeCell'
 
 export {
-  Scene,
+  SceneControl,
   Mesh,
   Group,
   PerspectiveCamera,

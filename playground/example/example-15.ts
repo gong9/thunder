@@ -1,4 +1,4 @@
-import { Scene, Vector3, Mesh, BoxGeometry, MeshBasicMaterial } from '@anov/3d'
+import { SceneControl as Scene, Vector3, Mesh, BoxGeometry, MeshBasicMaterial } from '@anov/3d'
 import { createSnow } from '@anov/3d-utils'
 
 /**

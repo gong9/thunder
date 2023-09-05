@@ -1,4 +1,4 @@
-import { AxesHelper, BoxGeometry, GridHelper, MeshBasicMaterial, Mesh, Scene, Direction, utils } from '../../packages/anov-3d/src/index'
+import { AxesHelper, BoxGeometry, GridHelper, MeshBasicMaterial, Mesh, SceneControl as Scene, Direction, utils } from '../../packages/anov-3d/src/index'
 
 const createAxesHelper = (size = 1) => {
   const axesHelper = new AxesHelper(size)

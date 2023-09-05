@@ -1,4 +1,4 @@
-import { ModelLoader, Scene, Group, Vector3 } from '@anov/3d'
+import { ModelLoader, SceneControl as Scene, Group, Vector3 } from '@anov/3d'
 
 /**
  * example-18
