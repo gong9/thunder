@@ -73,6 +73,33 @@ export const getObject3dAncestorsNodes = (object3d: Object3D, filter?: (object3d
 }
 
 /**
+ * get all mesh children, maybe also need line, but not now
+ * @param object3d
+ * @returns
+ */
+export const getAllMeshChildren = (object3d: Object3D) => {
+  const children: Object3D[] = []
+
+  const run = (object3d: Object3D) => {
+    if (object3d.children.length === 0)
+      return
+
+    for (let i = 0; i < object3d.children.length; i++) {
+      const child = object3d.children[i]
+
+      if (child.type === 'Mesh')
+        children.push(child)
+
+      run(child)
+    }
+  }
+
+  run(object3d)
+
+  return children
+}
+
+/**
  * handle small hump
  * @param camelCaseString
  * @returns

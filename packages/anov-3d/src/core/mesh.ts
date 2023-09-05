@@ -90,7 +90,7 @@ class Mesh extends TMesh {
    * handle bubbling 伪冒泡，仅触发上层group事件
    * @param object3d
    */
-  private HandleBubble(object3d: Object3D | undefined) {
+  private handleBubble(object3d: Object3D | undefined) {
     if (object3d) {
       const ancestorObject3d = getObject3dAncestorsNodes(object3d, object3d => object3d instanceof Group) as Group[]
 
@@ -123,7 +123,7 @@ class Mesh extends TMesh {
     const intersect = intersects[0]
     const object = intersect && intersect.object
 
-    object === this && this.HandleBubble(this)
+    object === this && this.handleBubble(this)
 
     if (object !== this)
       this.cancelAncestorsBubble(this)

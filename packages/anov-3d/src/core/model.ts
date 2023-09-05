@@ -3,6 +3,7 @@ import type { GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
+import { getAllMeshChildren } from '../utils'
 
 class ModelLoader {
   /**
@@ -58,6 +59,7 @@ class ModelLoader {
     return new Promise((resolve, reject) => {
       fbxLoader.load(url,
         (fbx) => {
+          console.log(getAllMeshChildren(fbx), 'fbx')
           onLoad ? resolve(onLoad(fbx)) : resolve(fbx)
         },
         (xhr) => {

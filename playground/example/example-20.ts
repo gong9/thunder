@@ -1,39 +1,37 @@
-import { BoxGeometry, SceneControl as Scene, Group, MeshBasicMaterial, Mesh, PerspectiveCamera } from '@anov/3d'
-
-
+import { ModelLoader, TransformControls, SceneControl as Scene, Group, Vector3, createTransformControls } from '@anov/3d'
 
 /**
- * example-20 测试 group
- * cut scene   
+ * example-20
+ * group 交互
  */
+
 const scene = new Scene({
     orbitControls: true,
+    ambientLight: true,
+    defCameraOps: {
+        position: new Vector3(0, 100, 800)
+    }
 })
-
+let transformControl: TransformControls | null = null
+const modelLoader = new ModelLoader()
 const group = new Group()
 
-
-const geometry = new BoxGeometry(2, 2, 2)
-const material = new MeshBasicMaterial({ color: 0x00FF00 })
-const box = new Mesh(geometry, material)
-
-group.addNatureEventListener('pointermove', (object3D) => {
-    object3D.children[0].material.color.set(0xFF0000)
+createTransformControls().then((transformControls) => {
+    transformControl = transformControls
+    scene.add(transformControl)
 })
 
-group.addNatureEventListener('pointerleave', (object3D) => {
-    object3D.children[0].material.color.set(0x00FF00)
+// fbx
+modelLoader.loadFbx('./beijing.fbx')!.then((object) => {
+
+    group.addNatureEventListener('click', (object3D) => {
+        console.log(object3D)
+    })
+    
+    console.log(group)
+    group.add(object as Group)
+    scene.add(group)
 })
-
-group.add(box)
-scene.add(group)
-
-// scene.add(box)
 
 scene.render(document.querySelector('#app')!)
 scene.startFrameAnimate()
-
-
-
-
-
