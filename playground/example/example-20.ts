@@ -25,7 +25,7 @@ createTransformControls().then((transformControls) => {
 modelLoader.loadFbx('./beijing.fbx')!.then((object) => {
 
     group.addNatureEventListener('click', (object3D) => {
-        console.log(object3D)
+        console.log('group click', object3D)
     })
     
     console.log(group)
