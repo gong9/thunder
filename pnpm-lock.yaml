@@ -119,7 +119,7 @@ importers:
   packages/anov-3d-utils:
     dependencies:
       '@anov/3d':
-        specifier: workspace:0.0.3
+        specifier: workspace:0.0.4-alpha.1
         version: link:../anov-3d
 
   packages/anov-3d-vue3: {}
