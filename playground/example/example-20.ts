@@ -1,4 +1,4 @@
-import { ModelLoader, TransformControls, SceneControl as Scene, Group, Vector3, createTransformControls } from '@anov/3d'
+import { ModelLoader, TransformControls, SceneControl as Scene, Group, Vector3, createTransformControls, Box3, Box3Helper, use } from '@anov/3d'
 
 /**
  * example-20
@@ -7,10 +7,7 @@ import { ModelLoader, TransformControls, SceneControl as Scene, Group, Vector3, 
 
 const scene = new Scene({
     orbitControls: true,
-    ambientLight: true,
-    defCameraOps: {
-        position: new Vector3(0, 100, 800)
-    }
+    ambientLight: true
 })
 let transformControl: TransformControls | null = null
 const modelLoader = new ModelLoader()
@@ -21,15 +18,63 @@ createTransformControls().then((transformControls) => {
     scene.add(transformControl)
 })
 
-// fbx
-modelLoader.loadFbx('./beijing.fbx')!.then((object) => {
+// glb
+modelLoader.loadGLTF('./car.glb',true)!.then((object) => {
+    group.add((object as any).scene)
 
-    group.addNatureEventListener('click', (object3D) => {
-        console.log('group click', object3D)
+    const box3 = new Box3()
+    let model: Box3 | null = null
+    let isLeaver = true
+    let iskeydown = false
+
+
+    group.addNatureEventListener('pointermove', (object3D) => {
+        // model = box3.setFromObject(group)
+        // isLeaver = false
+        transformControl && transformControl.attach(object3D)
     })
-    
-    console.log(group)
-    group.add(object as Group)
+
+
+    // group.addNatureEventListener('pointerleave', (object3D) => {
+    //     isLeaver = true
+    // })
+
+    // group.addNatureEventListener('click', (object3D) => {
+    //     model = box3.setFromObject(group)
+
+    //     const helper = new Box3Helper(model!);
+    //     scene.add(helper);
+    // })
+
+    // window.addEventListener('keyup', (e) => {
+    //     iskeydown = false
+    // })
+
+    // window.addEventListener('keydown', (e) => {
+    //     iskeydown = true
+    // })
+
+    // use.useframe(() => {
+    //     let helper: Box3Helper | null = null
+    //     if (!isLeaver) {
+    //         helper = new Box3Helper(model!);
+
+    //         if (
+    //             !scene.scene?.children.some((item) => item instanceof Box3Helper)
+    //         ) {
+    //             scene.add(helper);
+    //         }
+
+    //     }
+    //     if (isLeaver && !iskeydown) {
+    //         const helper = scene.scene?.children.find((item) => item instanceof Box3Helper)
+    //         if (helper) {
+    //             scene.scene?.remove(helper)
+    //         }
+    //     }
+
+    // })
+
     scene.add(group)
 })
 

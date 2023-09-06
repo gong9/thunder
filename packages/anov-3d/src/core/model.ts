@@ -1,10 +1,21 @@
-import type { Group, Mesh } from 'three'
+import type { Group, Mesh, Object3D } from 'three'
 import type { GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 import { getAllMeshChildren } from '../utils'
 import provideEventPrototype from './events'
+
+/**
+ * inject event prototype fn
+ * @param object3d
+ */
+const injectEventPrototype = (object3d: Object3D) => {
+  const allMesh = getAllMeshChildren(object3d)
+  allMesh.forEach((mesh) => {
+    Object.assign(mesh, provideEventPrototype(mesh.raycast.bind(mesh), mesh as Mesh))
+  })
+}
 
 class ModelLoader {
   /**
@@ -16,6 +27,7 @@ class ModelLoader {
    * @returns
    */
   public loadGLTF(url: string,
+    openEvents = false,
     onLoad?: (result: GLTF) => GLTF,
     onProgress?: (event: ProgressEvent) => void,
     onError?: (event: ErrorEvent) => void) {
@@ -32,10 +44,9 @@ class ModelLoader {
     return new Promise((resolve, reject) => {
       loader.load(url,
         (gltf) => {
-          const allMesh = getAllMeshChildren(gltf.scene)
-          allMesh.forEach((mesh) => {
-            Object.assign(mesh, provideEventPrototype(mesh.raycast.bind(mesh), mesh as Mesh))
-          })
+          if (openEvents)
+            injectEventPrototype(gltf.scene)
+
           onLoad ? resolve(onLoad(gltf)) : resolve(gltf)
         },
         (xhr) => {
@@ -45,17 +56,19 @@ class ModelLoader {
           onError && onError(err)
           reject(err)
         })
-    })
+    }) as Promise<GLTF>
   }
 
   /**
    * fbx model loader
    * @param url
+   * @param openEvents 是否打开事件传播
    * @param onLoad
    * @param onProgress
    * @param onError
    */
   public loadFbx(url: string,
+    openEvents = false,
     onLoad?: (result: Group) => Group,
     onProgress?: (event: ProgressEvent) => void,
     onError?: (event: ErrorEvent) => void) {
@@ -64,10 +77,9 @@ class ModelLoader {
     return new Promise((resolve, reject) => {
       fbxLoader.load(url,
         (fbx) => {
-          const allMesh = getAllMeshChildren(fbx)
-          allMesh.forEach((mesh) => {
-            Object.assign(mesh, provideEventPrototype(mesh.raycast.bind(mesh), mesh as Mesh))
-          })
+          if (openEvents)
+            injectEventPrototype(fbx)
+
           onLoad ? resolve(onLoad(fbx)) : resolve(fbx)
         },
         (xhr) => {
@@ -77,7 +89,7 @@ class ModelLoader {
           onError && onError(err)
           reject(err)
         })
-    })
+    }) as Promise<Group>
   }
 
   /**

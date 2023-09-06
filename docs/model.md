@@ -52,4 +52,22 @@ scene.startFrameAnimate()
 ```
 <Model type = 'fbx'/>
 
+## 关于模型的鼠标事件交互
+
+目前对模型的鼠标交互操作只支持`loadFbx`、`loadGLTF`,这两个核心加载api, 并且由于性能考虑不会默认打开，需要手动开启。他的使用方式也需要在顶层包裹一层Group, 在Group进行事件监听。 暂时不增加对模型内部的子模型的事件监听
+
+
+```ts
+import { ModelLoader, SceneControl as Scene, Group, Vector3} from '@anov/3d'
+
+modelLoader.loadGLTF('./car.glb',true)!.then((object) => {
+  group.add(object.scene)
+  group.addNatureEventListener('click', (object3D) => {
+       // do something
+    })
+  scene.add(group)
+})
+
+```
+
 ## API

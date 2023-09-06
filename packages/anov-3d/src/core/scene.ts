@@ -302,7 +302,7 @@ class SceneControl {
    * scene add object3d
    * @param object3d
    */
-  public add(object3d: Object3D) {
+  public add(object3d: any) {
     this.scene!.add(object3d)
   }
 
