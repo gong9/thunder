@@ -4,8 +4,8 @@ import type { CubeEventType, EventHandleFn } from '../type'
 import globalObjectManage from './global/global'
 
 class Group extends TGroup {
-  private natureEventMap: Map<CubeEventType, EventHandleFn<CubeEventType>[]> = new Map()
-  private object3d: Object3D[] = []
+  private natureEventMap: Map<CubeEventType, ((object3d: Object3D) => void)[]> = new Map()
+  private entered = false
 
   constructor() {
     super()
@@ -18,7 +18,6 @@ class Group extends TGroup {
    */
   public addModel(object: Object3D) {
     super.add(object)
-    this.object3d.push(object)
   }
 
   /**
@@ -26,7 +25,7 @@ class Group extends TGroup {
    * @param type
    * @param handlefn
    */
-  public addNatureEventListener<T extends CubeEventType>(type: T, handlefn: EventHandleFn<T>) {
+  public addNatureEventListener<T extends CubeEventType>(type: T, handlefn: EventHandleFn) {
     if (!this.natureEventMap.has(type))
       this.natureEventMap.set(type, [])
 
@@ -38,7 +37,7 @@ class Group extends TGroup {
    * @param type
    * @param handlefn
    */
-  public removeNatureEventListener<T extends CubeEventType>(type: T, handlefn: EventHandleFn<T>) {
+  public removeNatureEventListener<T extends CubeEventType>(type: T, handlefn: EventHandleFn) {
     if (!this.natureEventMap.has(type))
       return
 
@@ -60,13 +59,13 @@ class Group extends TGroup {
    * @param intersects
    * @param eventType
   */
-  private handleClick(natureEvent: EventHandleFn<CubeEventType>[]) {
+  private handleClick(natureEvent: EventHandleFn[]) {
     if (!globalObjectManage.triggerClick)
       return
 
     // get nature event
     natureEvent.forEach((handlefn) => {
-      // handlefn(this)
+      handlefn(this)
     })
   }
 
@@ -75,9 +74,9 @@ class Group extends TGroup {
    * @param intersects
    * @param natureEvent
    */
-  private handlePointerMove(natureEvent: EventHandleFn<CubeEventType>[]) {
+  private handlePointerMove(natureEvent: EventHandleFn[]) {
     natureEvent.forEach((handlefn) => {
-      // handlefn(this)
+      handlefn(this)
     })
   }
 
@@ -89,17 +88,37 @@ class Group extends TGroup {
   private handlePointerleave() {
     const pointerleaveCallback = this.natureEventMap.get('pointerleave')
     pointerleaveCallback && pointerleaveCallback.length > 0 && pointerleaveCallback.forEach((handlefn) => {
-      // handlefn(this)
+      handlefn(this)
     },
     )
   }
 
   /**
-   * raycastGroup
+   * raycast group
    * handle intersect event
    */
-  public raycastGroup(intersets: Intersection<Object3D<Event>>[]) {
-    console.log('raycastGroup', intersets)
+  public raycastGroup() {
+    const clickCallback = this.natureEventMap.get('click')
+    const pointerupCallback = this.natureEventMap.get('pointerup')
+    const pointerdownCallback = this.natureEventMap.get('pointerdown')
+    const pointermoveCallback = this.natureEventMap.get('pointermove')
+
+    this.entered = true
+
+    clickCallback && clickCallback.length > 0 && this.handleClick(clickCallback)
+    pointerupCallback && pointerupCallback.length > 0 && this.handleClick(pointerupCallback)
+    pointerdownCallback && pointerdownCallback.length > 0 && this.handleClick(pointerdownCallback)
+    pointermoveCallback && pointermoveCallback.length > 0 && this.handlePointerMove(pointermoveCallback)
+  }
+
+  /**
+   * cancel bubbling
+   */
+  public cancel() {
+    if (this.entered) {
+      this.handlePointerleave()
+      this.entered = false
+    }
   }
 }
 

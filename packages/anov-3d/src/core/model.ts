@@ -1,8 +1,10 @@
-import type { Group } from 'three'
+import type { Group, Mesh } from 'three'
 import type { GLTF } from 'three/examples/jsm/loaders/GLTFLoader'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
+import { getAllMeshChildren } from '../utils'
+import provideEventPrototype from './events'
 
 class ModelLoader {
   /**
@@ -30,6 +32,10 @@ class ModelLoader {
     return new Promise((resolve, reject) => {
       loader.load(url,
         (gltf) => {
+          const allMesh = getAllMeshChildren(gltf.scene)
+          allMesh.forEach((mesh) => {
+            Object.assign(mesh, provideEventPrototype(mesh.raycast.bind(mesh), mesh as Mesh))
+          })
           onLoad ? resolve(onLoad(gltf)) : resolve(gltf)
         },
         (xhr) => {
@@ -58,6 +64,10 @@ class ModelLoader {
     return new Promise((resolve, reject) => {
       fbxLoader.load(url,
         (fbx) => {
+          const allMesh = getAllMeshChildren(fbx)
+          allMesh.forEach((mesh) => {
+            Object.assign(mesh, provideEventPrototype(mesh.raycast.bind(mesh), mesh as Mesh))
+          })
           onLoad ? resolve(onLoad(fbx)) : resolve(fbx)
         },
         (xhr) => {

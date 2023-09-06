@@ -1,5 +1,5 @@
 import type { Color, ColorRepresentation, Object3D, ToneMapping } from 'three'
-import { ACESFilmicToneMapping, AmbientLight, CubeTextureLoader, Raycaster, Scene as TScene, Vector2, Vector3, WebGLRenderer } from 'three'
+import { ACESFilmicToneMapping, AmbientLight, CubeTextureLoader, Group, Line, Raycaster, Scene as TScene, Vector2, Vector3, WebGLRenderer } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as TWEEN from '@tweenjs/tween.js'
 import { emitter } from '../utils'
@@ -315,18 +315,10 @@ class SceneControl {
 
     // need expand
     const object3ds = this.scene!.children.filter((item: Object3D) => {
-      return item instanceof Mesh
+      return item instanceof Mesh || item instanceof Group || item instanceof Line
     })
 
-    this.raycaster!.intersectObjects(object3ds, raycasterOps.recursive ?? false)
-
-    // group的拾取，构建一个mesh？
-
-    // const intersects = this.raycaster!.intersectObjects(this.scene!.children, false)
-    // globalObjectManage.groupCatch.forEach((group) => {
-    //   if (intersects.length > 0)
-    //     group.raycastGroup(intersects as Intersection<Object3D<Event>>[])
-    // })
+    this.raycaster!.intersectObjects(object3ds, raycasterOps.recursive ?? true)
   }
 
   private getPointerPosition(event: PointerEvent) {

@@ -55,17 +55,48 @@ export const getAncestorsNodes = <T extends Node>(array: T[], targetId: string |
  * @param object3d
  * @returns
  */
-export const getObject3dAncestorsNodes = (object3d: Object3D) => {
+export const getObject3dAncestorsNodes = (object3d: Object3D, filter?: (object3d: Object3D) => boolean) => {
   const ancestorsNodes: Object3D[] = []
 
   let currentObject3d = object3d
 
   while (currentObject3d.parent) {
-    ancestorsNodes.push(currentObject3d.parent)
+    if (filter)
+      filter(currentObject3d.parent) && ancestorsNodes.push(currentObject3d.parent)
+    else
+      ancestorsNodes.push(currentObject3d.parent)
+
     currentObject3d = currentObject3d.parent
   }
 
   return ancestorsNodes
+}
+
+/**
+ * get all mesh children, maybe also need line, but not now
+ * @param object3d
+ * @returns
+ */
+export const getAllMeshChildren = (object3d: Object3D) => {
+  const children: Object3D[] = []
+
+  const run = (object3d: Object3D) => {
+    if (object3d.children.length === 0)
+      return
+
+    for (let i = 0; i < object3d.children.length; i++) {
+      const child = object3d.children[i]
+
+      if (child.type === 'Mesh')
+        children.push(child)
+
+      run(child)
+    }
+  }
+
+  run(object3d)
+
+  return children
 }
 
 /**
