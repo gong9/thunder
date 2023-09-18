@@ -19,8 +19,10 @@ const injectEventPrototype = (object3d: Object3D) => {
 
 class ModelLoader {
   /**
-   * load gltf model
+   * gltf model loader
    * @param url
+   * @param openEvents
+   * @param draco
    * @param onLoad
    * @param onProgress
    * @param onError
@@ -28,18 +30,22 @@ class ModelLoader {
    */
   public loadGLTF(url: string,
     openEvents = false,
+    draco = false,
     onLoad?: (result: GLTF) => GLTF,
     onProgress?: (event: ProgressEvent) => void,
     onError?: (event: ErrorEvent) => void) {
     const loader = new GLTFLoader()
-    const dracoLoader = new DRACOLoader()
 
-    // todo: 调优
-    dracoLoader.setDecoderPath('./draco/')
-    dracoLoader.setDecoderConfig({ type: 'js' })
-    dracoLoader.preload()
+    if (draco) {
+      // default draco file path is './draco/', now not support custom
+      const dracoLoader = new DRACOLoader()
 
-    loader.setDRACOLoader(dracoLoader)
+      dracoLoader.setDecoderPath('./draco/')
+      dracoLoader.setDecoderConfig({ type: 'js' })
+      dracoLoader.preload()
+
+      loader.setDRACOLoader(dracoLoader)
+    }
 
     return new Promise((resolve, reject) => {
       loader.load(url,
