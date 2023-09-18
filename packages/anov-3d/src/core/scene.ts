@@ -1,8 +1,10 @@
-import type { Color, ColorRepresentation, Object3D, ToneMapping } from 'three'
-import { ACESFilmicToneMapping, AmbientLight, CubeTextureLoader, Group, Line, Raycaster, Scene as TScene, Vector2, Vector3, WebGLRenderer } from 'three'
+import type { Color, Object3D, ToneMapping } from 'three'
+import { ACESFilmicToneMapping, AmbientLight, CubeTextureLoader, Fog, FogExp2, Group, Line, Raycaster, Scene as TScene, Vector2, Vector3, WebGLRenderer } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as TWEEN from '@tweenjs/tween.js'
 import { emitter } from '../utils'
+import type { ColorRepresentation } from '../type'
+import { FogEnum } from '../type'
 import Mesh from './mesh'
 import Cssrenderer from './cssRenderer'
 import globalControl from './global/globalControl'
@@ -24,6 +26,8 @@ interface SceneOptions {
       updateStyle?: boolean
     }
   }
+
+  fog?: FogEnum
 
   /** default camera options */
   defCameraOps?: {
@@ -95,6 +99,8 @@ class SceneControl {
   controls: OrbitControls | null = null
   domElement: HTMLElement | null = null
 
+  fog: Fog | FogExp2 | null = null
+
   /** 裁剪相关 */
   cutoutCamera: PerspectiveCamera | null = null
   cutoutBackground: ColorRepresentation | null = null
@@ -105,6 +111,12 @@ class SceneControl {
     width: 0,
     height: 0,
   }
+
+  /** 雾相关 */
+  fogColor: ColorRepresentation = 0xCCCCCC
+  fogNear = 1
+  fogFar = 100
+  fogDensity = 0.00025
 
   constructor(opts?: SceneOptions) {
     this.opts = opts ?? {}
@@ -123,6 +135,12 @@ class SceneControl {
     globalObjectManage.setCamera(camera)
     this.scene!.add(camera)
 
+    if (this.opts.fog) {
+      const fog = this.initFog()
+      this.scene!.fog = fog
+      this.fog = fog
+    }
+
     if (this.opts.css2DRenderer) {
       const cssRenderer = this.initCssRenderer()
       this.cssRenderer = cssRenderer
@@ -136,6 +154,21 @@ class SceneControl {
 
     if (this.opts.background?.imgs)
       this.initSkyBox(this.opts.background?.imgs)
+  }
+
+  /**
+   * init fog
+   * @returns
+   */
+  initFog() {
+    const fogType = this.opts.fog
+    if (fogType === FogEnum.Fog)
+      return new Fog(this.fogColor, this.fogNear, this.fogFar)
+
+    if (fogType === FogEnum.FogExp2)
+      return new FogExp2(this.fogColor, this.fogDensity)
+
+    return null
   }
 
   /**
