@@ -22,6 +22,8 @@ playground
 
 [示例网站](https://anov-3d-ecology.vercel.app/#base_scene)
 
+国内： http://182.92.210.127:8001/
+
 使用文档：暂时需要拉去代码本地查看
 
 ### development
