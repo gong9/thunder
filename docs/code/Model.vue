@@ -1,6 +1,6 @@
 <script setup lang='ts'>
 import { onMounted, ref } from 'vue'
-import { ModelLoader, Scene, Vector3, Group } from '@anov/3d';
+import { ModelLoader, SceneControl, Vector3, Group } from '@anov/3d';
 
 const props = defineProps({
     type: {
@@ -13,7 +13,7 @@ const divRef = ref(null)
 const modelLoader = new ModelLoader()
 
 onMounted(() => {
-    const scene = new Scene({
+    const scene = new SceneControl({
         orbitControls: true,
         ambientLight: true,
         rendererOps: {

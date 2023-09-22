@@ -1,11 +1,11 @@
 <script setup lang='ts'>
 import { onMounted, ref } from 'vue'
-import { BoxGeometry, Mesh, MeshBasicMaterial, Scene, createLabel, dom } from '@anov/3d'
+import { BoxGeometry, Mesh, MeshBasicMaterial, SceneControl, createLabel, dom } from '@anov/3d'
 
 const divRef = ref(null)
 
 onMounted(() => {
-  const scene = new Scene({
+  const scene = new SceneControl({
     orbitControls: true,
     css2DRenderer: true,
     rendererOps: {

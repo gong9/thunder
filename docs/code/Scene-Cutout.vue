@@ -1,11 +1,11 @@
 <script setup lang='ts'>
 import { onMounted, ref } from 'vue'
-import { BoxGeometry, Mesh, MeshBasicMaterial, Scene, PerspectiveCamera, Vector3 } from '@anov/3d'
+import { BoxGeometry, Mesh, MeshBasicMaterial, SceneControl, PerspectiveCamera, Vector3 } from '@anov/3d'
 
 const divRef = ref(null)
 
 onMounted(() => {
-  const scene = new Scene({
+  const scene = new SceneControl({
     orbitControls: true,
     cutout: true,
     rendererOps: {

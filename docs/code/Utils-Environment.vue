@@ -1,7 +1,7 @@
 <script setup lang='ts'>
 import { onMounted, ref } from 'vue'
 import { createSnow, createRain } from '@anov/3d-utils'
-import { BoxGeometry, Mesh, MeshBasicMaterial, Scene, Vector3 } from '@anov/3d'
+import { BoxGeometry, Mesh, MeshBasicMaterial, SceneControl, Vector3 } from '@anov/3d'
 
 const props = defineProps({
     type: {
@@ -12,7 +12,7 @@ const props = defineProps({
 const divRef = ref(null)
 
 onMounted(() => {
-    const scene = new Scene({
+    const scene = new SceneControl({
         orbitControls: true,
         rendererOps: {
             size: {

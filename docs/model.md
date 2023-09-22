@@ -10,9 +10,9 @@ anov3d 将社区中常见的模型加载器进行了统一封装
 ## GLTF
 
 ```ts
-import { ModelLoader, Scene, Vector3, Group } from '@anov/3d';
+import { ModelLoader, SceneControl, Vector3, Group } from '@anov/3d';
 
-const scene = new Scene({
+const scene = new SceneControl({
   orbitControls: true,
   ambientLight: true,
 })
@@ -31,9 +31,9 @@ scene.startFrameAnimate()
 ## FBX
 
 ```ts
-import { ModelLoader, Scene, Group, Vector3 } from '@anov/3d'
+import { ModelLoader, SceneControl, Group, Vector3 } from '@anov/3d'
 
-const scene = new Scene({
+const scene = new SceneControl({
   orbitControls: true,
   ambientLight: true,
   defCameraOps:{

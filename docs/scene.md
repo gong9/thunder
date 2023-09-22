@@ -23,9 +23,9 @@ Scene是3d中最重要的元素，区别于threejs在这里我们做了一些预
 
 
 ```ts
-import { Mesh, Scene, BoxGeometry, MeshBasicMaterial } from '@anov/3d'
+import { Mesh, SceneControl, BoxGeometry, MeshBasicMaterial } from '@anov/3d'
 
-const scene = new Scene({
+const scene = new SceneControl({
   orbitControls: true,
 })
 
@@ -43,7 +43,7 @@ scene.startFrameAnimate()
 ## 天空盒
 
 ```ts
-const scene = new Scene({
+const scene = new SceneControl({
             orbitControls: true,
             background: {
                 imgs: [
@@ -90,9 +90,9 @@ box.addNatureEventListener('pointerleave', (object3D) => {
 
 ```ts
 
-import { BoxGeometry, MeshBasicMaterial, Color, Mesh, Scene, dom, createLabel } from '@anov/3d'
+import { BoxGeometry, MeshBasicMaterial, Color, Mesh, SceneControl, dom, createLabel } from '@anov/3d'
 
-const scene = new Scene({
+const scene = new SceneControl({
   orbitControls: true,
   css2DRenderer: true,
 })
@@ -125,9 +125,9 @@ scene.startFrameAnimate()
 ## 渲染器剪裁
 
 ```ts
-import { BoxGeometry, Scene, Vector3, MeshBasicMaterial, Mesh, PerspectiveCamera } from '@anov/3d'
+import { BoxGeometry, SceneControl, Vector3, MeshBasicMaterial, Mesh, PerspectiveCamera } from '@anov/3d'
 
-const scene = new Scene({
+const scene = new SceneControl({
     orbitControls: true,
     cutout: true,
 })
