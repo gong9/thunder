@@ -8,7 +8,7 @@
   "scripts": {
     "start:p": "pnpm nx start playground-app",
     "build": "pnpm nx run-many --target=build --all",
-    "build-doc": "pnpm -r build && ts-node ./scripts/move-example.ts",
+    "build-doc": "pnpm build && ts-node ./scripts/move-example.ts",
     "prepare": "husky install",
     "batch-importes": "ts-node ./scripts/batch-importes.ts",
     "test": "cd packages/anov-3d && npm test",
@@ -16,7 +16,7 @@
     "release": "changeset version",
     "all-publish": "pnpm build && changeset publish",
     "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
+    "docs:build": "pnpm build && vitepress build docs",
     "docs:preview": "vitepress preview docs",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
