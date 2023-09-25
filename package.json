@@ -16,7 +16,7 @@
     "release": "changeset version",
     "all-publish": "pnpm build && changeset publish",
     "docs:dev": "vitepress dev docs",
-    "docs:build": "pnpm build && vitepress build docs",
+    "docs:build": "pnpm build && vitepress build docs && ts-node ./scripts/move-3d-doc.ts",
     "docs:preview": "vitepress preview docs",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
