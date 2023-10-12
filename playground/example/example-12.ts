@@ -1,4 +1,4 @@
-import { Mesh, SceneControl as Scene, BoxGeometry, MeshBasicMaterial, createTransformControls, TransformControls } from '../../packages/anov-3d/src/index'
+import { Mesh, SceneControl as Scene, BoxGeometry, MeshBasicMaterial, createTransformControls, TransformControls } from '../../packages/thunder-3d/src/index'
 
 
 /**

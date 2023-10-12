@@ -1,4 +1,4 @@
-import { Color, Vector3, SceneControl as Scene, createTransformControls, createControlLine } from '../../packages/anov-3d/src/index'
+import { Color, Vector3, SceneControl as Scene, createTransformControls, createControlLine } from '../../packages/thunder-3d/src/index'
 
 
 /**

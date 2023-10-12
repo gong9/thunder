@@ -61,4 +61,4 @@ const run = (cpath: string, outPath: string, filename: string) => {
   fs.writeFileSync(`${outPath}/${filename}`, lastOutput)
 }
 
-run(path.resolve(__dirname, '../packages/anov-3d/node_modules/three/examples/jsm'), path.resolve(__dirname, '../packages/anov-3d/src'), 'output.ts')
+run(path.resolve(__dirname, '../packages/thunder-3d/node_modules/three/examples/jsm'), path.resolve(__dirname, '../packages/thunder-3d/src'), 'output.ts')

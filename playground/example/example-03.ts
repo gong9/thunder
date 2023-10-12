@@ -1,4 +1,4 @@
-import { ModelLoader, SceneControl as Scene } from '@anov/3d'
+import { ModelLoader, SceneControl as Scene } from 'thunder-3d'
 
 /**
  * example-03

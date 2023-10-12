@@ -1,4 +1,4 @@
-name: anov-3d-monorepo
+name: thunder
 on:
   push:
     branches: [main]

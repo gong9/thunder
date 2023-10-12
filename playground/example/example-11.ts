@@ -1,4 +1,4 @@
-import { Color, SceneControl as Scene, AxesHelper, GridHelper, PlaneGeometry, ShadowMaterial, Mesh } from '../../packages/anov-3d/src/index'
+import { Color, SceneControl as Scene, AxesHelper, GridHelper, PlaneGeometry, ShadowMaterial, Mesh } from '../../packages/thunder-3d/src/index'
 
 const createAxesHelper = (size = 1) => {
     const axesHelper = new AxesHelper(size)

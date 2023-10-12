@@ -1,8 +1,8 @@
 {
-  "name": "anov-3d-monorepo",
+  "name": "thunder",
   "version": "0.0.0",
   "private": true,
-  "description": "anov-3d",
+  "description": "thunder-3d",
   "license": "MIT",
   "keywords": [],
   "scripts": {
@@ -11,7 +11,7 @@
     "build-doc": "pnpm build && ts-node ./scripts/move-example.ts",
     "prepare": "husky install",
     "batch-importes": "ts-node ./scripts/batch-importes.ts",
-    "test": "cd packages/anov-3d && npm test",
+    "test": "cd packages/thunder-3d && npm test",
     "changeset": "changeset",
     "release": "changeset version",
     "all-publish": "pnpm build && changeset publish",
@@ -23,8 +23,8 @@
   },
   "authors": [],
   "devDependencies": {
-    "@anov/3d": "workspace:*",
-    "@anov/3d-utils": "workspace:*",
+    "thunder-3d": "workspace:*",
+    "thunder-utils": "workspace:*",
     "@antfu/eslint-config": "^0.38.5",
     "@babel/core": "^7.22.10",
     "@babel/preset-env": "^7.22.10",

@@ -1,4 +1,4 @@
-import { ModelLoader, Color, SceneControl as Scene, AxesHelper, PlaneGeometry, GridHelper, BufferGeometry, LineBasicMaterial, MeshBasicMaterial, Vector3, utils, CatmullRomCurve3, Line, } from '../../packages/anov-3d/src/index'
+import { ModelLoader, Color, SceneControl as Scene, AxesHelper, PlaneGeometry, GridHelper, BufferGeometry, LineBasicMaterial, MeshBasicMaterial, Vector3, utils, CatmullRomCurve3, Line, } from '../../packages/thunder-3d/src/index'
 
 const modelLoader = new ModelLoader()
 

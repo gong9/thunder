@@ -3,7 +3,7 @@
 layout: home
 
 hero:
-  name: "anov 3d"
+  name: "thunder"
   text: "3d 引擎"
   # tagline: 3d engine
   actions:

@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { Mesh, SceneControl as Scene, utils, ModelLoader, BoxGeometry, MeshPhongMaterial, Vector3, DoubleSide, Color, CatmullRomCurve3, LineGeometry, LineMaterial, Line2, PerspectiveCamera } from '../../packages/anov-3d/src/index'
+import { Mesh, SceneControl as Scene, utils, ModelLoader, BoxGeometry, MeshPhongMaterial, Vector3, DoubleSide, Color, CatmullRomCurve3, LineGeometry, LineMaterial, Line2, PerspectiveCamera } from '../../packages/thunder-3d/src/index'
 
 const modelLoader = new ModelLoader()
 

@@ -1,4 +1,4 @@
-import { BoxGeometry, SceneControl as Scene, Vector3, MeshBasicMaterial, Mesh, PerspectiveCamera } from '@anov/3d'
+import { BoxGeometry, SceneControl as Scene, Vector3, MeshBasicMaterial, Mesh, PerspectiveCamera } from 'thunder-3d'
 
 /**
  * example-19 测试 cutout

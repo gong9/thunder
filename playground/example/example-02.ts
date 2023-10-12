@@ -1,4 +1,4 @@
-import { BufferGeometry, CameraHelper, Float32BufferAttribute, Group, MathUtils, MeshBasicMaterial, OrthographicCamera, PerspectiveCamera, Points, PointsMaterial, SphereGeometry, Vector3,Mesh, SceneControl as Scene } from '../../packages/anov-3d/src/index'
+import { BufferGeometry, CameraHelper, Float32BufferAttribute, Group, MathUtils, MeshBasicMaterial, OrthographicCamera, PerspectiveCamera, Points, PointsMaterial, SphereGeometry, Vector3,Mesh, SceneControl as Scene } from '../../packages/thunder-3d/src/index'
 
 let activeCamera: PerspectiveCamera | OrthographicCamera | null = null
 let activeHelper: CameraHelper | null = null

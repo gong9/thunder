@@ -1,4 +1,4 @@
-import { ModelLoader, TransformControls, SceneControl as Scene, Group, Vector3, createTransformControls, Box3, Box3Helper, use } from '@anov/3d'
+import { ModelLoader, TransformControls, SceneControl as Scene, Group, Vector3, createTransformControls, Box3, Box3Helper, use } from 'thunder-3d'
 
 /**
  * example-20

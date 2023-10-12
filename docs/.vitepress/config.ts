@@ -51,7 +51,7 @@ export default defineConfig({
     ],
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/anov-team/anov-3d-ecology' },
+      { icon: 'github', link: '' },
     ],
   },
 })

@@ -1,7 +1,7 @@
 <script setup lang='ts'>
 import { onMounted, ref } from 'vue'
-import { createSnow, createRain } from '@anov/3d-utils'
-import { BoxGeometry, Mesh, MeshBasicMaterial, SceneControl, Vector3 } from '@anov/3d'
+import { createSnow, createRain } from 'thunder-utils'
+import { BoxGeometry, Mesh, MeshBasicMaterial, SceneControl, Vector3 } from 'thunder-3d'
 
 const props = defineProps({
     type: {

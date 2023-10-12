@@ -7,7 +7,7 @@
 ## snow
  
  ```ts
-import { createSnow } from '@anov/3d-utils'
+import { createSnow } from 'thunder-utils'
 
 const [snowStart, snowStop] = createSnow(10, 1000, {
     x: 1,
@@ -32,7 +32,7 @@ snowStart()
 ## rain
 
 ```ts
-import { createRain } from '@anov/3d-utils'
+import { createRain } from 'thunder-utils'
 
 const [rainStart, rainStop] = createRain(2, 1000, {
     x: 1,

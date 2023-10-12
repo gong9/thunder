@@ -1,21 +1,19 @@
-# anov-3d
+# thunder-3d
 
-> anov 3d 核心包
+基于threejs的3d库
 
-
-[示例网站 (notes: 暂时需科学上网)](https://anov-3d-ecology.vercel.app/#base_scene)
 ### usage
 
 install
 
 ```bash
-pnpm add @anov/3d
+pnpm add thunder-3d
 ```
 
 init a base scene 「wip」
 
 ```ts
-import { Mesh, Scene, BoxGeometry, MeshBasicMaterial } from '@anov/3d'
+import { Mesh, Scene, BoxGeometry, MeshBasicMaterial } from 'thunder-3d'
 
 const scene = new Scene({
   orbitControls: true,
@@ -41,7 +39,7 @@ scene.startFrameAnimate()
 base object3d motion 「wip」
 
 ```ts
-import { Mesh, Scene, utils, AxesHelper, BoxGeometry, GridHelper, MeshBasicMaterial } from '@anov/3d'
+import { Mesh, Scene, utils, AxesHelper, BoxGeometry, GridHelper, MeshBasicMaterial } from 'thunder-3d'
 
 const scene = new Scene({
   orbitControls: true,

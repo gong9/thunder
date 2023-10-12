@@ -1,4 +1,4 @@
-import { BufferGeometry, Points, PointsMaterial, TextureLoader, Vector3 } from '@anov/3d'
+import { BufferGeometry, Points, PointsMaterial, TextureLoader, Vector3 } from 'thunder-3d'
 import type { SpeedType } from '../rain'
 
 interface EnvPointsOptions {

@@ -1,6 +1,6 @@
 <script setup lang='ts'>
 import { onMounted, ref } from 'vue'
-import { BoxGeometry, Mesh, MeshBasicMaterial, SceneControl, TransformControls, createTransformControls } from '@anov/3d'
+import { BoxGeometry, Mesh, MeshBasicMaterial, SceneControl, TransformControls, createTransformControls } from 'thunder-3d'
 
 const divRef = ref(null)
 

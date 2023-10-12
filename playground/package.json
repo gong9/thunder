@@ -11,8 +11,8 @@
     "start": "ts-node ../scripts/remov-catch.ts && parcel index.html"
   },
   "dependencies": {
-    "@anov/3d": "workspace:^",
-    "@anov/3d-utils": "workspace:^"
+    "thunder-3d": "workspace:^",
+    "thunder-utils": "workspace:^"
   },
   "devDependencies": {
     "@parcel/resolver-default": "^2.9.3",

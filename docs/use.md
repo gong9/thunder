@@ -6,7 +6,7 @@
 ## 用法
 
 ```ts
-import { use } from '@anov/3d'
+import { use } from 'thunder-3d'
 
 const stopFn = use.useFrame(()=>{
     // do something
@@ -19,7 +19,7 @@ stopFn() // 移出帧循环
 > 作用： 获取场景中的核心控件
 
 ```ts
-import { use } from '@anov/3d'
+import { use } from 'thunder-3d'
 
 const {
     scene,

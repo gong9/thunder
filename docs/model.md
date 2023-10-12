@@ -10,7 +10,7 @@ anov3d 将社区中常见的模型加载器进行了统一封装
 ## GLTF
 
 ```ts
-import { ModelLoader, SceneControl, Vector3, Group } from '@anov/3d';
+import { ModelLoader, SceneControl, Vector3, Group } from 'thunder-3d';
 
 const scene = new SceneControl({
   orbitControls: true,
@@ -31,7 +31,7 @@ scene.startFrameAnimate()
 ## FBX
 
 ```ts
-import { ModelLoader, SceneControl, Group, Vector3 } from '@anov/3d'
+import { ModelLoader, SceneControl, Group, Vector3 } from 'thunder-3d'
 
 const scene = new SceneControl({
   orbitControls: true,
@@ -58,7 +58,7 @@ scene.startFrameAnimate()
 
 
 ```ts
-import { ModelLoader, SceneControl as Scene, Group, Vector3} from '@anov/3d'
+import { ModelLoader, SceneControl as Scene, Group, Vector3} from 'thunder-3d'
 
 modelLoader.loadGLTF('./car.glb',true)!.then((object) => {
   group.add(object.scene)

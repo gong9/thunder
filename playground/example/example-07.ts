@@ -1,5 +1,5 @@
 
-import { BoxGeometry, MeshBasicMaterial, Color, Mesh, SceneControl as Scene, dom, createLabel } from '@anov/3d'
+import { BoxGeometry, MeshBasicMaterial, Color, Mesh, SceneControl as Scene, dom, createLabel } from 'thunder-3d'
 
 /**
  * add label

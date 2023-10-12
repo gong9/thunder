@@ -1,4 +1,4 @@
-import { Color, SceneControl as Scene, Mesh, BoxGeometry, PlaneGeometry, MeshBasicMaterial, Vector3, } from '../../packages/anov-3d/src/index'
+import { Color, SceneControl as Scene, Mesh, BoxGeometry, PlaneGeometry, MeshBasicMaterial, Vector3, } from '../../packages/thunder-3d/src/index'
 
 const createPlane = () => {
     const geometry = new PlaneGeometry(100, 100);

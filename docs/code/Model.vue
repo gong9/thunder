@@ -1,6 +1,6 @@
 <script setup lang='ts'>
 import { onMounted, ref } from 'vue'
-import { ModelLoader, SceneControl, Vector3, Group } from '@anov/3d';
+import { ModelLoader, SceneControl, Vector3, Group } from 'thunder-3d';
 
 const props = defineProps({
     type: {

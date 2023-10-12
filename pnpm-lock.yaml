@@ -4,12 +4,6 @@ importers:
 
   .:
     devDependencies:
-      '@anov/3d':
-        specifier: workspace:*
-        version: link:packages/anov-3d
-      '@anov/3d-utils':
-        specifier: workspace:*
-        version: link:packages/anov-3d-utils
       '@antfu/eslint-config':
         specifier: ^0.38.5
         version: 0.38.5(eslint@8.34.0)(jest@27.5.1)(typescript@4.8.4)
@@ -79,6 +73,12 @@ importers:
       nx:
         specifier: ^16.8.1
         version: 16.8.1
+      thunder-3d:
+        specifier: workspace:*
+        version: link:packages/thunder-3d
+      thunder-utils:
+        specifier: workspace:*
+        version: link:packages/thunder-utils
       ts-node:
         specifier: ^10.9.1
         version: 10.9.1(@types/node@18.14.1)(typescript@4.8.4)
@@ -95,7 +95,7 @@ importers:
         specifier: ^3.3.4
         version: 3.3.4
 
-  packages/anov-3d:
+  packages/thunder-3d:
     dependencies:
       '@tweenjs/tween.js':
         specifier: ^21.0.0
@@ -117,24 +117,20 @@ importers:
         specifier: ^4.14.196
         version: 4.14.196
 
-  packages/anov-3d-gis: {}
-
-  packages/anov-3d-utils:
+  packages/thunder-utils:
     dependencies:
-      '@anov/3d':
-        specifier: workspace:0.0.4-alpha.1
-        version: link:../anov-3d
-
-  packages/anov-3d-vue3: {}
+      thunder-3d:
+        specifier: workspace:0.0.1
+        version: link:../thunder-3d
 
   playground:
     dependencies:
-      '@anov/3d':
+      thunder-3d:
         specifier: workspace:^
-        version: link:../packages/anov-3d
-      '@anov/3d-utils':
+        version: link:../packages/thunder-3d
+      thunder-utils:
         specifier: workspace:^
-        version: link:../packages/anov-3d-utils
+        version: link:../packages/thunder-utils
     devDependencies:
       '@parcel/resolver-default':
         specifier: ^2.9.3

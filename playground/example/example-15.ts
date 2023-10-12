@@ -1,5 +1,5 @@
-import { SceneControl as Scene, Vector3, Mesh, BoxGeometry, MeshBasicMaterial } from '@anov/3d'
-import { createSnow } from '@anov/3d-utils'
+import { SceneControl as Scene, Vector3, Mesh, BoxGeometry, MeshBasicMaterial } from 'thunder-3d'
+import { createSnow } from 'thunder-utils'
 
 /**
  * example-15

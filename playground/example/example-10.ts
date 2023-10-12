@@ -1,4 +1,4 @@
-import { Color, SceneControl as Scene, Mesh, PlaneGeometry, BufferGeometry, LineBasicMaterial, Line, MeshBasicMaterial, Vector3, CatmullRomCurve3 } from '../../packages/anov-3d/src/index'
+import { Color, SceneControl as Scene, Mesh, PlaneGeometry, BufferGeometry, LineBasicMaterial, Line, MeshBasicMaterial, Vector3, CatmullRomCurve3 } from '../../packages/thunder-3d/src/index'
 
 const createPlane = () => {
     const geometry = new PlaneGeometry(100, 100);

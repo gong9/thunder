@@ -1,15 +1,13 @@
-# anov-3d-ecology
+# thunder
 
-> 3d 引擎生态包
+> 基于 three.js 的 3d 引擎生态
 
 ### description
 
 packages
 
-- anov-3d 3d 引擎基础核心包
-- anov-3d-gis 3d 引擎 gis 扩展包
-- anov-3d-utils 3d 引擎工具包
-- anov-3d-vue3 3d 引擎 vue3 扩展包
+- thunder-3d 3d 基础核心包
+- thunder-utils 业务工具包
 - ...
 
 playground
@@ -20,7 +18,6 @@ playground
 
 > notes: 暂时需科学上网
 
-[示例网站](https://anov-3d-ecology.vercel.app/#base_scene)
 
 国内： http://182.92.210.127:8001/
 

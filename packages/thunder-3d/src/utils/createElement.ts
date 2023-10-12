@@ -1,4 +1,4 @@
-import { handleCamelCaseString } from '../utils'
+import { handleCamelCaseString } from '.'
 
 export interface OpsType {
   textContent?: string
