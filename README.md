@@ -16,8 +16,6 @@ playground
 
 ### example 
 
-> notes: 暂时需科学上网
-
 
 国内： http://182.92.210.127:8001/
 
