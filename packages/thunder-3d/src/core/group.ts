@@ -1,4 +1,4 @@
-import type { Intersection, Object3D } from 'three'
+import type { Object3D } from 'three'
 import { Group as TGroup } from 'three'
 import type { CubeEventType, EventHandleFn } from '../type'
 import globalObjectManage from './global/global'

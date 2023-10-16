@@ -13,6 +13,7 @@ import { appendChildren, create, createElement, setAttributes, setClassList, set
 import globalObjectManage from './core/global/global'
 import useframe from './core/use/useframe'
 import useScene from './core/use/useScene'
+import * as EventManager from './core/eventManager'
 
 const utils = {
   moveTo,
@@ -54,4 +55,5 @@ export {
   dom,
   use,
   globalObjectManage,
+  EventManager,
 }

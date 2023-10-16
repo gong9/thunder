@@ -5,6 +5,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 import { getAllMeshChildren } from '../utils'
 import provideEventPrototype from './events'
+import global from './global/global'
 
 /**
  * inject event prototype fn

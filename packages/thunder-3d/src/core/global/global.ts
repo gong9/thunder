@@ -1,8 +1,9 @@
-import type { Scene } from 'three'
+import type { Scene, WebGLRenderer } from 'three'
 import type { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import type { TransformControls } from '../control/transformControls'
 import type { PerspectiveCamera } from '../camera'
 import type Group from '../group'
+import type { InteractionManager } from '../eventManager'
 
 class GlobalObjectManage {
   public scene: Scene | null = null
@@ -11,6 +12,10 @@ class GlobalObjectManage {
   public domElement: HTMLElement | null = null
   public orbitControls: OrbitControls | null = null
   public transformControls: TransformControls[] = []
+  public renderer: WebGLRenderer | null = null
+
+  // events
+  public interactionManage: InteractionManager | null = null
 
   // hooks callback
   public frameCallbacks = new Set<() => void>()
@@ -24,6 +29,10 @@ class GlobalObjectManage {
 
   public addScene(object3d: Scene) {
     this.scene = object3d
+  }
+
+  public setRenderer(renderer: WebGLRenderer) {
+    this.renderer = renderer
   }
 
   public setCamera(camera: PerspectiveCamera) {
@@ -56,6 +65,10 @@ class GlobalObjectManage {
 
   public addCatch(group: Group) {
     this.groupCatch.push(group)
+  }
+
+  public setInteractionManage(interactionManager: InteractionManager) {
+    this.interactionManage = interactionManager
   }
 }
 

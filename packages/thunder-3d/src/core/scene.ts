@@ -10,6 +10,7 @@ import Cssrenderer from './cssRenderer'
 import globalControl from './global/globalControl'
 import globalObjectManage from './global/global'
 import { PerspectiveCamera } from './camera'
+import initLifeCycle from './lifeCycle'
 
 interface SceneOptions {
   /** renderer options */
@@ -124,6 +125,7 @@ class SceneControl {
     this.raycaster = new Raycaster()
     globalObjectManage.addScene(this.scene)
     this.defaultInit()
+    initLifeCycle()
   }
 
   /**
@@ -194,6 +196,8 @@ class SceneControl {
       logarithmicDepthBuffer: rendererOps.logarithmicDepthBuffer ?? true,
       alpha: rendererOps.alpha ?? false,
     })
+
+    globalObjectManage.setRenderer(renderer)
 
     this.cutMain(renderer)
 
