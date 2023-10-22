@@ -11,11 +11,12 @@
 
 
 <body>
-    <div id="describe">圆周运动</div>
+    <div id="describe">下雪</div>
     <div id="my-sandbox"></div>
     <script type="importmap">
     </script>
     <script src="./lib/thunder-3d.min.js"></script>
+    <script src="./lib-utils/thunder-utils.min.js"></script>
     <script>
         javascript: (function () {
             var script = document.createElement('script');
@@ -32,45 +33,20 @@
         })()
     </script>
     <script type="module">
-        const createAxesHelper = (size = 1) => {
-            const axesHelper = new AxesHelper(size)
-
-            return axesHelper
-        }
-
-        const createGridHelper = (size = 10, divisions = 10) => {
-            const gridHelper = new GridHelper(size, divisions)
-
-            return gridHelper
-        }
         const scene = new SceneControl({
             orbitControls: true,
+            defCameraOps: {
+                position: new Vector3(0, 200, -350)
+            }
         })
 
 
-        const texture = new TextureLoader().load( 'files/crate.gif' );
-        texture.colorSpace = SRGBColorSpace;
+        const [start] = createSnow(10, 1000, {
+            x: 1,
+            y: 20,
+        }, 1, 600)
 
-        const geometry = new BoxGeometry(2, 2, 2)
-        const material = new MeshBasicMaterial({ map: texture })
-        const box = new Mesh(geometry, material)
-
-        const geometry2 = new BoxGeometry(2, 2, 2)
-        const materia2 = new MeshBasicMaterial({ map: texture })
-        const box2 = new Mesh(geometry2, materia2)
-
-        const axesHelper = createAxesHelper(10)
-        const gridHelper = createGridHelper(100, 30)
-
-        box.position.set(0, 0, 0)
-        box2.position.set(10, 0, 0)
-
-        scene.add(box)
-        scene.add(box2)
-        scene.add(axesHelper)
-        scene.add(gridHelper)
-
-        utils.moveWithRound(box2, 0.2, 100000)
+        start()
 
         scene.render(document.querySelector('#my-sandbox'))
         scene.startFrameAnimate()

@@ -11,12 +11,12 @@
 
 
 <body>
-    <div id="describe">下雪</div>
+    <div id="describe">云</div>
     <div id="my-sandbox"></div>
     <script type="importmap">
     </script>
-    <script src="./lib/3d.min.js"></script>
-    <script src="./lib-utils/3d-utils.min.js"></script>
+    <script src="./lib/thunder-3d.min.js"></script>
+    <script src="./lib-utils/thunder-utils.min.js"></script>
     <script>
         javascript: (function () {
             var script = document.createElement('script');
@@ -32,24 +32,30 @@
             document.head.appendChild(script);
         })()
     </script>
-    <script type="module">
+    <script script type="module">
+  
         const scene = new SceneControl({
-            orbitControls: true,
             defCameraOps: {
-                position: new Vector3(0, 200, -350)
-            }
+                position: new Vector3(0, 0, 8000),
+            },
+            background: {
+                color: new Color('#1e4877'),
+                alpha: 0.7
+            },
         })
 
+        createCloud(scene.scene)
 
-        const [start] = createSnow(10, 1000, {
-            x: 1,
-            y: 20,
-        }, 1, 600)
-
-        start()
 
         scene.render(document.querySelector('#my-sandbox'))
-        scene.startFrameAnimate()
+
+        let position = 0;
+        const start_time = Date.now();
+
+        scene.startFrameAnimate(() => {
+            position = ((Date.now() - start_time) * 0.01) % 8000;
+            scene.camera.position.z = -position + 8000
+        })
     </script>
 
 </body>

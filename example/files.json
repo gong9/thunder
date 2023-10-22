@@ -13,9 +13,10 @@
 	"controls": [
 		"controls_transform-controls"
 	],
-	"points": [
-		"points_rain",
-		"points_snow"
+	"env": [
+		"env_rain",
+		"env_snow",
+		"env_cloud"
 	],
 	"move":[
 		"move_car-line"
