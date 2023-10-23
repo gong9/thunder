@@ -1,5 +1,5 @@
 import type { Scene } from 'thunder-3d'
-import { BufferGeometryUtils, Fog, LinearMipMapLinearFilter, Mesh, PlaneGeometry, ShaderMaterial, TextureLoader } from 'thunder-3d'
+import { BufferGeometryUtils, Fog, Group, LinearMipMapLinearFilter, Mesh, PlaneGeometry, ShaderMaterial, TextureLoader } from 'thunder-3d'
 import { cloudBase64 } from './cloud'
 
 const vertexShader = `
@@ -25,7 +25,20 @@ const fragmentShader = `
         }
 `
 
-const createCloud = (scene: Scene) => {
+interface RangePrarams {
+  x?: number
+  y?: number
+}
+
+const createCloud = (range?: RangePrarams, density = 8000) => {
+  let rangeX = 1000
+  let rangeY = 200
+
+  if (range) {
+    rangeX = (range.x ?? 1000)
+    rangeY = (range.y ?? 200)
+  }
+
   const geometries = []
   const texture = new TextureLoader().load(cloudBase64)
 
@@ -58,22 +71,25 @@ const createCloud = (scene: Scene) => {
   })
 
   // cloud density
-  for (let i = 0; i < 8000; i++) {
+  for (let i = 0; i < density; i++) {
     const plane = new PlaneGeometry(64, 64)
 
-    plane.translate(Math.random() * 1000 - 500, -Math.random() * Math.random() * 200 - 15, i)
+    plane.translate(Math.random() * rangeX - 500, -Math.random() * Math.random() * rangeY - 15, i)
     // plane.rotateZ(Math.random() * Math.PI / 2)
     plane.scale(Math.random() * Math.random() * 1.1 + 0.5, Math.random() * Math.random() * 1.1 + 0.5, 1)
     geometries.push(plane)
   }
 
+  const group = new Group()
   const mergedGeometry = BufferGeometryUtils.mergeGeometries(geometries, false)
   const mesh = new Mesh(mergedGeometry, material)
-  scene.add(mesh)
+  group.add(mesh)
 
   const mesh2 = new Mesh(mergedGeometry, material)
   mesh.position.z = -1000
-  scene.add(mesh2)
+  group.add(mesh2)
+
+  return group
 }
 
 export default createCloud
