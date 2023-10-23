@@ -44,10 +44,10 @@
             },
         })
 
-        createCloud(scene.scene)
-
-
         scene.render(document.querySelector('#my-sandbox'))
+
+        const cloud = createCloud()
+        scene.add(cloud)
 
         let position = 0;
         const start_time = Date.now();
