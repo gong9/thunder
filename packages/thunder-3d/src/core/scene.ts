@@ -310,12 +310,6 @@ class SceneControl {
     if (!this.renderer || !this.scene || !this.camera)
       throw new Error('scene or camera or renderer is not init')
 
-    if (frameAnimate)
-      frameAnimate(this.renderer)
-
-    if (globalObjectManage.frameCallbacks.size > 0)
-      globalObjectManage.frameCallbacks.forEach((cb) => { cb() })
-
     globalControl.update()
     TWEEN.update()
 
@@ -325,8 +319,14 @@ class SceneControl {
     else
       this.renderer!.render(this.scene!, this.camera!)
 
+    if (frameAnimate)
+      frameAnimate(this.renderer)
+
     this.cssRenderer && this.cssRenderer.render(this.scene!, this.camera!)
     this.controls && this.controls.update()
+
+    if (globalObjectManage.frameCallbacks.size > 0)
+      globalObjectManage.frameCallbacks.forEach((cb) => { cb() })
 
     requestAnimationFrame(() => this.startFrameAnimate(frameAnimate))
   }
