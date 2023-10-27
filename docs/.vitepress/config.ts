@@ -48,6 +48,12 @@ export default defineConfig({
           { text: '雨雪效果', link: '/environment' }
         ],
       },
+      {
+        text: '后期效果',
+        items: [
+          { text: '边缘线高亮', link: '/highSelected' }
+        ],
+      }
     ],
 
     socialLinks: [

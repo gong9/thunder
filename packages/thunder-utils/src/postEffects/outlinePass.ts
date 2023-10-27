@@ -2,11 +2,11 @@ import type { Object3D } from 'thunder-3d'
 import { Vector2, lib, use, utils } from 'thunder-3d'
 
 type HighParamsType = {
-  edgeStrength: number // 边缘强度
-  edgeGlow: number // 缓缓接近
-  edgeThickness: number // 边缘厚度
-  pulsePeriod: number // 脉冲周期
-  visibleEdgeColor: string // 可见边缘颜色
+  edgeStrength?: number // 边缘强度
+  edgeGlow?: number // 缓缓接近
+  edgeThickness?: number // 边缘厚度
+  pulsePeriod?: number // 脉冲周期
+  visibleEdgeColor?: string // 可见边缘颜色
 }
 
 const { storeManagement } = utils
@@ -18,7 +18,7 @@ const { useScene } = use
  * @param highParams
  * @returns
  */
-const createHighSelectedTool = (highParams: HighParamsType) => {
+const createHighSelectedTool = (highParams?: HighParamsType) => {
   const baseHighParams = {
     edgeStrength: 10,
     edgeGlow: 1,

@@ -3,6 +3,8 @@ import { mouseDraweLine } from './core/mouseDrawe'
 import { createSnow } from './environment/snow'
 import { createRain } from './environment/rain'
 import createCloud from './environment/cloud'
+import { initPostEffects } from './postEffects'
+import createHighSelectedTool from './postEffects/outlinePass'
 
 export {
   SceneControl, // todo remove
@@ -10,4 +12,7 @@ export {
   createRain,
   createSnow,
   createCloud,
+
+  initPostEffects, // effect
+  createHighSelectedTool,
 }
