@@ -23,7 +23,6 @@ const createHighSelectedTool = (highParams?: HighParamsType) => {
     edgeStrength: 10,
     edgeGlow: 1,
     edgeThickness: 3,
-    pulsePeriod: 1,
     visibleEdgeColor: 'red',
   }
 
@@ -49,10 +48,11 @@ const createHighSelectedTool = (highParams?: HighParamsType) => {
   outlinePass.visibleEdgeColor.set(lastHighParams.visibleEdgeColor)
   composer.addPass(outlinePass)
 
-  const effectFXAA = new ShaderPass(FXAAShader)
-  effectFXAA.uniforms.resolution.value.set(1 / window.innerWidth, 1 / window.innerHeight)
-  effectFXAA.renderToScreen = true
-  composer.addPass(effectFXAA)
+  // todo bugfix
+  // const effectFXAA = new ShaderPass(FXAAShader)
+  // effectFXAA.uniforms.resolution.value.set(1 / window.innerWidth, 1 / window.innerHeight)
+  // effectFXAA.renderToScreen = true
+  // composer.addPass(effectFXAA)
 
   return (object3dArray: Object3D[]) => {
     outlinePass.selectedObjects = object3dArray

@@ -348,7 +348,7 @@ class SceneControl {
 
     // need expand
     const object3ds = this.scene!.children.filter((item: Object3D) => {
-      return item instanceof Mesh || item instanceof Group || item instanceof Line
+      return item.type === 'Mesh'
     })
 
     this.raycaster!.intersectObjects(object3ds, raycasterOps.recursive ?? true)
