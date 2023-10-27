@@ -13,12 +13,14 @@ import { appendChildren, create, createElement, setAttributes, setClassList, set
 import globalObjectManage from './core/global/global'
 import useframe from './core/use/useframe'
 import useScene from './core/use/useScene'
+import storeManagement from './utils/store'
 
 const utils = {
   moveTo,
   moveLine,
   moveWithRound,
   moveWithLine,
+  storeManagement,
 }
 
 const dom = {
@@ -32,6 +34,7 @@ const dom = {
 
 const use = {
   useframe,
+
   useScene,
 }
 

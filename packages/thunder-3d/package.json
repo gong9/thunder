@@ -39,7 +39,8 @@
     "@types/three": "^0.155.0",
     "lodash": "^4.17.21",
     "mitt": "^3.0.1",
-    "three": "^0.155.0"
+    "three": "^0.155.0",
+    "three-stdlib": "^2.28.3"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.196"

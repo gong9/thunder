@@ -1,4 +1,4 @@
-import type { Scene } from 'three'
+import type { Scene, WebGLRenderer } from 'three'
 import type { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import type { TransformControls } from '../control/transformControls'
 import type { PerspectiveCamera } from '../camera'
@@ -9,6 +9,7 @@ class GlobalObjectManage {
   public triggerClick = false
   public camera: PerspectiveCamera | null = null
   public domElement: HTMLElement | null = null
+  public renderer: WebGLRenderer | null = null
   public orbitControls: OrbitControls | null = null
   public transformControls: TransformControls[] = []
 
@@ -32,6 +33,10 @@ class GlobalObjectManage {
 
   public setDomElement(domElement: HTMLElement) {
     this.domElement = domElement
+  }
+
+  public setRenderer(renderer: WebGLRenderer) {
+    this.renderer = renderer
   }
 
   public setOrbitControls(orbitControls: OrbitControls) {

@@ -21,6 +21,6 @@
     "test": "jest --maxWorkers 2"
   },
   "dependencies": {
-    "thunder-3d": "workspace:0.0.2"
+    "thunder-3d": "workspace:^"
   }
 }

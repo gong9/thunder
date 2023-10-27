@@ -112,6 +112,9 @@ importers:
       three:
         specifier: ^0.155.0
         version: 0.155.0
+      three-stdlib:
+        specifier: ^2.28.3
+        version: 2.28.3(three@0.155.0)
     devDependencies:
       '@types/lodash':
         specifier: ^4.14.196
@@ -120,7 +123,7 @@ importers:
   packages/thunder-utils:
     dependencies:
       thunder-3d:
-        specifier: workspace:0.0.2
+        specifier: workspace:^
         version: link:../thunder-3d
 
   playground:

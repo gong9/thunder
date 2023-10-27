@@ -428,6 +428,7 @@ class SceneControl {
 
     const renderer = this.initRenderer()
     this.renderer = renderer
+    globalObjectManage.setRenderer(renderer)
 
     let currentControlDom: HTMLElement | null = null
     const domElement = this.renderer!.domElement

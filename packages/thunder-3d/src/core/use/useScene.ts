@@ -9,6 +9,8 @@ const useScene = () => {
     scene: globalObjectManage.scene,
     domElement: globalObjectManage.domElement,
     orbitControls: globalObjectManage.orbitControls,
+    camera: globalObjectManage.camera,
+    renderer: globalObjectManage.renderer,
   }
 }
 
