@@ -25,6 +25,7 @@ export async function move(srcPath: string, path: string) {
   consola.info('目标路径', path)
 
   if (await isExists(path)) {
+    consola.warn(path)
     consola.warn('The file already exists, delete ...')
     await remove(path)
   }

@@ -33,11 +33,11 @@ onMounted(() => {
 
 
     if (props.type === 'gltf') {
-        modelLoader.loadGLTF('../model/car.glb')!.then((gltf) => {
+        modelLoader.loadGLTF('./model/car.glb')!.then((gltf) => {
             scene.add((gltf as any).scene)
         })
     } else {
-        modelLoader.loadFbx('../model/beijing.fbx')!.then((fbx) => {
+        modelLoader.loadFbx('./model/beijing.fbx')!.then((fbx) => {
             scene.camera!.position.copy(new Vector3(0,50,-50))
             scene.add(fbx as Group)
         })

@@ -47,6 +47,9 @@
             }
         })
 
+        scene.scene.background = new Color('#345')
+        scene.render(document.querySelector('#my-sandbox'))
+
         const transformControl = createTransformControls(scene.camera, scene.domElement, 0.5)
 
         const texture = new TextureLoader().load('files/crate.gif');
@@ -73,8 +76,7 @@
         scene.add(box)
         scene.add(box2)
 
-        scene.scene.background = new Color('#345')
-        scene.render(document.querySelector('#my-sandbox'))
+       
         
     </script>
 

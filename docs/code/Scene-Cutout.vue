@@ -20,7 +20,6 @@ onMounted(() => {
     },
     
   })
-  scene.render(divRef.value!)
   
   const geometry = new BoxGeometry(2, 2, 2)
   const material = new MeshBasicMaterial({ color: 0x00FF00 })
@@ -32,9 +31,12 @@ onMounted(() => {
   scene.cutoutCamera = minCamera
   scene.cutoutArea = { x: 0, y: 0, width: 100, height: 100 }
   scene.cutoutBackground = '#111'
+  scene.render(divRef.value!)
 
+  
   scene.add(minCamera)
   scene.add(box)
+
 })
 </script>
 
