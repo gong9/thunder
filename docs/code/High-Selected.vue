@@ -20,7 +20,7 @@ onMounted(() => {
     })
 
     scene.render(divRef.value!)
-    scene.startFrameAnimate()
+    
 
     const geometry = new BoxGeometry(5, 5, 5)
     const material = new MeshBasicMaterial({ color: 0x00FF00 })

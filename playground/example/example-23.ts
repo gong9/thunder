@@ -10,7 +10,7 @@ const scene = new Scene({
 })
 
 scene.render(document.querySelector('#app')!)
-scene.startFrameAnimate()
+
 
 const curve = new QuadraticBezierCurve3(
     new Vector3(-10, 0, 0),

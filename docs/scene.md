@@ -28,14 +28,13 @@ import { Mesh, SceneControl, BoxGeometry, MeshBasicMaterial } from 'thunder-3d'
 const scene = new SceneControl({
   orbitControls: true,
 })
+scene.render(document.querySelector('#app')!)
 
 const geometry = new BoxGeometry(2, 2, 2) const material = new MeshBasicMaterial({ color: 0x00FF00 })
 const box = new Mesh(geometry, material)
 
 scene.add(box)
 
-scene.render(document.querySelector('#app')!)
-scene.startFrameAnimate()
 ```
 
 <SceneInit/>
@@ -96,6 +95,8 @@ const scene = new SceneControl({
   orbitControls: true,
   css2DRenderer: true,
 })
+scene.scene!.background = new Color('#ccc')
+scene.render(document.querySelector('#app')!)
 
 const geometry = new BoxGeometry(2, 2, 2)
 const material = new MeshBasicMaterial({ color: 0x00FF00 })
@@ -113,11 +114,6 @@ labelObject2d.position.set(0, 3, 0)
 box.add(labelObject2d)
 
 scene.add(box)
-scene.scene!.background = new Color('#ccc')
-
-scene.render(document.querySelector('#app')!)
-scene.startFrameAnimate()
-
 ```
 <SceneCssRenderer/>
 
@@ -131,6 +127,7 @@ const scene = new SceneControl({
     orbitControls: true,
     cutout: true,
 })
+scene.render(document.querySelector('#app')!)
 
 const minCamera = new PerspectiveCamera(90, 1, 0.1, 5000)
 
@@ -144,9 +141,6 @@ const box = new Mesh(geometry, material)
 
 scene.add(minCamera)
 scene.add(box)
-
-scene.render(document.querySelector('#app')!)
-scene.startFrameAnimate()
 ```
 
 <SceneCutout/>

@@ -306,7 +306,7 @@ class SceneControl {
    * frame render
    * @param frameAnimate
    */
-  public startFrameAnimate(frameAnimate?: (renderer: WebGLRenderer) => void) {
+  private startFrameAnimate(frameAnimate?: (renderer: WebGLRenderer) => void) {
     if (!this.renderer || !this.scene || !this.camera)
       throw new Error('scene or camera or renderer is not init')
 
@@ -367,7 +367,6 @@ class SceneControl {
    */
   private onPointerPointerup(event: PointerEvent) {
     globalObjectManage.setTriggerClickState(false)
-
     const transformControls = globalObjectManage.transformControls
 
     if (transformControls.length > 0) {
@@ -375,7 +374,6 @@ class SceneControl {
         transformControl.detach()
       })
     }
-
     this.getPointerPosition(event)
     this.updateRaycaster()
   }
@@ -455,6 +453,8 @@ class SceneControl {
     target.addEventListener('resize', () => this.resetScene(this.camera!, this.renderer!))
 
     emitter.emit('after-render')
+
+    this.startFrameAnimate()
   }
 
   private updateRenderForCut() {

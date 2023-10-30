@@ -1,4 +1,4 @@
-import { Color, Vector3, SceneControl as Scene, createTransformControls, createControlLine } from '../../packages/thunder-3d/src/index'
+import { Color, Vector3, SceneControl as Scene, createControlLine } from '../../packages/thunder-3d/src/index'
 
 
 /**
@@ -26,12 +26,7 @@ const points = [
   new Vector3(5, 0, 0)
 ]
 
-createTransformControls(0.7).then((control) => {
-  const curve = createControlLine(points, control)
-  scene.add(control)
-  scene.add(curve.mesh)
-})
 
 scene.render(document.querySelector('#app')!)
 scene.scene!.background = new Color(0xf0f0f0);
-scene.startFrameAnimate()
+

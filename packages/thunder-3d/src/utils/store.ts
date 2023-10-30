@@ -1,6 +1,6 @@
-type StoreType = Map<string, any>
+export type StoreType = Map<string, any>
 
-class StoreManagement {
+export class StoreManagement {
   public store: StoreType = new Map()
 
   public get<T>(key: string): T | undefined {

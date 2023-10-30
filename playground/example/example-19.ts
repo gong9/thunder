@@ -23,7 +23,7 @@ scene.add(minCamera)
 scene.add(box)
 
 scene.render(document.querySelector('#app')!)
-scene.startFrameAnimate()
+
 
 
 

@@ -29,6 +29,9 @@ onMounted(() => {
         }
     })
 
+    scene.render(divRef.value!)
+
+
     if (props.type === 'gltf') {
         modelLoader.loadGLTF('../model/car.glb')!.then((gltf) => {
             scene.add((gltf as any).scene)
@@ -40,8 +43,8 @@ onMounted(() => {
         })
     }
 
-    scene.render(divRef.value!)
-    scene.startFrameAnimate()
+ 
+    
 })
 </script>
 

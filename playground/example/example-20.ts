@@ -1,82 +1,82 @@
-import { ModelLoader, TransformControls, SceneControl as Scene, Group, Vector3, createTransformControls, Box3, Box3Helper, use } from 'thunder-3d'
+// import { ModelLoader, TransformControls, SceneControl as Scene, Group, Vector3, createTransformControls, Box3, Box3Helper, use } from 'thunder-3d'
 
-/**
- * example-20
- * group 交互
- */
+// /**
+//  * example-20
+//  * group 交互
+//  */
 
-const scene = new Scene({
-    orbitControls: true,
-    ambientLight: true
-})
-let transformControl: TransformControls | null = null
-const modelLoader = new ModelLoader()
-const group = new Group()
+// const scene = new Scene({
+//     orbitControls: true,
+//     ambientLight: true
+// })
+// let transformControl: TransformControls | null = null
+// const modelLoader = new ModelLoader()
+// const group = new Group()
 
-createTransformControls().then((transformControls) => {
-    transformControl = transformControls
-    scene.add(transformControl)
-})
+// createTransformControls().then((transformControls) => {
+//     transformControl = transformControls
+//     scene.add(transformControl)
+// })
 
-// glb
-modelLoader.loadGLTF('./car.glb',true)!.then((object) => {
-    group.add((object as any).scene)
+// // glb
+// modelLoader.loadGLTF('./car.glb',true)!.then((object) => {
+//     group.add((object as any).scene)
 
-    const box3 = new Box3()
-    let model: Box3 | null = null
-    let isLeaver = true
-    let iskeydown = false
-
-
-    group.addNatureEventListener('pointermove', (object3D) => {
-        // model = box3.setFromObject(group)
-        // isLeaver = false
-        transformControl && transformControl.attach(object3D)
-    })
+//     const box3 = new Box3()
+//     let model: Box3 | null = null
+//     let isLeaver = true
+//     let iskeydown = false
 
 
-    // group.addNatureEventListener('pointerleave', (object3D) => {
-    //     isLeaver = true
-    // })
+//     group.addNatureEventListener('pointermove', (object3D) => {
+//         // model = box3.setFromObject(group)
+//         // isLeaver = false
+//         transformControl && transformControl.attach(object3D)
+//     })
 
-    // group.addNatureEventListener('click', (object3D) => {
-    //     model = box3.setFromObject(group)
 
-    //     const helper = new Box3Helper(model!);
-    //     scene.add(helper);
-    // })
+//     // group.addNatureEventListener('pointerleave', (object3D) => {
+//     //     isLeaver = true
+//     // })
 
-    // window.addEventListener('keyup', (e) => {
-    //     iskeydown = false
-    // })
+//     // group.addNatureEventListener('click', (object3D) => {
+//     //     model = box3.setFromObject(group)
 
-    // window.addEventListener('keydown', (e) => {
-    //     iskeydown = true
-    // })
+//     //     const helper = new Box3Helper(model!);
+//     //     scene.add(helper);
+//     // })
 
-    // use.useframe(() => {
-    //     let helper: Box3Helper | null = null
-    //     if (!isLeaver) {
-    //         helper = new Box3Helper(model!);
+//     // window.addEventListener('keyup', (e) => {
+//     //     iskeydown = false
+//     // })
 
-    //         if (
-    //             !scene.scene?.children.some((item) => item instanceof Box3Helper)
-    //         ) {
-    //             scene.add(helper);
-    //         }
+//     // window.addEventListener('keydown', (e) => {
+//     //     iskeydown = true
+//     // })
 
-    //     }
-    //     if (isLeaver && !iskeydown) {
-    //         const helper = scene.scene?.children.find((item) => item instanceof Box3Helper)
-    //         if (helper) {
-    //             scene.scene?.remove(helper)
-    //         }
-    //     }
+//     // use.useframe(() => {
+//     //     let helper: Box3Helper | null = null
+//     //     if (!isLeaver) {
+//     //         helper = new Box3Helper(model!);
 
-    // })
+//     //         if (
+//     //             !scene.scene?.children.some((item) => item instanceof Box3Helper)
+//     //         ) {
+//     //             scene.add(helper);
+//     //         }
 
-    scene.add(group)
-})
+//     //     }
+//     //     if (isLeaver && !iskeydown) {
+//     //         const helper = scene.scene?.children.find((item) => item instanceof Box3Helper)
+//     //         if (helper) {
+//     //             scene.scene?.remove(helper)
+//     //         }
+//     //     }
 
-scene.render(document.querySelector('#app')!)
-scene.startFrameAnimate()
+//     // })
+
+//     scene.add(group)
+// })
+
+// scene.render(document.querySelector('#app')!)
+// 

@@ -16,14 +16,15 @@ const scene = new SceneControl({
   orbitControls: true,
   ambientLight: true,
 })
+
+scene.render(document.querySelector('#app')!)
+
 const modelLoader = new ModelLoader()
 
 modelLoader.loadGLTF('./car.glb')!.then((gltf) => {
   scene.add((gltf as any).scene)
 })
 
-scene.render(document.querySelector('#app')!)
-scene.startFrameAnimate()
 ```
 
 <Model type = 'gltf'/>
@@ -41,14 +42,13 @@ const scene = new SceneControl({
   }
 })
 
+scene.render(document.querySelector('#app')!)
+
 const modelLoader = new ModelLoader()
 
 modelLoader.loadFbx('./beijing.fbx')!.then((object) => {
   scene.add(object as Group)
 })
-
-scene.render(document.querySelector('#app')!)
-scene.startFrameAnimate()
 ```
 <Model type = 'fbx'/>
 

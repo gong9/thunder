@@ -31,4 +31,4 @@ scene.add(box)
 box.position.setX(0)
 
 scene.render(document.querySelector('#app')!)
-scene.startFrameAnimate()
+

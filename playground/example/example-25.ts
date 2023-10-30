@@ -15,7 +15,7 @@ const scene = new Scene({
 })
 
 scene.render(document.querySelector('#app')!)
-scene.startFrameAnimate()
+
 
 
 

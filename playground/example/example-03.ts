@@ -22,4 +22,4 @@ modelLoader.loadGLTF('./tree.glb')!.then((gltf) => {
 // })
 
 scene.render(document.querySelector('#app')!)
-scene.startFrameAnimate()
+

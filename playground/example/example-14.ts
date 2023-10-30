@@ -147,4 +147,3 @@ modelLoader.loadGLTF('./car.glb')!.then((gltf) => {
 
 scene.add(minCamera)
 scene.render(document.querySelector('#app')!)
-scene.startFrameAnimate()

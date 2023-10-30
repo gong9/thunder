@@ -36,7 +36,7 @@ onMounted(() => {
   scene.add(box)
 
   scene.render(divRef.value!)
-  scene.startFrameAnimate()
+  
 })
 </script>
 

@@ -33,8 +33,6 @@
         })()
     </script>
     <script type="module">
-        let transformControl = null
-
         const scene = new SceneControl({
             orbitControls: true,
             background: {
@@ -49,10 +47,7 @@
             }
         })
 
-        createTransformControls(0.7).then((transformControls) => {
-            transformControl = transformControls
-            scene.add(transformControl)
-        })
+        const transformControl = createTransformControls(scene.camera, scene.domElement, 0.5)
 
         const texture = new TextureLoader().load('files/crate.gif');
         texture.colorSpace = SRGBColorSpace;
@@ -80,7 +75,7 @@
 
         scene.scene.background = new Color('#345')
         scene.render(document.querySelector('#my-sandbox'))
-        scene.startFrameAnimate()
+        
     </script>
 
 </body>

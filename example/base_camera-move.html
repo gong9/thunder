@@ -57,6 +57,8 @@
             orbitControls: true,
         })
 
+        scene.render(document.querySelector('#my-sandbox'))
+
         const texture = new TextureLoader().load( 'files/crate.gif' );
         texture.colorSpace = SRGBColorSpace;
 
@@ -73,8 +75,7 @@
         scene.add(axesHelper)
         scene.add(gridHelper)
 
-        scene.render(document.querySelector('#my-sandbox'))
-        scene.startFrameAnimate()
+    
 
         const params = {
             number: 5,

@@ -11,7 +11,7 @@ const scene = new Scene({
 })
 
 scene.render(document.querySelector('#app')!)
-scene.startFrameAnimate()
+
 
 const createBoxGeometryByPoints = (a: Vector3, b: Vector3, height = 1, depth = 0.2) => {
     // step 1: get position

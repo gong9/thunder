@@ -42,4 +42,4 @@ scene.add(gridHelper)
 utils.moveWithRound(box2, 0.2, 100000)
 
 scene.render(document.querySelector('#app')!)
-scene.startFrameAnimate()
+

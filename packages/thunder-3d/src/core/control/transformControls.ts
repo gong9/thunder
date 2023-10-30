@@ -18,10 +18,9 @@ export class TransformControls extends TTransformControls {
   }
 }
 
-const create = (size = 0.5) => {
+const create = (camera: Camera, domElement: HTMLElement, size: number) => {
   const transformControl = new TransformControls(globalObjectManage.camera as Camera, globalObjectManage.domElement as HTMLElement)
   transformControl.size = size
-  transformControl.addEventListener('change', () => { })
 
   transformControl.addEventListener('dragging-changed', (event) => {
     const controls = globalObjectManage.orbitControls
@@ -38,20 +37,8 @@ const create = (size = 0.5) => {
 
 /**
  * create TransformControls
- * note: 不可使用await，否则会导致渲染器无法完成初始化
  * @returns
  */
-export const createTransformControls = (size = 0.5) => {
-  const promise = new Promise<TransformControls>((resolve) => {
-    if (!(globalObjectManage.camera && globalObjectManage.domElement)) {
-      emitter.on('after-render', () => {
-        resolve(create(size))
-      })
-    }
-    else {
-      resolve(create(size))
-    }
-  })
-
-  return promise
+export const createTransformControls = (camera: Camera, domElement: HTMLElement, size = 0.5) => {
+  return create(camera, domElement, size)
 }

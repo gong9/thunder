@@ -36,4 +36,4 @@ box.addNatureEventListener('pointerleave', (object3D) => {
 scene.add(box)
 
 scene.render(document.querySelector('#app')!)
-scene.startFrameAnimate()
+

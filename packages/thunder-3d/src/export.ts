@@ -34,7 +34,6 @@ const dom = {
 
 const use = {
   useframe,
-
   useScene,
 }
 

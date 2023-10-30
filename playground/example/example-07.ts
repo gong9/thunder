@@ -37,4 +37,4 @@ scene.add(box)
 scene.scene!.background = new Color('#ccc')
 
 scene.render(document.querySelector('#app')!)
-scene.startFrameAnimate()
+

@@ -43,4 +43,4 @@ utils.moveLine(box, box2)
 utils.moveTo(box, box2, 100, Direction.plus, 1000)
 
 scene.render(document.querySelector('#app')!)
-scene.startFrameAnimate()
+

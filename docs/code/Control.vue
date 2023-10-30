@@ -17,26 +17,19 @@ onMounted(() => {
       aspect: 1
     }
   })
-
-  let transformControl: TransformControls | null = null
-
+  scene.render(divRef.value!)
+  
   const geometry = new BoxGeometry(2, 2, 2)
   const material = new MeshBasicMaterial({ color: 0x00FF00 })
   const box = new Mesh(geometry, material)
 
-  createTransformControls(1).then((transformControls) => {
-  transformControl = transformControls
-  scene.add(transformControl)
-})
+  const transformControl = createTransformControls(scene.camera!, scene.domElement!, 0.5)
 
   box.addNatureEventListener('pointermove', (object3D) => {
-   transformControl && transformControl.attach(object3D)
+    transformControl.attach(object3D)
   })
 
-  scene.add(box)
-
-  scene.render(divRef.value!)
-  scene.startFrameAnimate()
+  scene.add(box)  
 })
 </script>
 

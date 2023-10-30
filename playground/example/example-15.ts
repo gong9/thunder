@@ -32,4 +32,4 @@ setTimeout(()=>{
 scene.add(box)
 console.log(scene.scene?.children)
 scene.render(document.querySelector('#app')!)
-scene.startFrameAnimate()
+

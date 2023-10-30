@@ -33,7 +33,7 @@ box.addNatureEventListener('pointerleave', (object3D) => {
 scene.add(box)
 
 scene.render(document.querySelector('#app')!)
-scene.startFrameAnimate()
+
 ```
 
 base object3d motion 「wip」
@@ -62,7 +62,7 @@ scene.add(box2)
 utils.moveWithRound(box2, 0.2, 100000)
 
 scene.render(document.querySelector('#app')!)
-scene.startFrameAnimate()
+
 ```
 
 ## umd usage
@@ -133,7 +133,7 @@ scene.startFrameAnimate()
 
         scene.scene.background = new ANOV.Color('#345')
         scene.render(document.querySelector('#my-sandbox'))
-        scene.startFrameAnimate()
+        
     </script>
 
 </body>

@@ -43,4 +43,4 @@ scene.camera!.promote(box2, 100, 10000)
 // scene.camera!.demote(box2,100,10000)
 
 scene.render(document.querySelector('#app')!)
-scene.startFrameAnimate()
+

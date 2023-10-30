@@ -20,7 +20,8 @@ onMounted(() => {
     },
     
   })
-
+  scene.render(divRef.value!)
+  
   const geometry = new BoxGeometry(2, 2, 2)
   const material = new MeshBasicMaterial({ color: 0x00FF00 })
   const box = new Mesh(geometry, material)
@@ -34,9 +35,6 @@ onMounted(() => {
 
   scene.add(minCamera)
   scene.add(box)
-
-  scene.render(divRef.value!)
-  scene.startFrameAnimate()
 })
 </script>
 

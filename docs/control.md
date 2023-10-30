@@ -9,31 +9,24 @@
 转化控制器用于控制场景中的物体的旋转、平移、缩放等操作，它的使用是最频繁的，也是最常用的控制器。
 
 ```ts
-import { Mesh, SceneControl, BoxGeometry, MeshBasicMaterial, createTransformControls, TransformControls } from 'thunder-3d'
+import { Mesh, SceneControl, BoxGeometry, MeshBasicMaterial, createTransformControls } from 'thunder-3d'
 
 const scene = new SceneControl({
   orbitControls: true,
 })
-
-let transformControl: TransformControls | null = null
+scene.render(document.querySelector('#app')!)
 
 const geometry = new BoxGeometry(2, 2, 2)
 const material = new MeshBasicMaterial({ color: 0x00FF00 })
 const box = new Mesh(geometry, material)
 
-createTransformControls().then((transformControls) => {
-  transformControl = transformControls
-  scene.add(transformControl)
-})
+const transformControl = createTransformControls(scene.camera!, scene.domElement!, 0.5)
 
 box.addNatureEventListener('pointermove', (object3D) => {
-  transformControl && transformControl.attach(object3D)
+  transformControl.attach(object3D)
 })
 
 scene.add(box)
-scene.render(document.querySelector('#app')!)
-scene.startFrameAnimate()
-
 ```
 
 <Control/>

@@ -71,4 +71,4 @@ scene.add(line as any)
 
 scene.scene!.background = new Color('#345')
 scene.render(document.querySelector('#app')!)
-scene.startFrameAnimate()
+

@@ -23,4 +23,4 @@ modelLoader.loadFbx('./beijing.fbx')!.then((object) => {
 })
 
 scene.render(document.querySelector('#app')!)
-scene.startFrameAnimate()
+
