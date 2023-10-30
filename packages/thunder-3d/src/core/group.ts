@@ -1,5 +1,6 @@
 import type { Intersection, Object3D } from 'three'
 import { Group as TGroup } from 'three'
+import { debounce } from 'lodash'
 import type { CubeEventType, EventHandleFn } from '../type'
 import globalObjectManage from './global/global'
 
@@ -59,7 +60,7 @@ class Group extends TGroup {
    * @param intersects
    * @param eventType
   */
-  private handleClick(natureEvent: EventHandleFn[]) {
+  private handleClick = debounce((natureEvent: EventHandleFn[]) => {
     if (!globalObjectManage.triggerClick)
       return
 
@@ -67,14 +68,14 @@ class Group extends TGroup {
     natureEvent.forEach((handlefn) => {
       handlefn(this)
     })
-  }
+  }, 20)
 
   /**
    * handle pointermove event
    * @param intersects
    * @param natureEvent
    */
-  private handlePointerMove(natureEvent: EventHandleFn[]) {
+  private handlePointerMove = (natureEvent: EventHandleFn[]) => {
     natureEvent.forEach((handlefn) => {
       handlefn(this)
     })
@@ -85,7 +86,7 @@ class Group extends TGroup {
    * @param intersects
    * @param natureEvent
    */
-  private handlePointerleave() {
+  private handlePointerleave = () => {
     const pointerleaveCallback = this.natureEventMap.get('pointerleave')
     pointerleaveCallback && pointerleaveCallback.length > 0 && pointerleaveCallback.forEach((handlefn) => {
       handlefn(this)

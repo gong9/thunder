@@ -34,13 +34,14 @@ const highSelected = createHighSelectedTool()
 
 
 box.addNatureEventListener('pointermove', () => {
-
     highSelected([box])
 })
 
 box.addNatureEventListener('pointerleave', () => {
     highSelected([])
 })
+
+
 
 
 

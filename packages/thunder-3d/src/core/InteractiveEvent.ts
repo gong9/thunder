@@ -80,13 +80,12 @@ export class InteractionManager {
     this.renderer = renderer
     this.camera = camera
     this.domElement = domElement
-    this.bindEventsOnBodyElement
-            = options && typeof options.bindEventsOnBodyElement !== 'undefined'
-        ? options.bindEventsOnBodyElement
-        : true
+    this.bindEventsOnBodyElement = options && typeof options.bindEventsOnBodyElement !== 'undefined'
+      ? options.bindEventsOnBodyElement
+      : true
 
-    this.scene
-            = options && typeof options.scene !== 'undefined' ? options.scene : null
+    this.scene = options && typeof options.scene !== 'undefined' ? options.scene : null
+
     if (this.scene) {
       this.scene.onBeforeRender = () => {
         if (this.autoAdd && this.scene !== null) {
@@ -102,10 +101,9 @@ export class InteractionManager {
         this.update()
       }
     }
-    this.autoAdd
-            = options && typeof options.autoAdd !== 'undefined'
-        ? options.autoAdd
-        : false
+    this.autoAdd = options && typeof options.autoAdd !== 'undefined'
+      ? options.autoAdd
+      : false
 
     if (this.autoAdd && this.scene === null) {
       console.error(

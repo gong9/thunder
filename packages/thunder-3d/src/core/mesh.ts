@@ -1,5 +1,6 @@
 import type { Intersection, Object3D, Raycaster } from 'three'
 import { Mesh as TMesh } from 'three'
+import { debounce } from 'lodash'
 import { getObject3dAncestorsNodes } from '../utils'
 import type { CubeEventType, EventHandleFn } from '../type'
 import Group from './group'
@@ -52,7 +53,7 @@ class Mesh extends TMesh {
    * @param intersects
    * @param eventType
    */
-  private handleClick(natureEvent: EventHandleFn[], intersect: Intersection) {
+  private handleClick = debounce((natureEvent: EventHandleFn[], intersect: Intersection) => {
     if (!globalObjectManage.triggerClick)
       return
 
@@ -60,14 +61,14 @@ class Mesh extends TMesh {
     natureEvent.forEach((handlefn) => {
       handlefn(this, intersect)
     })
-  }
+  }, 20)
 
   /**
    * handle pointermove event
    * @param intersects
    * @param natureEvent
    */
-  private handlePointerMove(natureEvent: EventHandleFn[], intersect: Intersection) {
+  private handlePointerMove = (natureEvent: EventHandleFn[], intersect: Intersection) => {
     natureEvent.forEach((handlefn) => {
       handlefn(this, intersect)
     })
@@ -78,7 +79,7 @@ class Mesh extends TMesh {
    * @param intersects
    * @param natureEvent
    */
-  private handlePointerleave() {
+  private handlePointerleave = () => {
     const pointerleaveCallback = this.natureEventMap.get('pointerleave')
     pointerleaveCallback && pointerleaveCallback.length > 0 && pointerleaveCallback.forEach((handlefn) => {
       handlefn(this)
