@@ -14,6 +14,7 @@ import globalObjectManage from './core/global/global'
 import useframe from './core/use/useframe'
 import useScene from './core/use/useScene'
 import storeManagement from './utils/store'
+import { InteractionManager } from './core/InteractiveEvent'
 
 const utils = {
   moveTo,
@@ -41,6 +42,7 @@ export * from 'three'
 export * from './threeCell'
 
 export {
+
   SceneControl,
   Mesh,
   Group,
@@ -56,4 +58,5 @@ export {
   dom,
   use,
   globalObjectManage,
+  InteractionManager,
 }
