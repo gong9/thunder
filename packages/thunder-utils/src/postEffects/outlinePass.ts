@@ -44,7 +44,7 @@ const createHighSelectedTool = (highParams?: HighParamsType) => {
   outlinePass.edgeStrength = lastHighParams.edgeStrength
   outlinePass.edgeGlow = lastHighParams.edgeGlow
   outlinePass.edgeThickness = lastHighParams.edgeThickness
-  outlinePass.pulsePeriod = lastHighParams.pulsePeriod
+  lastHighParams.pulsePeriod && (outlinePass.pulsePeriod = lastHighParams.pulsePeriod)
   outlinePass.visibleEdgeColor.set(lastHighParams.visibleEdgeColor)
   composer.addPass(outlinePass)
 
