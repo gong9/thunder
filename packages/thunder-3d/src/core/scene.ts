@@ -1,4 +1,4 @@
-import type { Color, Object3D, ToneMapping } from 'three'
+import type { Color, Intersection, Object3D, ToneMapping } from 'three'
 import { ACESFilmicToneMapping, AmbientLight, CubeTextureLoader, Fog, FogExp2, Group, Line, Raycaster, Scene as TScene, Vector2, Vector3, WebGLRenderer } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as TWEEN from '@tweenjs/tween.js'
@@ -117,6 +117,8 @@ class SceneControl {
   fogNear = 1
   fogFar = 100
   fogDensity = 0.00025
+
+  intersectObjects: Intersection[] = []
 
   constructor(opts?: SceneOptions) {
     this.opts = opts ?? {}
@@ -351,7 +353,7 @@ class SceneControl {
       return item.type === 'Mesh'
     })
 
-    this.raycaster!.intersectObjects(object3ds, raycasterOps.recursive ?? true)
+    this.intersectObjects = this.raycaster!.intersectObjects(object3ds, raycasterOps.recursive ?? true)
   }
 
   private getPointerPosition(event: PointerEvent) {
