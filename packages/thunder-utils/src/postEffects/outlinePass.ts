@@ -40,12 +40,15 @@ const createHighSelectedTool = (highParams?: HighParamsType) => {
   if (!composer)
     throw new Error('composer is not defined, please initPostEffects first')
 
+  scene.children = scene.children.filter((item: Object3D) => (item as any)?.isTransformControls !== true)
+
   const outlinePass = new OutlinePass(new Vector2(window.innerWidth, window.innerHeight), scene, camera)
   outlinePass.edgeStrength = lastHighParams.edgeStrength
   outlinePass.edgeGlow = lastHighParams.edgeGlow
   outlinePass.edgeThickness = lastHighParams.edgeThickness
   lastHighParams.pulsePeriod && (outlinePass.pulsePeriod = lastHighParams.pulsePeriod)
   outlinePass.visibleEdgeColor.set(lastHighParams.visibleEdgeColor)
+
   composer.addPass(outlinePass)
 
   // todo bugfix

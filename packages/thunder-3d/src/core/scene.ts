@@ -65,6 +65,9 @@ interface SceneOptions {
   /** 是否开启css3d渲染 */
   css3DRenderer?: boolean
 
+  /** 是否启用后期效果 */
+  postEffects?: boolean
+
   /** 是否开启裁剪 */
   cutout?: boolean
 
@@ -190,6 +193,7 @@ class SceneControl {
    */
   private initRenderer() {
     const rendererOps = this.opts.rendererOps || {}
+    const postEffects = this.opts.postEffects ?? false
 
     const renderer = new WebGLRenderer({
       antialias: rendererOps.antialias ?? true,

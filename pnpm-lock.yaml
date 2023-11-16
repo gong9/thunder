@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 importers:
 
   .:
@@ -122,6 +126,9 @@ importers:
 
   packages/thunder-utils:
     dependencies:
+      postprocessing:
+        specifier: ^6.33.3
+        version: 6.33.3(three@0.155.0)
       thunder-3d:
         specifier: workspace:^
         version: link:../thunder-3d
@@ -152,7 +159,7 @@ importers:
         version: 6.0.3
       parcel:
         specifier: ^2.9.3
-        version: 2.9.3(postcss@8.4.28)
+        version: 2.9.3(postcss@8.4.21)
       process:
         specifier: ^0.11.10
         version: 0.11.10
@@ -3683,7 +3690,7 @@ packages:
       - '@parcel/core'
     dev: true
 
-  /@parcel/config-default@2.9.3(@parcel/core@2.9.3)(postcss@8.4.28):
+  /@parcel/config-default@2.9.3(@parcel/core@2.9.3)(postcss@8.4.21):
     resolution: {integrity: sha512-tqN5tF7QnVABDZAu76co5E6N8mA9n8bxiWdK4xYyINYFIEHgX172oRTqXTnhEMjlMrdmASxvnGlbaPBaVnrCTw==}
     peerDependencies:
       '@parcel/core': ^2.9.3
@@ -3693,7 +3700,7 @@ packages:
       '@parcel/core': 2.9.3
       '@parcel/namer-default': 2.9.3(@parcel/core@2.9.3)
       '@parcel/optimizer-css': 2.9.3(@parcel/core@2.9.3)
-      '@parcel/optimizer-htmlnano': 2.9.3(@parcel/core@2.9.3)(postcss@8.4.28)
+      '@parcel/optimizer-htmlnano': 2.9.3(@parcel/core@2.9.3)(postcss@8.4.21)
       '@parcel/optimizer-image': 2.9.3(@parcel/core@2.9.3)
       '@parcel/optimizer-svgo': 2.9.3(@parcel/core@2.9.3)
       '@parcel/optimizer-swc': 2.9.3(@parcel/core@2.9.3)
@@ -3862,12 +3869,12 @@ packages:
       - '@parcel/core'
     dev: true
 
-  /@parcel/optimizer-htmlnano@2.9.3(@parcel/core@2.9.3)(postcss@8.4.28):
+  /@parcel/optimizer-htmlnano@2.9.3(@parcel/core@2.9.3)(postcss@8.4.21):
     resolution: {integrity: sha512-9g/KBck3c6DokmJfvJ5zpHFBiCSolaGrcsTGx8C3YPdCTVTI9P1TDCwUxvAr4LjpcIRSa82wlLCI+nF6sSgxKA==}
     engines: {node: '>= 12.0.0', parcel: ^2.9.3}
     dependencies:
       '@parcel/plugin': 2.9.3(@parcel/core@2.9.3)
-      htmlnano: 2.0.4(postcss@8.4.28)(svgo@2.8.0)
+      htmlnano: 2.0.4(postcss@8.4.21)(svgo@2.8.0)
       nullthrows: 1.1.1
       posthtml: 0.16.6
       svgo: 2.8.0
@@ -4539,7 +4546,7 @@ packages:
     dependencies:
       '@babel/core': 7.22.10
       postcss: 8.4.21
-      postcss-syntax: 0.36.2(postcss@8.4.28)
+      postcss-syntax: 0.36.2(postcss@8.4.21)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -5473,7 +5480,7 @@ packages:
       eslint-plugin-react: 7.29.4(eslint@8.34.0)
       eslint-plugin-react-hooks: 4.5.0(eslint@8.34.0)
       postcss: 8.4.21
-      postcss-syntax: 0.36.2(postcss@8.4.28)
+      postcss-syntax: 0.36.2(postcss@8.4.21)
       stylelint-config-standard: 25.0.0(stylelint@14.16.1)
     transitivePeerDependencies:
       - eslint
@@ -9153,7 +9160,7 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /htmlnano@2.0.4(postcss@8.4.28)(svgo@2.8.0):
+  /htmlnano@2.0.4(postcss@8.4.21)(svgo@2.8.0):
     resolution: {integrity: sha512-WGCkyGFwjKW1GeCBsPYacMvaMnZtFJ0zIRnC2NCddkA+IOEhTqskXrS7lep+3yYZw/nQ3dW1UAX4yA/GJyR8BA==}
     peerDependencies:
       cssnano: ^6.0.0
@@ -9183,7 +9190,7 @@ packages:
         optional: true
     dependencies:
       cosmiconfig: 8.1.0
-      postcss: 8.4.28
+      postcss: 8.4.21
       posthtml: 0.16.6
       svgo: 2.8.0
       timsort: 0.3.0
@@ -11056,6 +11063,7 @@ packages:
   /node-gyp-build-optional-packages@5.0.7:
     resolution: {integrity: sha512-YlCCc6Wffkx0kHkmam79GKvDQ6x+QZkMjFGrIMxgFNILFvGSbCp2fCBC55pGTT9gVaz8Na5CLmxt/urtzRv36w==}
     hasBin: true
+    requiresBuild: true
     dev: true
     optional: true
 
@@ -11426,7 +11434,7 @@ packages:
     resolution: {integrity: sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw==}
     dev: true
 
-  /parcel@2.9.3(postcss@8.4.28):
+  /parcel@2.9.3(postcss@8.4.21):
     resolution: {integrity: sha512-2GTVocFkwblV/TIg9AmT7TI2fO4xdWkyN8aFUEVtiVNWt96GTR3FgQyHFValfCbcj1k9Xf962Ws2hYXYUr9k1Q==}
     engines: {node: '>= 12.0.0'}
     hasBin: true
@@ -11434,7 +11442,7 @@ packages:
       '@parcel/core':
         optional: true
     dependencies:
-      '@parcel/config-default': 2.9.3(@parcel/core@2.9.3)(postcss@8.4.28)
+      '@parcel/config-default': 2.9.3(@parcel/core@2.9.3)(postcss@8.4.21)
       '@parcel/core': 2.9.3
       '@parcel/diagnostic': 2.9.3
       '@parcel/events': 2.9.3
@@ -12333,7 +12341,7 @@ packages:
       util-deprecate: 1.0.2
     dev: true
 
-  /postcss-syntax@0.36.2(postcss@8.4.28):
+  /postcss-syntax@0.36.2(postcss@8.4.21):
     resolution: {integrity: sha512-nBRg/i7E3SOHWxF3PpF5WnJM/jQ1YpY9000OaVXlAQj6Zp/kIqJxEDWIZ67tAd7NLuk7zqN4yqe9nc0oNAOs1w==}
     peerDependencies:
       postcss: '>=5.0.0'
@@ -12354,7 +12362,7 @@ packages:
       postcss-scss:
         optional: true
     dependencies:
-      postcss: 8.4.28
+      postcss: 8.4.21
     dev: true
 
   /postcss-value-parser@4.2.0:
@@ -12407,6 +12415,15 @@ packages:
       posthtml-parser: 0.11.0
       posthtml-render: 3.0.0
     dev: true
+
+  /postprocessing@6.33.3(three@0.155.0):
+    resolution: {integrity: sha512-zQAVvcMf7bfeggQNQeVErD/UFd1XHBi2X6+yxwIv9PjhGCLAYKue3UuzVyu95O7ZUvkDwF0TyTzKdxoaVwYi7w==}
+    engines: {node: '>= 0.13.2'}
+    peerDependencies:
+      three: '>= 0.138.0 < 0.159.0'
+    dependencies:
+      three: 0.155.0
+    dev: false
 
   /potpack@1.0.2:
     resolution: {integrity: sha512-choctRBIV9EMT9WGAZHn3V7t0Z2pMQyl0EZE6pFc/6ml3ssw7Dlf/oAOvFwjm1HVsqfQN8GfeFyJ+d8tRzqueQ==}

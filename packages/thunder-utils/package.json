@@ -1,6 +1,6 @@
 {
   "name": "thunder-utils",
-  "version": "0.0.4-alpha2",
+  "version": "0.0.4-alpha3",
   "description": "",
   "author": "",
   "license": "MIT",
@@ -21,6 +21,7 @@
     "test": "jest --maxWorkers 2"
   },
   "dependencies": {
+    "postprocessing": "^6.33.3",
     "thunder-3d": "workspace:^"
   }
 }
