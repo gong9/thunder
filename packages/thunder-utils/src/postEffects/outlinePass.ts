@@ -1,5 +1,5 @@
 import type { Object3D } from 'thunder-3d'
-import { Vector2, lib, use, utils } from 'thunder-3d'
+import { TransformControls, Vector2, lib, use, utils } from 'thunder-3d'
 
 type HighParamsType = {
   edgeStrength?: number // 边缘强度
@@ -40,7 +40,7 @@ const createHighSelectedTool = (highParams?: HighParamsType) => {
   if (!composer)
     throw new Error('composer is not defined, please initPostEffects first')
 
-  scene.children = scene.children.filter((item: Object3D) => (item as any)?.isTransformControls !== true)
+  scene.children = scene.children.filter((item: Object3D) => !(item instanceof TransformControls))
 
   const outlinePass = new OutlinePass(new Vector2(window.innerWidth, window.innerHeight), scene, camera)
   outlinePass.edgeStrength = lastHighParams.edgeStrength
