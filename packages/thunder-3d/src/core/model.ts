@@ -23,6 +23,7 @@ class ModelLoader {
    * @param url
    * @param openEvents
    * @param draco
+   * @param decoderPath
    * @param onLoad
    * @param onProgress
    * @param onError
@@ -31,6 +32,7 @@ class ModelLoader {
   public loadGLTF(url: string,
     openEvents = false,
     draco = false,
+    decoderPath = './draco/',
     onLoad?: (result: GLTF) => GLTF,
     onProgress?: (event: ProgressEvent) => void,
     onError?: (event: ErrorEvent) => void) {
@@ -40,7 +42,7 @@ class ModelLoader {
       // default draco file path is './draco/', now not support custom
       const dracoLoader = new DRACOLoader()
 
-      dracoLoader.setDecoderPath('./draco/')
+      dracoLoader.setDecoderPath(decoderPath)
       dracoLoader.setDecoderConfig({ type: 'js' })
       dracoLoader.preload()
 
