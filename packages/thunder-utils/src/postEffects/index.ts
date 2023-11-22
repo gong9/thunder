@@ -10,9 +10,11 @@ const { useframe } = use
  * @param scene
  * @param renderer
  * @param camera
+ * @param beforehooks composer render before hook
+ * @param afterhooks composer render after hook
  * @returns
  */
-export const initPostEffects = (scene: Scene, renderer: WebGLRenderer, camera: Camera) => {
+export const initPostEffects = (scene: Scene, renderer: WebGLRenderer, camera: Camera, beforehooks?: () => void, afterhooks?: () => void) => {
   const composer = new EffectComposer(renderer)
   const renderPass = new RenderPass(scene, camera)
 
@@ -22,7 +24,9 @@ export const initPostEffects = (scene: Scene, renderer: WebGLRenderer, camera: C
   storeManagement.set('renderPass', renderPass)
 
   const cleanEffectsframe = useframe(() => {
+    beforehooks && beforehooks()
     composer.render()
+    afterhooks && afterhooks()
   })
 
   return () => {
