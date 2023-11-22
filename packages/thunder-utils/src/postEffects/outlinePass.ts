@@ -1,5 +1,5 @@
 import type { Object3D } from 'thunder-3d'
-import { TransformControls, Vector2, lib, use, utils } from 'thunder-3d'
+import { OutlinePassExtend, TransformControls, Vector2, lib, use, utils } from 'thunder-3d'
 
 type HighParamsType = {
   edgeStrength?: number // 边缘强度
@@ -10,7 +10,7 @@ type HighParamsType = {
 }
 
 const { storeManagement } = utils
-const { OutlinePass, ShaderPass, FXAAShader } = lib
+const { ShaderPass, FXAAShader } = lib
 const { useScene } = use
 
 /**
@@ -42,7 +42,7 @@ const createHighSelectedTool = (highParams?: HighParamsType) => {
 
   scene.children = scene.children.filter((item: Object3D) => !(item instanceof TransformControls))
 
-  const outlinePass = new OutlinePass(new Vector2(window.innerWidth, window.innerHeight), scene, camera)
+  const outlinePass = new OutlinePassExtend(new Vector2(window.innerWidth, window.innerHeight), scene, camera)
   outlinePass.edgeStrength = lastHighParams.edgeStrength
   outlinePass.edgeGlow = lastHighParams.edgeGlow
   outlinePass.edgeThickness = lastHighParams.edgeThickness
