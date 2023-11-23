@@ -15,7 +15,7 @@ import useframe from './core/use/useframe'
 import useScene from './core/use/useScene'
 import storeManagement from './utils/store'
 import { InteractionManager } from './core/InteractiveEvent'
-import { OutlinePassExtend } from './threeCell'
+import OutlinePassExtend from './extend/OutlinePassExtend'
 
 const utils = {
   moveTo,

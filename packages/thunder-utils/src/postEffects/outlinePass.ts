@@ -40,9 +40,8 @@ const createHighSelectedTool = (highParams?: HighParamsType) => {
   if (!composer)
     throw new Error('composer is not defined, please initPostEffects first')
 
-  scene.children = scene.children.filter((item: Object3D) => !(item instanceof TransformControls))
-
   const outlinePass = new OutlinePassExtend(new Vector2(window.innerWidth, window.innerHeight), scene, camera)
+
   outlinePass.edgeStrength = lastHighParams.edgeStrength
   outlinePass.edgeGlow = lastHighParams.edgeGlow
   outlinePass.edgeThickness = lastHighParams.edgeThickness
