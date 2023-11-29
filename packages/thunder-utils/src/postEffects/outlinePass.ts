@@ -7,6 +7,7 @@ type HighParamsType = {
   edgeThickness?: number // 边缘厚度
   pulsePeriod?: number // 脉冲周期
   visibleEdgeColor?: string // 可见边缘颜色
+  hiddenEdgeColor?: string // 隐藏边缘颜色
 }
 
 const { storeManagement } = utils
@@ -24,6 +25,7 @@ const createHighSelectedTool = (highParams?: HighParamsType) => {
     edgeGlow: 1,
     edgeThickness: 3,
     visibleEdgeColor: 'red',
+    hiddenEdgeColor: 'red',
   }
 
   const lastHighParams = {
