@@ -12,6 +12,10 @@ packages
 
 playground
 
+### 安装
+
+pnpm add thunder-3d  
+
 开发调试
 
 ### example 
