@@ -54,18 +54,52 @@ modelLoader.loadFbx('./beijing.fbx')!.then((object) => {
 
 ## 关于模型的鼠标事件交互
 
-目前对模型的鼠标交互操作只支持`loadFbx`、`loadGLTF`,这两个核心加载api, 并且由于性能考虑不会默认打开，需要手动开启。他的使用方式也需要在顶层包裹一层Group, 在Group进行事件监听。 暂时不增加对模型内部的子模型的事件监听
+目前对模型的鼠标交互操作只支持`loadFbx`、`loadGLTF`,这两个核心加载api, 并且由于性能考虑不会默认打开，需要手动开启。暂时不增加对模型内部的子模型的事件监听
 
+同时这里的监听api需要使用`addEventListener`
 
 ```ts
-import { ModelLoader, SceneControl as Scene, Group, Vector3} from 'thunder-3d'
+import { ModelLoader, SceneControl as Scene, Vector3, use} from 'thunder-3d'
 
 modelLoader.loadGLTF('./car.glb',true)!.then((object) => {
-  group.add(object.scene)
-  group.addNatureEventListener('click', (object3D) => {
+  const { scene } = use.useScene()
+  const model = object.scene
+
+  group.addEventListener('click', (model) => {
        // do something
     })
-  scene.add(group)
+  scene.add(model)
+})
+
+```
+
+如果你需要对模型的子模型进行事件监听，可以使用`traverse`之后使用事件管理器进行事件监听
+
+```ts
+import { ModelLoader, SceneControl as Scene, Vector3, InteractionManager, use} from 'thunder-3d'
+   
+  modelLoader.loadGLTF('./car.glb')!.then((object) => {
+    const { scene, camera, renderer } = use.useScene()
+    const model = object.scene
+    scene.add(model)
+
+    const interactionManager = new InteractionManager(
+     renderer,
+     camera,
+      renderer.domElement,
+    )
+
+    use.useframe(() => {
+        interactionManager.update()
+    })
+
+    model.traverse((child) => {
+     if (child instanceof Mesh) {
+       child.addEventListener('click', (model) => {
+          // do something
+       })
+     }
+    })
 })
 
 ```

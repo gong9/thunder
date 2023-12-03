@@ -5,6 +5,8 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 import { getAllMeshChildren } from '../utils'
 import provideEventPrototype from './events'
+import { InteractionManager } from './InteractiveEvent'
+import global from './global/global'
 
 /**
  * inject event prototype fn
@@ -18,6 +20,32 @@ const injectEventPrototype = (object3d: Object3D) => {
 }
 
 class ModelLoader {
+  interactionManager: InteractionManager | null = null
+
+  private initInteractionManager() {
+    const { renderer, camera } = global
+
+    if (!renderer || !camera)
+      throw new Error('please init renderer and camera first')
+
+    this.interactionManager = new InteractionManager(
+      renderer,
+      camera,
+      renderer.domElement,
+    )
+
+    global.addFrameCallback(() => {
+      this.interactionManager!.update()
+    })
+  }
+
+  private addEvent(object3d: Object3D) {
+    if (!this.interactionManager)
+      this.initInteractionManager()
+
+    this.interactionManager!.add(object3d)
+  }
+
   /**
    * gltf model loader
    * @param url
@@ -53,7 +81,7 @@ class ModelLoader {
       loader.load(url,
         (gltf) => {
           if (openEvents)
-            injectEventPrototype(gltf.scene)
+            this.addEvent(gltf.scene)
 
           onLoad ? resolve(onLoad(gltf)) : resolve(gltf)
         },
@@ -86,7 +114,7 @@ class ModelLoader {
       fbxLoader.load(url,
         (fbx) => {
           if (openEvents)
-            injectEventPrototype(fbx)
+            this.addEvent(fbx)
 
           onLoad ? resolve(onLoad(fbx)) : resolve(fbx)
         },

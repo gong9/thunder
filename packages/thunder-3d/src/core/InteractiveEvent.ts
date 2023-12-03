@@ -66,7 +66,7 @@ export class InteractionManager {
   scene: THREE.Scene | null
   mouse: Vector2
   supportsPointerEvents: boolean
-  interactiveObjects: InteractiveObject[]
+  interactiveObjects: InteractiveObject[] = []
   closestObject: InteractiveObject | null
   raycaster: THREE.Raycaster
   treatTouchEventsAsMouseEvents: boolean
