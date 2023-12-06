@@ -1,6 +1,7 @@
 /* eslint-disable no-mixed-operators */
 import { Raycaster, Vector2 } from 'three'
 
+// InteractiveObject transform https://github.com/markuslerner/THREE.Interactive
 export class InteractiveObject {
   target: THREE.Object3D
   name: string
@@ -36,25 +37,8 @@ export class InteractiveEvent {
   }
 }
 
-export class InteractionManagerOptions {
-  bindEventsOnBodyElement = true
-  autoAdd = false
-  scene: THREE.Scene | null = null
-
-  constructor(options: {
-    bindEventsOnBodyElement?: boolean | undefined
-    autoAdd?: boolean | undefined
-    scene?: THREE.Scene | undefined
-  }) {
-    if (options && typeof options.bindEventsOnBodyElement !== 'undefined')
-      this.bindEventsOnBodyElement = options.bindEventsOnBodyElement
-
-    if (options && typeof options.scene !== 'undefined')
-      this.scene = options.scene
-
-    if (options && typeof options.autoAdd !== 'undefined')
-      this.autoAdd = options.autoAdd
-  }
+export type InteractionManagerOptions = {
+  bindEventsOnBodyElement?: boolean
 }
 
 export class InteractionManager {
@@ -62,14 +46,12 @@ export class InteractionManager {
   camera: THREE.Camera
   domElement: HTMLElement
   bindEventsOnBodyElement: boolean
-  autoAdd: boolean
-  scene: THREE.Scene | null
   mouse: Vector2
   supportsPointerEvents: boolean
   interactiveObjects: InteractiveObject[] = []
   closestObject: InteractiveObject | null
   raycaster: THREE.Raycaster
-  treatTouchEventsAsMouseEvents: boolean
+  treatTouchEventsAsMouseEvents = true
 
   constructor(
     renderer: THREE.Renderer,
@@ -84,42 +66,18 @@ export class InteractionManager {
       ? options.bindEventsOnBodyElement
       : true
 
-    this.scene = options && typeof options.scene !== 'undefined' ? options.scene : null
-
-    if (this.scene) {
-      this.scene.onBeforeRender = () => {
-        if (this.autoAdd && this.scene !== null) {
-          this.scene.traverse((object) => {
-            this.add(object)
-
-            object.addEventListener('removed', (o) => {
-              this.remove(o.target)
-            })
-          })
-        }
-
-        this.update()
-      }
-    }
-    this.autoAdd = options && typeof options.autoAdd !== 'undefined'
-      ? options.autoAdd
-      : false
-
-    if (this.autoAdd && this.scene === null) {
-      console.error(
-        'Attention: Options.scene needs to be set when using options.autoAdd',
-      )
-    }
-
-    this.mouse = new Vector2(-1, 1) // top left default position
-
+    this.mouse = new Vector2(-1, 1)
     this.supportsPointerEvents = !!window.PointerEvent
-
     this.interactiveObjects = []
     this.closestObject = null
 
     this.raycaster = new Raycaster()
 
+    this.initHandleEvent()
+  }
+
+  private initHandleEvent = () => {
+    const domElement = this.domElement
     domElement.addEventListener('click', this.onMouseClick)
 
     if (this.supportsPointerEvents) {
@@ -160,6 +118,9 @@ export class InteractionManager {
     this.treatTouchEventsAsMouseEvents = true
   }
 
+  /**
+   * events removeEventListener
+   */
   dispose = () => {
     this.domElement.removeEventListener('click', this.onMouseClick)
 
@@ -199,6 +160,11 @@ export class InteractionManager {
     this.domElement.removeEventListener('touchend', this.onTouchEnd)
   }
 
+  /**
+   * add interactive object
+   * @param object
+   * @param childNames  this is use for add interactive object in group, eg: model [mesh1name,mesh2name]
+   */
   add = (object: THREE.Object3D, childNames: string[] = []) => {
     if (object && !this.interactiveObjects.find(i => i.target === object)) {
       if (childNames.length > 0) {
@@ -217,6 +183,12 @@ export class InteractionManager {
     }
   }
 
+  /**
+   * remove interactive object
+   * @param object
+   * @param childNames
+   * @returns
+   */
   remove = (object: THREE.Object3D, childNames: string[] = []) => {
     if (!object)
       return
@@ -235,71 +207,6 @@ export class InteractionManager {
       this.interactiveObjects = this.interactiveObjects.filter(
         o => o.target !== object,
       )
-    }
-  }
-
-  update = () => {
-    this.raycaster.setFromCamera(this.mouse, this.camera)
-
-    this.interactiveObjects.forEach((object) => {
-      if (object.target)
-        this.checkIntersection(object)
-    })
-
-    this.interactiveObjects.sort((a, b) => {
-      return a.distance - b.distance
-    })
-
-    const newClosestObject
-            = this.interactiveObjects.find(object => object.intersected) ?? null
-    if (newClosestObject !== this.closestObject) {
-      if (this.closestObject) {
-        const eventOutClosest = new InteractiveEvent('mouseout')
-        this.dispatch(this.closestObject, eventOutClosest)
-      }
-      if (newClosestObject) {
-        const eventOverClosest = new InteractiveEvent('mouseover')
-        this.dispatch(newClosestObject, eventOverClosest)
-      }
-      this.closestObject = newClosestObject
-    }
-
-    let eventLeave: InteractiveEvent
-    this.interactiveObjects.forEach((object) => {
-      if (!object.intersected && object.wasIntersected) {
-        if (!eventLeave)
-          eventLeave = new InteractiveEvent('mouseleave')
-
-        this.dispatch(object, eventLeave)
-      }
-    })
-    let eventEnter: InteractiveEvent
-    this.interactiveObjects.forEach((object) => {
-      if (object.intersected && !object.wasIntersected) {
-        if (!eventEnter)
-          eventEnter = new InteractiveEvent('mouseenter')
-
-        this.dispatch(object, eventEnter)
-      }
-    })
-  }
-
-  checkIntersection = (object: InteractiveObject) => {
-    const intersects = this.raycaster.intersectObjects([object.target], true)
-
-    object.wasIntersected = object.intersected
-
-    if (intersects.length > 0) {
-      let distance = intersects[0].distance
-      intersects.forEach((i) => {
-        if (i.distance < distance)
-          distance = i.distance
-      })
-      object.intersected = true
-      object.distance = distance
-    }
-    else {
-      object.intersected = false
     }
   }
 
@@ -452,6 +359,13 @@ export class InteractionManager {
     })
   }
 
+  mapPositionToPoint = (point: Vector2, x: number, y: number) => {
+    const rect = this.renderer.domElement.getBoundingClientRect()
+
+    point.x = ((x - rect.left) / rect.width) * 2 - 1
+    point.y = -((y - rect.top) / rect.height) * 2 + 1
+  }
+
   dispatch = (object: InteractiveObject, event: InteractiveEvent) => {
     if (object.target && !event.cancelBubble) {
       event.coords = this.mouse
@@ -461,10 +375,77 @@ export class InteractionManager {
     }
   }
 
-  mapPositionToPoint = (point: Vector2, x: number, y: number) => {
-    const rect = this.renderer.domElement.getBoundingClientRect()
+  /**
+   * check intersection
+   * @param object
+  */
+  checkIntersection = (object: InteractiveObject) => {
+    const intersects = this.raycaster.intersectObjects([object.target], true)
 
-    point.x = ((x - rect.left) / rect.width) * 2 - 1
-    point.y = -((y - rect.top) / rect.height) * 2 + 1
+    object.wasIntersected = object.intersected
+
+    // get nearest intersection
+    if (intersects.length > 0) {
+      let distance = intersects[0].distance
+
+      intersects.forEach((i) => {
+        if (i.distance < distance)
+          distance = i.distance
+      })
+      object.intersected = true
+      object.distance = distance
+    }
+    else {
+      object.intersected = false
+    }
+  }
+
+  /**
+   * update raycaster
+   */
+  update = () => {
+    this.raycaster.setFromCamera(this.mouse, this.camera)
+
+    this.interactiveObjects.forEach((object) => {
+      if (object.target)
+        this.checkIntersection(object)
+    })
+
+    this.interactiveObjects.sort((a, b) => {
+      return a.distance - b.distance
+    })
+
+    const newClosestObject = this.interactiveObjects.find(object => object.intersected) ?? null
+
+    if (newClosestObject !== this.closestObject) {
+      if (this.closestObject) {
+        const eventOutClosest = new InteractiveEvent('mouseout')
+        this.dispatch(this.closestObject, eventOutClosest)
+      }
+      if (newClosestObject) {
+        const eventOverClosest = new InteractiveEvent('mouseover')
+        this.dispatch(newClosestObject, eventOverClosest)
+      }
+      this.closestObject = newClosestObject
+    }
+
+    let eventLeave: InteractiveEvent
+    this.interactiveObjects.forEach((object) => {
+      if (!object.intersected && object.wasIntersected) {
+        if (!eventLeave)
+          eventLeave = new InteractiveEvent('mouseleave')
+
+        this.dispatch(object, eventLeave)
+      }
+    })
+    let eventEnter: InteractiveEvent
+    this.interactiveObjects.forEach((object) => {
+      if (object.intersected && !object.wasIntersected) {
+        if (!eventEnter)
+          eventEnter = new InteractiveEvent('mouseenter')
+
+        this.dispatch(object, eventEnter)
+      }
+    })
   }
 }
