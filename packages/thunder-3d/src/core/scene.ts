@@ -27,6 +27,9 @@ interface SceneOptions {
     }
   }
 
+  /** window reset */
+  reset?: boolean
+
   fog?: FogEnum
 
   /** default camera options */
@@ -92,6 +95,7 @@ interface CutoutAreaType {
 class SceneControl {
   private opts: SceneOptions = {}
   private pointer: Vector2 = new Vector2()
+  private container: HTMLElement | null = null
 
   scene: TScene | null = null
   raycaster: Raycaster | null = null
@@ -182,9 +186,11 @@ class SceneControl {
    * @param renderer
    */
   public resetScene(camera: PerspectiveCamera, renderer: WebGLRenderer) {
-    camera.aspect = window.innerWidth / window.innerHeight
+    const rendererOps = this.opts.rendererOps || {}
+
+    camera.aspect = this.container!.clientWidth / this.container!.clientHeight
     camera.updateProjectionMatrix()
-    renderer.setSize(window.innerWidth, window.innerHeight)
+    renderer.setSize(rendererOps.size?.width ?? this.container!.clientWidth, rendererOps.size?.height ?? this.container!.clientHeight)
     renderer.setPixelRatio(window.devicePixelRatio)
   }
 
@@ -203,9 +209,9 @@ class SceneControl {
 
     this.cutMain(renderer)
 
-    renderer.shadowMap.enabled = rendererOps.shadowMap ?? true
-    renderer.toneMapping = (rendererOps.toneMapping ?? ACESFilmicToneMapping) as ToneMapping
-    renderer.toneMappingExposure = rendererOps.toneMappingExposure ?? 0.3
+    renderer.shadowMap.enabled = rendererOps.shadowMap ?? false
+    // renderer.toneMapping = (rendererOps.toneMapping ?? ACESFilmicToneMapping) as ToneMapping
+    // renderer.toneMappingExposure = rendererOps.toneMappingExposure ?? 0.3
     renderer.setPixelRatio(window.devicePixelRatio)
 
     return renderer
@@ -217,8 +223,8 @@ class SceneControl {
    */
   private cutMain(renderer: WebGLRenderer) {
     const rendererOps = this.opts.rendererOps || {}
-    const w = rendererOps.size?.width ?? window.innerWidth
-    const h = rendererOps.size?.height ?? window.innerHeight
+    const w = rendererOps.size?.width ?? this.container!.clientWidth
+    const h = rendererOps.size?.height ?? this.container!.clientHeight
 
     renderer.setClearColor(this.opts.background?.color || 0x000000, this.opts.background?.alpha || 1)
     renderer.setSize(w, h)
@@ -430,6 +436,8 @@ class SceneControl {
   public render(target: HTMLElement) {
     emitter.emit('before-render')
 
+    this.container = target
+
     const renderer = this.initRenderer()
     this.renderer = renderer
     globalObjectManage.setRenderer(renderer)
@@ -456,7 +464,7 @@ class SceneControl {
     target.appendChild(domElement)
 
     this.registerEvent(currentControlDom || domElement)
-    target.addEventListener('resize', () => this.resetScene(this.camera!, this.renderer!))
+    this.opts.reset && window.addEventListener('resize', () => this.resetScene(this.camera!, this.renderer!))
 
     emitter.emit('after-render')
 
@@ -471,7 +479,7 @@ class SceneControl {
   }
 
   public destroy() {
-    window.removeEventListener('resize', () => this.resetScene(this.camera!, this.renderer!))
+    // window.removeEventListener('resize', () => this.resetScene(this.camera!, this.renderer!))
   }
 }
 
