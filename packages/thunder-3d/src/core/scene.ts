@@ -23,7 +23,6 @@ interface SceneOptions {
     size?: {
       width: number
       height: number
-      updateStyle?: boolean
     }
   }
 
@@ -187,10 +186,12 @@ class SceneControl {
    */
   public resetScene(camera: PerspectiveCamera, renderer: WebGLRenderer) {
     const rendererOps = this.opts.rendererOps || {}
+    const w = rendererOps.size?.width ?? window.innerWidth
+    const h = rendererOps.size?.height ?? window.innerHeight
 
-    camera.aspect = this.container!.clientWidth / this.container!.clientHeight
+    camera.aspect = w / h
     camera.updateProjectionMatrix()
-    renderer.setSize(rendererOps.size?.width ?? this.container!.clientWidth, rendererOps.size?.height ?? this.container!.clientHeight)
+    renderer.setSize(w, h)
     renderer.setPixelRatio(window.devicePixelRatio)
   }
 
@@ -223,8 +224,8 @@ class SceneControl {
    */
   private cutMain(renderer: WebGLRenderer) {
     const rendererOps = this.opts.rendererOps || {}
-    const w = rendererOps.size?.width ?? this.container!.clientWidth
-    const h = rendererOps.size?.height ?? this.container!.clientHeight
+    const w = rendererOps.size?.width ?? window.innerWidth
+    const h = rendererOps.size?.height ?? window.innerHeight
 
     renderer.setClearColor(this.opts.background?.color || 0x000000, this.opts.background?.alpha || 1)
     renderer.setSize(w, h)
