@@ -1,11 +1,10 @@
 import type { Color, Intersection, Object3D, ToneMapping } from 'three'
-import { ACESFilmicToneMapping, AmbientLight, CubeTextureLoader, Fog, FogExp2, Group, Line, Raycaster, Scene as TScene, Vector2, Vector3, WebGLRenderer } from 'three'
+import { AmbientLight, CubeTextureLoader, Fog, FogExp2, Raycaster, Scene as TScene, Vector2, Vector3, WebGLRenderer } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as TWEEN from '@tweenjs/tween.js'
 import { emitter } from '../utils'
 import type { ColorRepresentation } from '../type'
 import { FogEnum } from '../type'
-import Mesh from './mesh'
 import Cssrenderer from './cssRenderer'
 import globalControl from './global/globalControl'
 import globalObjectManage from './global/global'
@@ -42,7 +41,6 @@ interface SceneOptions {
 
   /** default ambient light options */
   defAmbientLightOps?: {
-    position?: Vector3
     color?: Color
     intensity?: number
   }
@@ -308,9 +306,7 @@ class SceneControl {
    */
   private initAmbientLight() {
     const defConfigOps = this.opts.defAmbientLightOps || {}
-    const position = defConfigOps.position || new Vector3(0, 3, 10)
     const ambientLight = new AmbientLight(defConfigOps.color || 0xFFFFFF, defConfigOps.intensity || 1)
-    ambientLight.position.set(position.x, position.y, position.z)
 
     return ambientLight
   }
@@ -380,13 +376,15 @@ class SceneControl {
    */
   private onPointerPointerup(event: PointerEvent) {
     globalObjectManage.setTriggerClickState(false)
-    const transformControls = globalObjectManage.transformControls
 
-    if (transformControls.length > 0) {
-      transformControls.forEach((transformControl) => {
-        transformControl.detach()
-      })
-    }
+    // const transformControls = globalObjectManage.transformControls
+
+    // if (transformControls.length > 0) {
+    //   transformControls.forEach((transformControl) => {
+    //     transformControl.detach()
+    //   })
+    // }
+
     this.getPointerPosition(event)
     this.updateRaycaster()
   }
