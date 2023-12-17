@@ -79,6 +79,7 @@ export class InteractionManager {
   private initHandleEvent = () => {
     const domElement = this.domElement
     domElement.addEventListener('click', this.onMouseClick)
+    domElement.addEventListener('dblclick', this.onMouseClick)
 
     if (this.supportsPointerEvents) {
       if (this.bindEventsOnBodyElement) {
@@ -123,6 +124,7 @@ export class InteractionManager {
    */
   dispose = () => {
     this.domElement.removeEventListener('click', this.onMouseClick)
+    this.domElement.removeEventListener('dblclick', this.onMouseClick)
 
     if (this.supportsPointerEvents) {
       if (this.bindEventsOnBodyElement) {
@@ -430,6 +432,7 @@ export class InteractionManager {
     }
 
     let eventLeave: InteractiveEvent
+
     this.interactiveObjects.forEach((object) => {
       if (!object.intersected && object.wasIntersected) {
         if (!eventLeave)
@@ -438,7 +441,9 @@ export class InteractionManager {
         this.dispatch(object, eventLeave)
       }
     })
+
     let eventEnter: InteractiveEvent
+
     this.interactiveObjects.forEach((object) => {
       if (object.intersected && !object.wasIntersected) {
         if (!eventEnter)
