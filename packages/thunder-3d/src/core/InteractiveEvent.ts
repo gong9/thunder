@@ -79,7 +79,8 @@ export class InteractionManager {
   private initHandleEvent = () => {
     const domElement = this.domElement
     domElement.addEventListener('click', this.onMouseClick)
-    domElement.addEventListener('dblclick', this.onMouseClick)
+    // @ts-ignore
+    domElement.addEventListener('dbclick', this.onMouseClick)
 
     if (this.supportsPointerEvents) {
       if (this.bindEventsOnBodyElement) {
@@ -124,7 +125,9 @@ export class InteractionManager {
    */
   dispose = () => {
     this.domElement.removeEventListener('click', this.onMouseClick)
-    this.domElement.removeEventListener('dblclick', this.onMouseClick)
+
+    // @ts-ignore
+    this.domElement.removeEventListener('dbclick', this.onMouseClick)
 
     if (this.supportsPointerEvents) {
       if (this.bindEventsOnBodyElement) {
