@@ -59,6 +59,12 @@ export default defineConfig({
         items: [
           { text: '网格材质', link: '/gridMaterial' }
         ],
+      },
+      {
+        text: 'Helper',
+        items: [
+          { text: 'view-helper', link: '/viewHelper' }
+        ],
       }
     ],
 
