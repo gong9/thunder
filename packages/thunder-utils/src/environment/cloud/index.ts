@@ -1,4 +1,3 @@
-import type { Scene } from 'thunder-3d'
 import { BufferGeometryUtils, Fog, Group, LinearMipMapLinearFilter, Mesh, PlaneGeometry, ShaderMaterial, TextureLoader } from 'thunder-3d'
 import { cloudBase64 } from './cloud'
 

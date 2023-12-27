@@ -53,11 +53,17 @@ export default defineConfig({
         items: [
           { text: '边缘线高亮', link: '/highSelected' }
         ],
+      },
+      {
+        text: '材质',
+        items: [
+          { text: '网格材质', link: '/gridMaterial' }
+        ],
       }
     ],
 
     socialLinks: [
-      { icon: 'github', link: '' },
+      { icon: 'github', link: 'https://github.com/gong9/thunder' },
     ],
   },
 })

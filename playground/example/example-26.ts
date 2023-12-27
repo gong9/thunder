@@ -1,5 +1,5 @@
-import { ModelLoader, SceneControl as Scene, Group, Vector3, InteractionManager, use, AmbientLight, PMREMGenerator, lib, DirectionalLight, Color } from 'thunder-3d'
-import { createHighSelectedTool, createSnow, initPostEffects } from 'thunder-utils'
+import { PlaneGeometry, SceneControl as Scene, Mesh, Vector3, Color, } from 'thunder-3d'
+import { GridMaterial, } from 'thunder-utils'
 
 /**
  * example-17
@@ -14,30 +14,11 @@ const scene = new Scene({
 })
 
 scene.render(document.querySelector('#app')!)
-const ambientLight = new AmbientLight(0xFFFFFF, 10)
 
-const modelLoader = new ModelLoader()
+const geometry = new PlaneGeometry(10000, 10000)
+const material = new GridMaterial()
 
-const { renderer, camera } = use.useScene()
+const mesh = new Mesh(geometry, material)
+mesh.rotateX(-Math.PI / 2)
 
-
-
-initPostEffects(scene.scene!, scene.renderer!, scene.camera!)
-createHighSelectedTool({ edgeThickness: 0.01, edgeStrength: 5, visibleEdgeColor: 'red' })
-
-scene.add(ambientLight)
-const pmremGenerator = new PMREMGenerator(scene.renderer!)
-pmremGenerator.compileEquirectangularShader()
-// @ts-expect-error
-const roomEnvironment = new lib.RoomEnvironment()
-
-
-const sun = new DirectionalLight(0xFFFFFF, 10)
-sun.position.set(100, 100, -10)
-scene.add(sun)
-
-scene.scene!.environment = pmremGenerator.fromScene(roomEnvironment, 0.04).texture
-// fbx
-modelLoader.loadGLTF('./meidi.glb')!.then((object) => {
-    scene.add(object.scene)
-})
+scene.add(mesh)
