@@ -58,5 +58,3 @@ class GridMaterial extends THREE.Material {
 }
 
 export default GridMaterial
-
-const a = new GridMaterial()
