@@ -1,56 +1,54 @@
 <script setup lang='ts'>
 import { onMounted, ref } from 'vue'
-import { BoxGeometry, Mesh, MeshBasicMaterial, SceneControl, use } from 'thunder-3d'
-import { ViewHelper } from 'thunder-utils'
+import { PlaneGeometry, Mesh, Vector3, SceneControl as Scene, use } from 'thunder-3d'
+import { ViewHelper, GridMaterial } from 'thunder-utils'
 
 const divRef = ref(null)
 
 onMounted(() => {
-  const scene = new SceneControl({
-    orbitControls: true,
-    rendererOps:{
-      size: {
-        width: 400,
-        height: 400
-      }
-    },
-    defCameraOps: {
-      aspect: 1
-    }
-  })
+    const scene = new Scene({
+        orbitControls: true,
+        defCameraOps: {
+            position: new Vector3(0, 10, 80)
+        },
+        reset: true,
+        rendererOps: {
+            size: {
+                width: 400,
+                height: 400
+            }
+        },
+    })
 
-  scene.render(divRef.value!)
+    scene.render(divRef.value!)
 
-  const geometry = new BoxGeometry(2, 2, 2)
-  const material = new MeshBasicMaterial({ color: 0x00FF00 })
-  const box = new Mesh(geometry, material)
+    const geometry = new PlaneGeometry(10000, 10000)
+    const material = new GridMaterial()
+    const mesh = new Mesh(geometry, material)
+    mesh.rotateX(-Math.PI / 2)
 
-  scene.add(box)  
+    scene.add(mesh)
 
-  const helper = new ViewHelper(scene.camera!, scene.renderer!, "top-right");
+    const helper = new ViewHelper(scene.camera!, scene.renderer!, "top-right");
+    helper.setControls(scene.controls!);
 
-  helper.setControls(scene.controls!);
-
-  console.log(helper);
-
-use.useframe(()=>{
-    helper.render();
-})
-
-console.log(scene.scene)
+    use.useframe(() => {
+        helper.render();
+    })
 })
 
 
 </script>
 
 <template>
-  <div ref="divRef" class="canvas" />
+    <div ref="divRef" class="canvas" />
 </template>
 
 <style scoped lang='css'>
 .canvas {
-  width: 100%;
-  height: 400px;
-  overflow: hidden;
+    width: 400px;
+    height: 400px;
+    overflow: hidden;
+    position: relative;
 }
 </style>

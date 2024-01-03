@@ -248,12 +248,11 @@ class ViewHelper extends Object3D {
     if (this.animating)
       this.animate(delta)
 
-    const x = this.domRect.left
-    const y = this.offsetHeight - this.domRect.bottom
-
+    const { width, height } = this.domElement.getBoundingClientRect()
     const autoClear = this.renderer.autoClear
+
     this.renderer.autoClear = false
-    this.renderer.setViewport(x, y, dim, dim)
+    this.renderer.setViewport(width - dim, height - dim, dim, dim)
     this.renderer.render(this, this.orthoCamera)
     this.renderer.setViewport(this.viewport)
     this.renderer.autoClear = autoClear

@@ -11,10 +11,11 @@ const scene = new Scene({
     defCameraOps: {
         position: new Vector3(0, 10, 80)
     },
+    reset:true,
     rendererOps: {
         size: {
-            width: 400,
-            height: 400
+            width: 300,
+            height: 300
         }
     },
 })
@@ -33,8 +34,7 @@ const helper = new ViewHelper(scene.camera!, scene.renderer!, "top-right");
 
 helper.setControls(scene.controls!);
 
-console.log(helper)
-console.log(scene.scene?.children)
+
 
 use.useframe(()=>{
     helper.render();

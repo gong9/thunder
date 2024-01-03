@@ -190,6 +190,7 @@ class SceneControl {
     camera.aspect = w / h
     camera.updateProjectionMatrix()
     renderer.setSize(w, h)
+    renderer.setViewport(0, 0, w, h)
     renderer.setPixelRatio(window.devicePixelRatio)
   }
 
