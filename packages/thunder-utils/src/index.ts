@@ -5,6 +5,7 @@ import { createRain } from './environment/rain'
 import createCloud from './environment/cloud'
 import { initPostEffects } from './postEffects'
 import createHighSelectedTool from './postEffects/outlinePass'
+import { createSun } from './environment/sun'
 
 export {
   SceneControl, // todo remove
@@ -12,6 +13,7 @@ export {
   createRain,
   createSnow,
   createCloud,
+  createSun,
 
   initPostEffects, // effect
   createHighSelectedTool,

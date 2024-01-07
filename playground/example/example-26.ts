@@ -1,5 +1,5 @@
-import { ModelLoader, SceneControl as Scene, Group, Vector3, InteractionManager, use, AmbientLight, PMREMGenerator, lib, DirectionalLight, Color } from 'thunder-3d'
-import { createHighSelectedTool, createSnow, initPostEffects } from 'thunder-utils'
+import { BoxGeometry, SceneControl as Scene, MeshBasicMaterial, Vector3, Mesh, use, AmbientLight, PMREMGenerator, lib, DirectionalLight, Color } from 'thunder-3d'
+import { createSun,  } from 'thunder-utils'
 
 /**
  * example-17
@@ -14,30 +14,20 @@ const scene = new Scene({
 })
 
 scene.render(document.querySelector('#app')!)
-const ambientLight = new AmbientLight(0xFFFFFF, 10)
 
-const modelLoader = new ModelLoader()
+const sun = createSun(new Date(),116,40)
 
-const { renderer, camera } = use.useScene()
-
-
-
-initPostEffects(scene.scene!, scene.renderer!, scene.camera!)
-createHighSelectedTool({ edgeThickness: 0.01, edgeStrength: 5, visibleEdgeColor: 'red' })
-
-scene.add(ambientLight)
-const pmremGenerator = new PMREMGenerator(scene.renderer!)
-pmremGenerator.compileEquirectangularShader()
-// @ts-expect-error
-const roomEnvironment = new lib.RoomEnvironment()
-
-
-const sun = new DirectionalLight(0xFFFFFF, 10)
-sun.position.set(100, 100, -10)
+console.log(sun)
 scene.add(sun)
 
-scene.scene!.environment = pmremGenerator.fromScene(roomEnvironment, 0.04).texture
-// fbx
-modelLoader.loadGLTF('./meidi.glb')!.then((object) => {
-    scene.add(object.scene)
-})
+const box = new BoxGeometry(1, 1, 1)
+const mater = new MeshBasicMaterial({ color: 'red' })
+const mesh = new Mesh(box, mater)
+
+
+
+scene.add(mesh)
+
+
+
+
