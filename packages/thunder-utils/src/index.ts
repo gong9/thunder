@@ -6,6 +6,8 @@ import createCloud from './environment/cloud'
 import { initPostEffects } from './postEffects'
 import createHighSelectedTool from './postEffects/outlinePass'
 import { createSun } from './environment/sun'
+import GridMaterial from './material/pristineGridMaterial'
+import ViewHelper from './helper/view'
 
 export {
   SceneControl, // todo remove
@@ -17,4 +19,8 @@ export {
 
   initPostEffects, // effect
   createHighSelectedTool,
+
+  GridMaterial,
+
+  ViewHelper,
 }
