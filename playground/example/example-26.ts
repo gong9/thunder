@@ -1,4 +1,4 @@
-import { BoxGeometry, SceneControl as Scene, MeshBasicMaterial, Vector3, Mesh, use, AmbientLight, PMREMGenerator, lib, DirectionalLight, PlaneGeometry } from 'thunder-3d'
+import { BoxGeometry, SceneControl as Scene, MeshBasicMaterial, Vector3, Mesh, use, AmbientLight, PMREMGenerator, lib, DirectionalLight, PlaneGeometry, Color } from 'thunder-3d'
 import { createSun, } from 'thunder-utils'
 import { Pane } from 'tweakpane';
 
@@ -18,12 +18,12 @@ scene.render(document.querySelector('#app')!)
 
 
 const PARAMS = {
-    时间: 0,
+    hour: 0,
 };
 
 const pane = new Pane() as any;
 
-pane.addBinding(PARAMS, '时间', {
+pane.addBinding(PARAMS, 'hour', {
     min: 0,
     max: 24,
     step: 1
@@ -32,7 +32,7 @@ pane.addBinding(PARAMS, '时间', {
 
 const date = new Date()
 
-const [sun, updateSunPosition] = createSun(date, 40, 116, 10)
+const [sun, updateSunPosition] = createSun(date, 40, 116, 50)
 
 console.log(sun)
 scene.add(sun)
@@ -51,9 +51,14 @@ scene.add(mesh)
 
 use.useframe(() => {
 
-    date.setHours(PARAMS.时间)
+    date.setHours(PARAMS.hour)
     //@ts-ignore
     updateSunPosition(date, 40, 116)
 
-    console.log(scene.camera?.position)
+    if ((sun as Mesh).position.y > 0) {
+        scene.scene!.background = new Color('blue')
+    } else {
+        scene.scene!.background = new Color('black')
+    }
 })
+
