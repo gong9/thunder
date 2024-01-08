@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      tweakpane:
+        specifier: ^4.0.3
+        version: 4.0.3
     devDependencies:
       '@antfu/eslint-config':
         specifier: ^0.38.5

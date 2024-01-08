@@ -45,7 +45,8 @@ export default defineConfig({
       {
         text: '环境模拟',
         items: [
-          { text: '雨雪效果', link: '/environment' }
+          { text: '雨雪效果', link: '/environment' },
+          { text: '太阳', link: '/sun' }
         ],
       },
       {

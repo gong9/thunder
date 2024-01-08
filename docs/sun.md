@@ -1,3 +1,20 @@
+<script setup>
+  import Sun from './code/Sun.vue'
+</script>
+
+# sun
+
+> wip 开发中
+
+<Sun/>
+
+经纬度为北京，可以通过设置右上角时间空间来查看太阳的位置变化
+
+待发布，api暂时不稳定
+
+
+
+```ts
 import { BoxGeometry, SceneControl as Scene, MeshBasicMaterial, Vector3, Mesh, use, MeshLambertMaterial, PMREMGenerator, lib, DirectionalLight, PlaneGeometry, Color } from 'thunder-3d'
 import { createSun, } from 'thunder-utils'
 import { Pane } from 'tweakpane';
@@ -70,3 +87,5 @@ use.useframe(() => {
     }
 })
 
+
+```
