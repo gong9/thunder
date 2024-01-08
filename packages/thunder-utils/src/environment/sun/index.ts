@@ -1,4 +1,4 @@
-import { SphereGeometry, Mesh, MeshBasicMaterial, Vector3 } from 'thunder-3d'
+import { DirectionalLight, Group, Mesh, MeshBasicMaterial, SphereGeometry, Vector3 } from 'thunder-3d'
 import { getPosition } from 'suncalc'
 
 /**
@@ -18,6 +18,31 @@ const getThreePosition = (date: Date, latitude: number, longitude: number, dista
 }
 
 /**
+ * entity
+ * @returns
+ */
+const createSunEntity = () => {
+  const box = new SphereGeometry(1)
+  const mater = new MeshBasicMaterial({ color: 'yellow' })
+  const mesh = new Mesh(box, mater)
+
+  return mesh
+}
+
+/**
+ * sun light
+ * @returns
+ */
+const createSunLight = () => {
+  const sunLight = new DirectionalLight('white', 8)
+  sunLight.castShadow = true
+  sunLight.shadow.bias = -0.005
+  sunLight.shadow.mapSize.set(1024, 1024)
+
+  return sunLight
+}
+
+/**
  * create init
  * @param date
  * @param latitude
@@ -25,20 +50,21 @@ const getThreePosition = (date: Date, latitude: number, longitude: number, dista
  * @param distance
  */
 export const createSun = (date: Date, latitude: number, longitude: number, distance = 1000, autoUpdate = true) => {
-
   const position = getThreePosition(date, latitude, longitude, distance)
+  const group = new Group()
 
-  const box = new SphereGeometry(1)
-  const mater = new MeshBasicMaterial({ color: 'yellow' })
-  const mesh = new Mesh(box, mater)
+  group.add(
+    createSunEntity(),
+    createSunLight(),
+  )
 
-  mesh.position.set(position.x, position.y, position.z)
-  mesh.lookAt(0, 0, 0)
+  group.position.set(position.x, position.y, position.z)
+  group.lookAt(0, 0, 0)
 
   const updateSunPosition = (date: Date, latitude: number, longitude: number) => {
     const currentPosition = getThreePosition(date, latitude, longitude, distance)
-    mesh.position.set(currentPosition.x, currentPosition.y, currentPosition.z)
+    group.position.set(currentPosition.x, currentPosition.y, currentPosition.z)
   }
 
-  return [mesh, updateSunPosition]
+  return [group, updateSunPosition]
 }

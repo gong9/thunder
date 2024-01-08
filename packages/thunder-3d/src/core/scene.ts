@@ -16,7 +16,7 @@ interface SceneOptions {
     antialias?: boolean
     logarithmicDepthBuffer?: boolean
     alpha?: boolean
-    shadowMap?: boolean
+    shadowMap?: boolean // 是否开启阴影
     toneMapping?: ToneMapping
     toneMappingExposure?: number
     size?: {
