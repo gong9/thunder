@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>three.js webgl - materials - shaders [lava]</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="main.css">
+</head>
+
+<body>
+
+    <div id="container"></div>
+    <div id="info"><a href="https://threejs.org" target="_blank" rel="noopener">three.js</a> - shader material demo.
+        featuring lava shader by <a href="http://irrlicht.sourceforge.net/phpBB2/viewtopic.php?t=21057" target="_blank"
+            rel="noopener">TheGameMaker</a></div>
+
+
+
+    <script type="importmap">
+        {
+				"imports": {
+					"three": "../build/three.module.js",
+					"three/addons/": "./jsm/"
+				}
+			}
+		</script>
+
+    <script type="module">
+        import * as THREE from 'three'
+
+// 初始化场景、相机和渲染器
+const scene = new THREE.Scene()
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
+const renderer = new THREE.WebGLRenderer()
+renderer.setSize(window.innerWidth, window.innerHeight)
+document.body.appendChild(renderer.domElement)
+
+// 创建几何体和材质
+const geometry = new THREE.SphereGeometry(1, 32, 32)
+// 顶点着色器代码 (在实际项目中，这些代码应该被分离到单独的文件中)
+const vertexShader = `
+varying vec3 vNormal;
+
+void main() {
+vNormal = normalize(normalMatrix * normal); // 法线变换到视图空间
+gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+}
+`
+
+// 片段着色器代码
+const fragmentShader = `
+varying vec3 vNormal;
+
+void main() {
+float intensity = pow(0.5 - dot(vNormal, vec3(0, 0, 1)), 2.0); // 简单计算雪的覆盖强度
+gl_FragColor = vec4(intensity, intensity, intensity, 1.0); // 灰度表示雪
+}
+`
+// 自定义着色器材质
+const material = new THREE.ShaderMaterial({
+  vertexShader, // 顶点着色器代码
+  fragmentShader, // 片段着色器代码
+})
+
+// 创建物体并将其添加到场景中
+const sphere = new THREE.Mesh(geometry, material)
+scene.add(sphere)
+
+// 摄像机位置调整
+camera.position.z = 5
+
+// 动画循环渲染
+function animate() {
+  requestAnimationFrame(animate)
+  renderer.render(scene, camera)
+}
+animate()
+		</script>
+
+</body>
+
+</html>

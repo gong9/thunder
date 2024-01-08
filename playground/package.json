@@ -11,10 +11,12 @@
     "start": "ts-node ../scripts/remov-catch.ts && parcel index.html"
   },
   "dependencies": {
+    "@tweakpane/core": "^2.0.3",
     "three": "^0.155.0",
     "three-stdlib": "^2.28.3",
     "thunder-3d": "workspace:^",
-    "thunder-utils": "workspace:^"
+    "thunder-utils": "workspace:^",
+    "tweakpane": "^4.0.3"
   },
   "devDependencies": {
     "@parcel/resolver-default": "^2.9.3",
