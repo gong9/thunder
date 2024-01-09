@@ -17,6 +17,15 @@ const getThreePosition = (date: Date, latitude: number, longitude: number, dista
   return new Vector3(x, y, z)
 }
 
+const getSunPosition = (date: Date, latitude: number, longitude: number) => {
+  const { altitude, azimuth } = getPosition(date, latitude, longitude)
+
+  return {
+    altitude,
+    azimuth,
+  }
+}
+
 /**
  * entity
  * @returns
@@ -66,5 +75,7 @@ export const createSun = (date: Date, latitude: number, longitude: number, dista
     group.position.set(currentPosition.x, currentPosition.y, currentPosition.z)
   }
 
-  return [group, updateSunPosition]
+  return [group, updateSunPosition, () => {
+    return getSunPosition(date, latitude, longitude)
+  }]
 }
