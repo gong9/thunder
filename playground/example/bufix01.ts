@@ -4,7 +4,7 @@ import { initPostEffects, createHighSelectedTool } from 'thunder-utils'
 
 
 /**
- * 模拟太阳移动
+ * recurrent bug
  */
 const scene = new Scene({
     orbitControls: true,
