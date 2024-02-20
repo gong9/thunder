@@ -20,4 +20,6 @@ scene.render(document.querySelector('#app')!)
 
 initPostEffects(scene.scene!, scene.renderer!, scene.camera!)
 createHighSelectedTool({ edgeThickness: 0.01, edgeStrength: 5, visibleEdgeColor: 'red' })
+createHighSelectedTool({ edgeThickness: 0.01, edgeStrength: 5, visibleEdgeColor: 'red' })
+
 
