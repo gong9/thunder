@@ -1,1 +1,1 @@
-import './example/example-26'
+import './example/bufix01'

@@ -52,8 +52,8 @@ const createHighSelectedTool = (highParams?: HighParamsType) => {
 
   composer.addPass(outlinePass)
 
-  // const gammaCorrectionShader = new ShaderPass(GammaCorrectionShader)
-  // composer.addPass(gammaCorrectionShader)
+  const gammaCorrectionShader = new ShaderPass(GammaCorrectionShader)
+  composer.addPass(gammaCorrectionShader)
 
   // todo bugfix
   // const effectFXAA = new ShaderPass(FXAAShader)
