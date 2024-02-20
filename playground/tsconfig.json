@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "paths": {
+            "thunder-3d": [
+                "../packages/thunder-3d/src"
+            ],
+            "thunder-utils": [
+                "../packages/thunder-utils/src"
+            ],
+        }
+    }
+}
