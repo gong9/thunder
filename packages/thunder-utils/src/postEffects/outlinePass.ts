@@ -53,7 +53,11 @@ const createHighSelectedTool = (highParams?: HighParamsType) => {
   composer.addPass(outlinePass)
 
   const gammaCorrectionShader = new ShaderPass(GammaCorrectionShader)
-  composer.addPass(gammaCorrectionShader)
+
+  if (!storeManagement.get<boolean>('__&&__gammaCorrectionShader')) {
+    composer.addPass(gammaCorrectionShader)
+    storeManagement.set('__&&__gammaCorrectionShader', true)
+  }
 
   // todo bugfix
   // const effectFXAA = new ShaderPass(FXAAShader)
