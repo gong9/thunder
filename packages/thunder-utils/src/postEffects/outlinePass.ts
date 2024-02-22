@@ -11,7 +11,7 @@ type HighParamsType = {
 }
 
 const { storeManagement } = utils
-const { ShaderPass, FXAAShader } = lib
+const { ShaderPass, FXAAShader, GammaCorrectionShader } = lib
 const { useScene } = use
 
 /**
@@ -51,6 +51,13 @@ const createHighSelectedTool = (highParams?: HighParamsType) => {
   outlinePass.visibleEdgeColor.set(lastHighParams.visibleEdgeColor)
 
   composer.addPass(outlinePass)
+
+  const gammaCorrectionShader = new ShaderPass(GammaCorrectionShader)
+
+  if (!storeManagement.get<boolean>('__&&__gammaCorrectionShader')) {
+    composer.addPass(gammaCorrectionShader)
+    storeManagement.set('__&&__gammaCorrectionShader', true)
+  }
 
   // todo bugfix
   // const effectFXAA = new ShaderPass(FXAAShader)

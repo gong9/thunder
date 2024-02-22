@@ -1,4 +1,5 @@
 {
+    "extends": "../../build.tsconfig.json",
     "compilerOptions": {
         "paths": {
             "thunder-3d": [
