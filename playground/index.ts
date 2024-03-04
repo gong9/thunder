@@ -1,1 +1,1 @@
-import './example/bufix01'
+import './src/homeFurnishings/index'

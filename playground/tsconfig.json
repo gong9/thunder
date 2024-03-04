@@ -7,6 +7,9 @@
             "thunder-utils": [
                 "../packages/thunder-utils/src"
             ]
-        }
-    }
+        },
+    },
+    "exclude": [
+        "dist",
+    ]
 }
