@@ -5,9 +5,9 @@ interface CallbackType {
 
 class GlobalControl {
   public callback: CallbackType = {} as CallbackType
-  public task: Map<() => void, NodeJS.Timer> = new Map()
+  public task: Map<() => void, NodeJS.Timer | null> = new Map()
 
-  constructor() {}
+  constructor() { }
 
   public update() {
     if (this.task.size > 0) {
@@ -23,8 +23,8 @@ class GlobalControl {
   }
 
   public remove(cb: () => void) {
-    if (this.task.get(cb)) {
-      clearTimeout(this.task.get(cb)!)
+    if (this.task.get(cb) !== undefined) {
+      !this.task.get(cb) && clearTimeout(this.task.get(cb)!)
       this.task.delete(cb)
     }
   }
@@ -32,11 +32,14 @@ class GlobalControl {
   public start() {
     if (!this.task.get(this.callback.cb)) {
       const timer = this.timerControl()
-      this.task.set(this.callback.cb, timer)
+      this.task.set(this.callback.cb, timer as NodeJS.Timer)
     }
   }
 
   private timerControl() {
+    if (this.callback.duration === Infinity)
+      return null
+
     return setTimeout(() => {
       this.task.delete(this.callback.cb)
     }, this.callback.duration)

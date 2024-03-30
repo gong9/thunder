@@ -1,18 +1,20 @@
 /* eslint-disable no-mixed-operators */
+import type { Vector3 } from 'three'
 import { Raycaster, Vector2 } from 'three'
 
-// InteractiveObject transform https://github.com/markuslerner/THREE.Interactive
 export class InteractiveObject {
   target: THREE.Object3D
   name: string
   intersected: boolean
   wasIntersected = false
   distance: number
+  point: Vector3 | null
   constructor(target: THREE.Object3D, name: string) {
     this.target = target
     this.name = name
     this.intersected = false
     this.distance = 0
+    this.point = null
   }
 }
 
@@ -20,6 +22,7 @@ export class InteractiveEvent {
   type: string
   cancelBubble: boolean
   originalEvent: Event | null
+  point: Vector3 | null
 
   // Dummy default values
   coords: Vector2 = new Vector2(0, 0)
@@ -30,6 +33,7 @@ export class InteractiveEvent {
     this.cancelBubble = false
     this.type = type
     this.originalEvent = originalEvent
+    this.point = null
   }
 
   stopPropagation() {
@@ -376,6 +380,7 @@ export class InteractionManager {
       event.coords = this.mouse
       event.distance = object.distance
       event.intersected = object.intersected
+      event.point = object.point
       object.target.dispatchEvent(event)
     }
   }
@@ -385,6 +390,11 @@ export class InteractionManager {
    * @param object
   */
   checkIntersection = (object: InteractiveObject) => {
+    if (!object.target.visible) {
+      object.intersected = false
+      return
+    }
+
     const intersects = this.raycaster.intersectObjects([object.target], true)
 
     object.wasIntersected = object.intersected
@@ -397,7 +407,9 @@ export class InteractionManager {
         if (i.distance < distance)
           distance = i.distance
       })
+
       object.intersected = true
+      object.point = intersects[0].point
       object.distance = distance
     }
     else {
