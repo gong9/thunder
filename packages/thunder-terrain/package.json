@@ -1,0 +1,29 @@
+{
+  "name": "thunder-terrain",
+  "version": "0.0.1",
+  "description": "地形",
+  "author": "",
+  "license": "MIT",
+  "keywords": [],
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "readme.md",
+    "package.json"
+  ],
+  "scripts": {
+    "build": "father build",
+    "build:deps": "father prebundle",
+    "test": "jest --maxWorkers 2"
+  },
+  "dependencies": {
+    "@types/suncalc": "^1.9.2",
+    "postprocessing": "^6.33.3",
+    "suncalc": "^1.9.0",
+    "thunder-3d": "workspace:^"
+  }
+}
