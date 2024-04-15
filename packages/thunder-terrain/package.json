@@ -1,29 +1,46 @@
 {
   "name": "thunder-terrain",
+  "type": "module",
   "version": "0.0.1",
   "description": "地形",
-  "author": "",
-  "license": "MIT",
-  "keywords": [],
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "publishConfig": {
-    "access": "public"
-  },
   "files": [
     "dist",
-    "readme.md",
-    "package.json"
+    "README.md"
   ],
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/types/index.d.ts",
+  "license": "MIT",
+  "keywords": [
+    "3d",
+    "webgl",
+    "threejs",
+    "terrain",
+    "gis"
+  ],
+  "exports": {
+    "./workers": "./dist/workers/*"
+  },
   "scripts": {
-    "build": "father build",
-    "build:deps": "father prebundle",
-    "test": "jest --maxWorkers 2"
+    "build": "vite build"
   },
   "dependencies": {
-    "@types/suncalc": "^1.9.2",
-    "postprocessing": "^6.33.3",
-    "suncalc": "^1.9.0",
+    "@mapbox/tilebelt": "^1.0.2",
+    "comlink": "^4.4.1"
+  },
+  "peerDependencies": {
     "thunder-3d": "workspace:^"
+  },
+  "devDependencies": {
+    "thunder-3d": "workspace:^",
+    "@antfu/eslint-config": "^0.38.5",
+    "@types/mapbox__tilebelt": "^1.0.0",
+    "@types/offscreencanvas": "^2019.7.0",
+    "eslint": "^8.23.0",
+    "typescript": "^4.6.4",
+    "vite": "^4.2.1",
+    "vite-plugin-dts": "^2.1.0",
+    "tweakpane": "^4.0.3",
+    "@tweakpane/core": "^2.0.3"
   }
 }

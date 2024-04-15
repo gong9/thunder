@@ -20,10 +20,15 @@
     "build:deps": "father prebundle",
     "test": "jest --maxWorkers 2"
   },
+  "peerDependencies": {
+    "thunder-3d": "workspace:^"
+  },
+  "devDependencies": {
+    "thunder-3d": "workspace:^"
+  },
   "dependencies": {
     "@types/suncalc": "^1.9.2",
     "postprocessing": "^6.33.3",
-    "suncalc": "^1.9.0",
-    "thunder-3d": "workspace:^"
+    "suncalc": "^1.9.0"
   }
 }
