@@ -1,5 +1,5 @@
-import type { Texture } from 'thunder-3d'
-import { Color, GLSL3, Matrix3, Matrix4, NoBlending, RawShaderMaterial, Vector2 } from 'thunder-3d'
+import type { Fog, Texture } from 'thunder-3d'
+import { Color, GLSL3, Matrix3, Matrix4, Mesh, NoBlending, PlaneGeometry, RawShaderMaterial, Vector2 } from 'thunder-3d'
 import { fragmentShader } from './shader/frag'
 import { vertexShader } from './shader/vert'
 import Reflector from './Reflector'
@@ -18,7 +18,6 @@ export interface ReflectorMaterialConfig {
     far: number
   }
   dithering?: boolean
-
 }
 
 const reflector = new Reflector() as any
@@ -109,5 +108,46 @@ class ReflectorMaterial extends RawShaderMaterial {
   }
 }
 
-export { reflector }
-export default ReflectorMaterial
+type CreateReflectorPlaneOptions = {
+  reflectivity?: number
+  mirror?: number
+  mixStrength?: number
+  position?: [number, number, number]
+  map: Texture
+  fog?: Fog | undefined
+  dithering?: boolean
+}
+
+/**
+ * create reflector plane
+ * @param width
+ * @param height
+ * @param options
+ * @returns
+ */
+export const createReflectorPlane = (width: number, height: number, options: CreateReflectorPlaneOptions) => {
+  const { reflectivity = 300, mirror = 0.1, mixStrength = 0.1, fog, dithering = true, map } = options || {}
+
+  const material = new ReflectorMaterial({
+    reflectivity,
+    mirror,
+    mixStrength,
+    fog,
+    dithering,
+    map,
+  })
+
+  const geometry = new PlaneGeometry(width, height)
+  const planeMesh = new Mesh(geometry, material)
+
+  planeMesh.rotation.x = -Math.PI / 2
+  planeMesh.add(reflector)
+
+  planeMesh.onBeforeRender = (rendererSelf, sceneSelf, cameraSelf) => {
+    planeMesh.visible = false
+    reflector.update(rendererSelf, sceneSelf, cameraSelf)
+    planeMesh.visible = true
+  }
+
+  return planeMesh
+}

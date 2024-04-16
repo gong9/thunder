@@ -9,7 +9,7 @@ import { createSun } from './environment/sun'
 import GridMaterial from './material/pristineGridMaterial'
 import ViewHelper from './helper/view'
 import createSkySystem from './environment/sky'
-import ReflectorMaterial, { reflector } from './material/reflectorMaterial'
+import { createReflectorPlane } from './material/reflectorMaterial'
 
 export {
   SceneControl, // todo remove
@@ -24,8 +24,7 @@ export {
   createHighSelectedTool,
 
   GridMaterial,
-  ReflectorMaterial,
-  reflector,
+  createReflectorPlane,
 
   ViewHelper,
 }

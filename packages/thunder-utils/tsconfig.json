@@ -1,6 +1,7 @@
 {
     "extends": "../../build.tsconfig.json",
     "compilerOptions": {
+        "outDir": "tslib",
         "paths": {
             "thunder-3d": [
                 "../thunder-3d/src"
