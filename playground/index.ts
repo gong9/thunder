@@ -1,1 +1,1 @@
-import './src/homeFurnishings/index'
+import './src/reflectorMaterial/example02'
