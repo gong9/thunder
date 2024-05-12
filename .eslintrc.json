@@ -9,6 +9,7 @@
     "@typescript-eslint/no-invalid-this": "off",
     "@typescript-eslint/ban-ts-comment": "off",
     "@typescript-eslint/prefer-ts-expect-error": "off",
-    "@typescript-eslint/consistent-type-definitions": "off"
+    "@typescript-eslint/consistent-type-definitions": "off",
+    "no-tabs": "off"
   }
 }
